@@ -17,9 +17,4 @@
     <a href="?lang=ua">
         <@spring.message "lang.ua"/>
     </a>
-
-<#--    <#assign locale="uk_UA">-->
-<#--    <#setting locale="uk_UA">-->
-<#--    <#assign args = ["title"]>-->
-<#--    <@spring.messageArgs "title" args/>-->
 </@c.page>

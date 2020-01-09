@@ -1,4 +1,4 @@
-package com.training.projectlogistics.entity;
+package com.training.projectlogistics.entity.enums;
 
 public enum Cargo {
     LIGHT,

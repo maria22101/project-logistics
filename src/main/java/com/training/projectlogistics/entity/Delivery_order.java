@@ -1,5 +1,7 @@
 package com.training.projectlogistics.entity;
 
+import com.training.projectlogistics.entity.enums.Cargo;
+import com.training.projectlogistics.entity.enums.Delivery_order_status;
 import lombok.*;
 
 import javax.persistence.*;

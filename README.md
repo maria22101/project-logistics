@@ -1,4 +1,5 @@
-**Spring boot project - Delivery System
+**Spring boot project - Delivery System.
+
 Проект Spring boot - Система "Доставка груза"**
 
 ---------------------------------------------------------------------

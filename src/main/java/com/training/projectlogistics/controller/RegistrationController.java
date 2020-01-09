@@ -1,6 +1,6 @@
 package com.training.projectlogistics.controller;
 
-import com.training.projectlogistics.entity.Role;
+import com.training.projectlogistics.entity.enums.Role;
 import com.training.projectlogistics.entity.User;
 import com.training.projectlogistics.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

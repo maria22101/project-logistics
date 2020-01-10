@@ -5,7 +5,7 @@ import com.training.projectlogistics.entity.enums.Delivery_order_status;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -22,7 +22,7 @@ public class Delivery_order {
     private Long id;
 
     private Long weight;
-    private Date deliveryDate;
+    private LocalDate deliveryDate;
 
     @Enumerated(EnumType.STRING)
     private Delivery_order_status delivery_order_status;

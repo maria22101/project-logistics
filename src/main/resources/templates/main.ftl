@@ -8,7 +8,7 @@
     <a href="?lang=en">
         <@spring.message "lang.eng"/>
     </a>
-    <span>   </span>
+    <br>
     <a href="?lang=ua">
         <@spring.message "lang.ua"/>
     </a>
@@ -39,7 +39,7 @@
 
     <h4><@spring.message "main.login.indication"/></h4>
     <div>
-        <@l.login "/login" />
+        <@l.login "/login"/>
     </div>
 
     <br>

@@ -1,9 +1,9 @@
 <#macro login path>
     <form action="${path}" method="post">
-        <div><label> User Name : <input type="text" name="username"/> </label></div>
-        <div><label> Password: <input type="password" name="password"/> </label></div>
+        <div><label> <@spring.message "login.user_name.indication"/> <input type="text" name="username"/> </label></div>
+        <div><label> <@spring.message "login.password.indication"/> <input type="password" name="password"/> </label></div>
         <input type="hidden" name="_csrf" value="${_csrf.token}" />
-        <div><input type="submit" value="Log In"/></div>
+        <div><input type="submit" value=<@spring.message "login.log_in.on.button"/>></div>
     </form>
 </#macro>
 

@@ -5,13 +5,10 @@
 <@c.page>
 
     <h2><@spring.message "main.title"/></h2>
-    <a href="?lang=en">
-        <@spring.message "lang.eng"/>
-    </a>
+
+    <a href="?lang=en"><@spring.message "lang.eng"/></a>
     <br>
-    <a href="?lang=ua">
-        <@spring.message "lang.ua"/>
-    </a>
+    <a href="?lang=ua"><@spring.message "lang.ua"/></a>
 
 
     <h3><@spring.message "main.services"/></h3>
@@ -37,14 +34,12 @@
 
     <br>
 
-    <h4><@spring.message "main.login.indication"/></h4>
-    <div>
-        <@l.login "/login"/>
-    </div>
+    <span><@spring.message "main.login.indication"/></span>
+    <a href="/login"><@spring.message "main.login.link"/></a>
 
     <br>
 
-    <h4><@spring.message "main.registration.indication"/></h4>
+    <span><@spring.message "main.registration.indication"/></span>
     <a href="/registration"><@spring.message "main.registration.link"/></a>
 
 </@c.page>

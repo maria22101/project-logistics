@@ -3,8 +3,12 @@
 <#import "/spring.ftl" as spring />
 
 <@c.page>
-    Add new user
-<#--    ${message}-->
+    <h4><@spring.message "registration.page.title"/></h4>
     <@l.login "/registration" />
-<#--    ${rc.getMessage("title")}-->
+
+    <p></p>
+
+    <a href="?lang=en"><@spring.message "lang.eng"/></a>
+    <br>
+    <a href="?lang=ua"><@spring.message "lang.ua"/></a>
 </@c.page>

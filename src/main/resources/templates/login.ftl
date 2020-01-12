@@ -1,8 +1,15 @@
 <#import "parts/common.ftl" as c>
 <#import "parts/log_in_out.ftl" as l>
+<#import "/spring.ftl" as spring/>
 
 <@c.page>
-    Login page
+    <h4><@spring.message "login.page.title"/></h4>
     <@l.login "/login" />
-    <a href="/registration">Add new user</a>
+
+    <p></p>
+
+    <a href="?lang=en"><@spring.message "lang.eng"/></a>
+    <br>
+    <a href="?lang=ua"><@spring.message "lang.ua"/></a>
+
 </@c.page>

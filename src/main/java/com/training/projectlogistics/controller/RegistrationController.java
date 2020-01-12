@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Map;
 
 @Controller
@@ -21,6 +22,7 @@ public class RegistrationController {
         return "registration";
     }
 
+    //TODO - setup message output when user exists
     @PostMapping("/registration")
     public String addUser(User user, Map<String, Object> model) {
         User userFromDB = userRepository.findByUsername(user.getUsername());

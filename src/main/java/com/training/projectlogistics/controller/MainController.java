@@ -25,11 +25,4 @@ public class MainController {
         return "main";
     }
 
-//    @GetMapping("/login")
-//    public String enterLogin(Locale locale, Model model) {
-////        Locale currentLocale = LocaleContextHolder.getLocale();
-////        model.addAttribute("locale", currentLocale);
-//        return "login";
-//    }
-
 }

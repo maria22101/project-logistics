@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-//                .csrf().disable() check!
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/login", "/registration").permitAll() // routes allowed for all
                 .antMatchers("/admin/**").hasAuthority("ADMIN")

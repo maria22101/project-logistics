@@ -3,8 +3,8 @@
 
 <@c.page>
 
-    <h2>Hello, admin!</h2>
-    <h3>List of Users:</h3>
+    <h2><@spring.message "admincabinet.title"/></h2>
+    <h3><@spring.message "admincabinet.userlist.indication"/></h3>
 
 <#--    <table>-->
 <#--        <thead>-->
@@ -25,5 +25,10 @@
 <#--        </#list>-->
 <#--        </tbody>-->
 <#--    </table>-->
+
+    <p></p>
+
+    <a href="?lang=en"><@spring.message "lang.eng"/></a><br>
+    <a href="?lang=ua"><@spring.message "lang.ua"/></a>
 
 </@c.page>

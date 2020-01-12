@@ -6,8 +6,7 @@
 
     <h2><@spring.message "main.title"/></h2>
 
-    <a href="?lang=en"><@spring.message "lang.eng"/></a>
-    <br>
+    <a href="?lang=en"><@spring.message "lang.eng"/></a><br>
     <a href="?lang=ua"><@spring.message "lang.ua"/></a>
 
 
@@ -35,9 +34,7 @@
     <br>
 
     <span><@spring.message "main.login.indication"/></span>
-    <a href="/login"><@spring.message "main.login.link"/></a>
-
-    <br>
+    <a href="/login"><@spring.message "main.login.link"/></a><br>
 
     <span><@spring.message "main.registration.indication"/></span>
     <a href="/registration"><@spring.message "main.registration.link"/></a>

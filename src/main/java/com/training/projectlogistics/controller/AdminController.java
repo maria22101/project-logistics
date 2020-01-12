@@ -8,13 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-@RequestMapping("/admin")
-@PreAuthorize("hasAuthority('ADMIN')")
+//@Controller
+//@RequestMapping("/admin")
+//@PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
-
-    @Autowired
-    UserRepository userRepository;
+//
+//    @Autowired
+//    UserRepository userRepository;
 
 //    @GetMapping
 //    public String userList(Model model) {

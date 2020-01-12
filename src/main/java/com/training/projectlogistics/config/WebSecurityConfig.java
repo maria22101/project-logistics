@@ -17,8 +17,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
 
     @Bean
     public PasswordEncoder bcryptPasswordEncoder() {
@@ -31,16 +35,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(bcryptPasswordEncoder());
     }
 
+    //TODO: implement csrf disabling - for simplification purpose
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
 //                .csrf().disable() check!
                 .authorizeRequests()
                 .antMatchers("/", "/login", "/registration").permitAll() // routes allowed for all
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/user/**").hasAnyAuthority("USER","ADMIN")
                 .anyRequest().authenticated() // for all other routes authentication required
                 .and()
                 .formLogin()
-                .loginPage("/login").permitAll()
+                .loginPage("/login")
+                .failureUrl("/login?error=true")
+                .successHandler(loginSuccessHandler)
                 .and()
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll();
     }

@@ -16,10 +16,10 @@ public class AdminController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping
-    public String userList(Model model) {
-        model.addAttribute("users", userRepository.findAll());
-
-        return "userList";
-    }
+//    @GetMapping
+//    public String userList(Model model) {
+//        model.addAttribute("users", userRepository.findAll());
+//
+//        return "userList";
+//    }
 }

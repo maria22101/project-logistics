@@ -4,6 +4,7 @@ import com.training.projectlogistics.entity.Delivery_route;
 import com.training.projectlogistics.repository.DeliveryRouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

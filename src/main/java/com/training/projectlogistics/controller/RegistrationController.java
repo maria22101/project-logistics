@@ -4,16 +4,13 @@ import com.training.projectlogistics.entity.enums.Role;
 import com.training.projectlogistics.entity.User;
 import com.training.projectlogistics.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Collections;
-import java.util.Locale;
 import java.util.Map;
 
 @Controller
@@ -33,11 +30,11 @@ public class RegistrationController {
 
     //TODO - setup message output when user exists
     @PostMapping
-    public String addUser(User user, Map model) {
+    public String addUser(User user, Model model) {
         User userFromDB = userRepository.findByUsername(user.getUsername());
 
         if (userFromDB != null) {
-            model.put("message", "User exists!");
+            model.addAttribute("message", "User exists!");
             return "registration";
         }
 

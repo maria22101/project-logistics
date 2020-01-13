@@ -1,13 +1,16 @@
 package com.training.projectlogistics.controller;
 
 import com.training.projectlogistics.entity.Delivery_route;
+import com.training.projectlogistics.entity.User;
 import com.training.projectlogistics.repository.DeliveryRouteRepository;
 import com.training.projectlogistics.repository.UserRepository;
+import com.training.projectlogistics.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 
@@ -15,10 +18,13 @@ import java.security.Principal;
 public class MainController {
 
     @Autowired
-    UserRepository userRepository;
+    UserRepository userRepository; //TODO: remove and ensure all functionality is placed in the Services
 
     @Autowired
-    DeliveryRouteRepository deliveryRouteRepository;
+    DeliveryRouteRepository deliveryRouteRepository; //TODO: remove and ensure all functionality is placed in the Services
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/")
     public String greetingAll(Model model) {
@@ -38,10 +44,12 @@ public class MainController {
 
     @GetMapping("/cabinet")
     public String returnToAdminCabinet(Principal principal) {
-////if(principal.getName())
-        return "redirect:/user";
-//
-////        return "redirect:/adminCabinet";
+        if (userService.getUserRole(principal.getName()).toString().equals("USER")) {
+            return "redirect:/user";
+        }
+        if (userService.getUserRole(principal.getName()).toString().equals("ADMIN")) {
+            return "redirect:/admin";
+        }
+        return "main_general";
     }
-
 }

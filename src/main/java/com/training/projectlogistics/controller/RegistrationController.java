@@ -44,7 +44,7 @@ public class RegistrationController {
         String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
 
         user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
+        user.setRole(Role.USER);
         user.setPassword(encodedPassword);
         userRepository.save(user);
 

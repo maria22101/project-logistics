@@ -39,7 +39,7 @@ public class MainController {
     @GetMapping("/cabinet")
     public String returnToAdminCabinet(Principal principal) {
 ////if(principal.getName())
-//        return "redirect:/user";
+        return "redirect:/user";
 //
 ////        return "redirect:/adminCabinet";
     }

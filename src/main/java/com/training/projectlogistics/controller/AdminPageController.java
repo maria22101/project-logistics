@@ -12,14 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 //@RequestMapping("/admin")
 //@PreAuthorize("hasAuthority('ADMIN')")
 public class AdminPageController {
-//
+
 //    @Autowired
 //    UserRepository userRepository;
-
-//    @GetMapping
-//    public String userList(Model model) {
-//        model.addAttribute("users", userRepository.findAll());
-//
-//        return "userList";
-//    }
 }

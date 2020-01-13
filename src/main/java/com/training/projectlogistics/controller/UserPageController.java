@@ -1,9 +1,7 @@
 package com.training.projectlogistics.controller;
 
-import com.training.projectlogistics.repository.DeliveryOrderRepository;
 import com.training.projectlogistics.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,4 +25,9 @@ public class UserPageController {
         return "userCabinet";
     }
 
+    //    @PreAuthorize("hasAuthority('ADMIN')")
+//    @GetMapping("/main_user")
+//    public String greetingAuthenticated() {
+//        return "main_user";
+//    }
 }

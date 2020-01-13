@@ -1,8 +1,6 @@
-<#import "parts/common.ftl" as c>
-<#import "parts/log_in_out.ftl" as l>
 <#import "/spring.ftl" as spring/>
 
-<@c.page>
+<#macro main>
 
     <h2><@spring.message "main.title"/></h2>
 
@@ -31,12 +29,4 @@
         </tbody>
     </table>
 
-    <br>
-
-    <span><@spring.message "main.login.indication"/></span>
-    <a href="/login"><@spring.message "main.login.link"/></a><br>
-
-    <span><@spring.message "main.registration.indication"/></span>
-    <a href="/registration"><@spring.message "main.registration.link"/></a>
-
-</@c.page>
+</#macro>

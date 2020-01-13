@@ -1,3 +1,5 @@
+<#import "/spring.ftl" as spring/>
+
 <#macro login path>
     <form action="${path}" method="post">
         <div><label> <@spring.message "login.user_name.indication"/> <input type="text" name="username"/> </label></div>
@@ -10,6 +12,6 @@
 <#macro logout>
     <form action="/logout" method="post">
 <#--        <input type="hidden" name="_csrf" value="${_csrf.token}" />-->
-        <input type="submit" value="<@spring.message "logout.button"/>"/>
+        <input type="submit" value=<@spring.message "logout.log_out.on.button"/>>
     </form>
 </#macro>

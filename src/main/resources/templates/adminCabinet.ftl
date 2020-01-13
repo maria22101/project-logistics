@@ -1,4 +1,5 @@
 <#import "parts/common.ftl" as c>
+<#import "parts/log_in_out.ftl" as l>
 <#import "/spring.ftl" as spring/>
 
 <@c.page>
@@ -27,8 +28,10 @@
 <#--    </table>-->
 
     <p></p>
-
     <a href="?lang=en"><@spring.message "lang.eng"/></a><br>
     <a href="?lang=ua"><@spring.message "lang.ua"/></a>
+
+    <p></p>
+    <@l.logout />
 
 </@c.page>

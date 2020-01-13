@@ -7,12 +7,10 @@
     <@l.login "/login" />
 
     <p></p>
-
     <a href="?lang=en"><@spring.message "lang.eng"/></a><br>
     <a href="?lang=ua"><@spring.message "lang.ua"/></a>
 
     <p></p>
-
     <a href="/"><@spring.message "main.return.link"/></a>
 
 </@c.page>

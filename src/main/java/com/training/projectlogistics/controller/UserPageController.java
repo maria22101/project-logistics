@@ -24,10 +24,4 @@ public class UserPageController {
         model.addAttribute("username", principal.getName());
         return "userCabinet";
     }
-
-    //    @PreAuthorize("hasAuthority('ADMIN')")
-//    @GetMapping("/main_user")
-//    public String greetingAuthenticated() {
-//        return "main_user";
-//    }
 }

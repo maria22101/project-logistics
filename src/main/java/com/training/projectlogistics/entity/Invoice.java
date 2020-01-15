@@ -15,15 +15,13 @@ import javax.persistence.*;
 @Table(name = "invoice")
 public class Invoice {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
+
+    @Column(name = "is_paid", nullable = false)
     boolean isPaid;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "delivery_order_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "invoice")
     Delivery_order delivery_order;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    User user;
 }

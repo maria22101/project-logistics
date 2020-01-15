@@ -7,7 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -23,23 +25,28 @@ import java.util.stream.Stream;
 @Table(name = "user")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "username", nullable = false)
     private String username;
 
+    @Column(name = "password", nullable = false)
     private String password;
 
-    private boolean active;
+    @Column(name = "email", nullable = false)
+    private String email;
 
-//    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+
+    // @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
 //    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    // CHECK!!!
-//    @OneToMany(mappedBy = "user")
-//    private List<Order> orders = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<Delivery_order> delivery_orders = new ArrayList<>();
 
     public User(String username, String password) {
         this.username = username;
@@ -68,6 +75,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return isActive();
+        return true;
     }
 }

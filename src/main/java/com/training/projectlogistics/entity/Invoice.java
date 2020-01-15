@@ -22,6 +22,6 @@ public class Invoice {
     @Column(name = "is_paid", nullable = false)
     boolean isPaid;
 
-    @OneToOne(mappedBy = "invoice")
+    @OneToOne(optional = true, mappedBy = "invoice")
     Delivery_order delivery_order;
 }

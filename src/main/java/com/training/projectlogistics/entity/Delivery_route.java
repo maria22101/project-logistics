@@ -30,6 +30,6 @@ public class Delivery_route {
     @Column(name = "deliveryCost", nullable = false)
     private Long cost;
 
-    @OneToMany(mappedBy = "delivery_route")
+    @OneToMany(mappedBy = "delivery_route", fetch = FetchType.EAGER)
     private List<Delivery_order> delivery_orders = new ArrayList<>();
 }

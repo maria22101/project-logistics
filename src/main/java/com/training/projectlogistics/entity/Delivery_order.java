@@ -32,15 +32,15 @@ public class Delivery_order {
     @Column(name = "cargo", nullable = false)
     private Cargo cargo;
 
-    @ManyToOne
-    @JoinColumn(name = "delivery_route_id")
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_route_id", referencedColumnName = "id")
     private Delivery_route delivery_route;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToOne
+    @OneToOne(optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "invoice_id", referencedColumnName = "id")
     private Invoice invoice;
 

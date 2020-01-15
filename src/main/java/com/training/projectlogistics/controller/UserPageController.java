@@ -24,4 +24,10 @@ public class UserPageController {
         model.addAttribute("username", principal.getName());
         return "userCabinet";
     }
+
+    @GetMapping("/create_delivery")
+    public String createDelivery() {
+        return "<h1>Delivery creation form tbc</h1>";
+    }
+
 }

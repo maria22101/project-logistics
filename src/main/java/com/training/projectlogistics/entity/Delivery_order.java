@@ -40,8 +40,9 @@ public class Delivery_order {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToOne(optional = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "invoice_id", referencedColumnName = "id")
+//    @OneToOne(optional = true, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "invoice_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "delivery_order", cascade = CascadeType.ALL)
     private Invoice invoice;
 
     @Enumerated(EnumType.STRING)

@@ -1,4 +1,4 @@
-package com.training.projectlogistics.entity;
+package com.training.projectlogistics.model;
 
 import lombok.*;
 
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "delivery_route")
-public class Delivery_route {
+public class DeliveryRoute {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -32,5 +32,5 @@ public class Delivery_route {
     private BigDecimal basicRate;
 
     @OneToMany(mappedBy = "delivery_route", fetch = FetchType.EAGER)
-    private List<Delivery_order> delivery_orders = new ArrayList<>();
+    private List<DeliveryOrder> delivery_orders = new ArrayList<>();
 }

@@ -1,7 +1,7 @@
-package com.training.projectlogistics.entity;
+package com.training.projectlogistics.model;
 
-import com.training.projectlogistics.entity.enums.Cargo;
-import com.training.projectlogistics.entity.enums.Delivery_order_status;
+import com.training.projectlogistics.model.enums.Cargo;
+import com.training.projectlogistics.model.enums.Delivery_order_status;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,30 +18,30 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "delivery_order")
-public class Delivery_order {
+public class DeliveryOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "deliveryDate", nullable = false)
+    private LocalDate deliveryDate;
+
     @Digits(integer=5, fraction=2)
     @Column(name = "weight", nullable = false)
     private BigDecimal weight;
-
-    @Column(name = "deliveryDate", nullable = false)
-    private LocalDate deliveryDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "cargo", nullable = false)
     private Cargo cargo;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "delivery_route_id", referencedColumnName = "id")
-    private Delivery_route delivery_route;
-
     @Digits(integer=5, fraction=2)
     @Column(name = "sum")
     private BigDecimal sum;
+
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_route_id", referencedColumnName = "id")
+    private DeliveryRoute delivery_route;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")

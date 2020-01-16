@@ -1,6 +1,6 @@
-package com.training.projectlogistics.entity;
+package com.training.projectlogistics.model;
 
-import com.training.projectlogistics.entity.enums.Cargo;
+import com.training.projectlogistics.model.enums.Cargo;
 import lombok.*;
 
 import javax.persistence.*;

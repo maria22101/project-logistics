@@ -1,6 +1,7 @@
 package com.training.projectlogistics.controller;
 
 import com.training.projectlogistics.repository.UserRepository;
+import com.training.projectlogistics.service.DeliveryOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,9 @@ public class UserPageController {
 
 //    @Autowired
 //    DeliveryOrderRepository deliveryOrderRepository;
+
+    @Autowired
+    DeliveryOrderService deliveryOrderService;
 
     @GetMapping
     public String greetUser(Principal principal, Model model) {

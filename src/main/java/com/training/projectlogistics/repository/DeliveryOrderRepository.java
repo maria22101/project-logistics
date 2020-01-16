@@ -1,7 +1,11 @@
 package com.training.projectlogistics.repository;
 
-import com.training.projectlogistics.entity.Delivery_order;
+import com.training.projectlogistics.model.DeliveryOrder;
+import com.training.projectlogistics.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DeliveryOrderRepository extends JpaRepository<Delivery_order, Long> {
+import java.util.Optional;
+
+public interface DeliveryOrderRepository extends JpaRepository<DeliveryOrder, Long> {
+    Optional<DeliveryOrder> findById(Long id);
 }

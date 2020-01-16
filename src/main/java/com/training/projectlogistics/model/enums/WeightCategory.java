@@ -1,4 +1,4 @@
-package com.training.projectlogistics.entity.enums;
+package com.training.projectlogistics.model.enums;
 
 public enum WeightCategory {
     LIGHT,

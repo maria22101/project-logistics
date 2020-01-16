@@ -1,6 +1,6 @@
 package com.training.projectlogistics.controller;
 
-import com.training.projectlogistics.entity.Delivery_route;
+import com.training.projectlogistics.model.DeliveryRoute;
 import com.training.projectlogistics.repository.DeliveryRouteRepository;
 import com.training.projectlogistics.repository.UserRepository;
 import com.training.projectlogistics.service.UserService;
@@ -27,7 +27,7 @@ public class MainController {
 
     @GetMapping("/")
     public String greetingAll(Model model) {
-        Iterable<Delivery_route> routes = deliveryRouteRepository.findAll();
+        Iterable<DeliveryRoute> routes = deliveryRouteRepository.findAll();
         model.addAttribute("routes", routes);
 
         return "main_general";
@@ -35,7 +35,7 @@ public class MainController {
 
     @GetMapping("/main_authenticated")
     public String greetingAuthenticated(Model model) {
-        Iterable<Delivery_route> routes = deliveryRouteRepository.findAll();
+        Iterable<DeliveryRoute> routes = deliveryRouteRepository.findAll();
         model.addAttribute("routes", routes);
 
         return "main_authenticated";

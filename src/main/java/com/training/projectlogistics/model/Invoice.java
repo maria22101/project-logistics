@@ -1,4 +1,4 @@
-package com.training.projectlogistics.entity;
+package com.training.projectlogistics.model;
 
 import lombok.*;
 
@@ -27,5 +27,5 @@ public class Invoice {
     //    @MapsId //this way the id property serves both PrimaryKey and ForeignKey
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "delivery_order_id", nullable = false)
-    private Delivery_order delivery_order;
+    private DeliveryOrder delivery_order;
 }

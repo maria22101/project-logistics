@@ -1,16 +1,14 @@
-package com.training.projectlogistics.entity;
+package com.training.projectlogistics.model;
 
-import com.training.projectlogistics.entity.enums.Role;
+import com.training.projectlogistics.model.enums.Role;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -43,7 +41,7 @@ public class User implements UserDetails {
     private Role role;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Delivery_order> delivery_orders = new ArrayList<>();
+    private List<DeliveryOrder> delivery_orders = new ArrayList<>();
 
     public User(String username, String password) {
         this.username = username;

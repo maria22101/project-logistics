@@ -1,7 +1,14 @@
 package com.training.projectlogistics.repository;
 
-import com.training.projectlogistics.entity.Delivery_route;
+import com.training.projectlogistics.model.DeliveryOrder;
+import com.training.projectlogistics.model.DeliveryRoute;
+import com.training.projectlogistics.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DeliveryRouteRepository extends JpaRepository<Delivery_route, Long> {
+import java.util.List;
+import java.util.Optional;
+
+public interface DeliveryRouteRepository extends JpaRepository<DeliveryRoute, Long> {
+    Optional<DeliveryRoute> findById(Long id);
+    List<DeliveryRoute> findBySourceAndDestination(String source, String destination);
 }

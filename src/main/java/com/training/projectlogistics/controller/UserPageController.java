@@ -29,16 +29,11 @@ public class UserPageController {
         return "userCabinet";
     }
 
-//    @GetMapping("/create_delivery")
-//    public String createDelivery() {
-//        return "userCabinetOrdering";
-//    }
+    @PostMapping()
+    public String addDeliveryOrder() {
 
-//    @PostMapping() {
-//        public String addDeliveryOrder() {
-//
-//            return "redirect:/login";
-//        }
-//    }
+        return "redirect:/user";
+    }
+
 
 }

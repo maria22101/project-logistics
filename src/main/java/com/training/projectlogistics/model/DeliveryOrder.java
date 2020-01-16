@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @Table(name = "delivery_order")
 public class DeliveryOrder {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
 

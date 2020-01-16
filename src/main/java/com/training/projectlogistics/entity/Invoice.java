@@ -15,8 +15,8 @@ import javax.persistence.*;
 @Table(name = "invoice")
 public class Invoice {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     //no other annotations needed since the identifier is populated with the Delivery_order id
     private Long id;
 
@@ -24,7 +24,8 @@ public class Invoice {
     private boolean isPaid;
 
     //    @OneToOne(mappedBy = "invoice", cascade = CascadeType.ALL)
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId //this way the id property serves both PrimaryKey and ForeignKey
+    //    @MapsId //this way the id property serves both PrimaryKey and ForeignKey
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "delivery_order_id", nullable = false)
     private Delivery_order delivery_order;
 }

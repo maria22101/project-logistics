@@ -21,8 +21,8 @@
         <tbody>
         <#list routes as route>
             <tr>
-                <td>${route.sourceLocation}</td>
-                <td>${route.destinationLocation}</td>
+                <td>${route.source}</td>
+                <td>${route.destination}</td>
                 <td>${route.deliveryCost}</td>
             </tr>
         </#list>

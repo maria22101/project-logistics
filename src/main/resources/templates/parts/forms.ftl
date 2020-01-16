@@ -23,3 +23,15 @@
     </form>
 </#macro>
 
+<#macro delivery_order_creation path>
+    <form action="${path}" method="post">
+        <div><label> <@spring.message "order.route.from"/> <input type="text" name="delivery_route_from"/> </label></div>
+        <div><label> <@spring.message "order.route.to"/> <input type="text" name="delivery_route_to"/> </label></div>
+        <div><label> <@spring.message "order.delivery.date"/> <input type="text" name="deliveryDate"/> </label></div>
+        <div><label> <@spring.message "order.weight"/> <input type="text" name="weight"/> </label></div>
+        <div><label> <@spring.message "order.cargo"/> <input type="text" name="cargo"/> </label></div>
+        <div><input type="submit" value=<@spring.message "order.placing.button"/>></div>
+    </form>
+
+</#macro>
+

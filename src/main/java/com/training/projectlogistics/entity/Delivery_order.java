@@ -5,6 +5,8 @@ import com.training.projectlogistics.entity.enums.Delivery_order_status;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -22,8 +24,9 @@ public class Delivery_order {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Digits(integer=5, fraction=2)
     @Column(name = "weight", nullable = false)
-    private Long weight;
+    private BigDecimal weight;
 
     @Column(name = "deliveryDate", nullable = false)
     private LocalDate deliveryDate;
@@ -36,13 +39,17 @@ public class Delivery_order {
     @JoinColumn(name = "delivery_route_id", referencedColumnName = "id")
     private Delivery_route delivery_route;
 
+    @Digits(integer=5, fraction=2)
+    @Column(name = "sum")
+    private BigDecimal sum;
+
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
 //    @OneToOne(optional = true, cascade = CascadeType.ALL)
 //    @JoinColumn(name = "invoice_id", referencedColumnName = "id")
-    @OneToOne(mappedBy = "delivery_order", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "delivery_order")
     private Invoice invoice;
 
     @Enumerated(EnumType.STRING)

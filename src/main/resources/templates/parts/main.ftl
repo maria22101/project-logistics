@@ -10,7 +10,7 @@
 
     <h3><@spring.message "main.services"/></h3>
 
-    <table>
+    <table border="0.5">
         <thead>
         <tr>
             <th><@spring.message "main.from"/></th>
@@ -23,7 +23,7 @@
             <tr>
                 <td>${route.source}</td>
                 <td>${route.destination}</td>
-                <td>${route.deliveryCost}</td>
+                <td>${route.basicRate}</td>
             </tr>
         </#list>
         </tbody>

@@ -7,12 +7,9 @@
     <h2><@spring.message "usercabinet.title"/>${username}!</h2>
     <h3><@spring.message "usercabinet.orderlist.indication"/></h3>
 
-<#--    <p></p>-->
-<#--    <a href="/user/create_delivery"><@spring.message "usercabinet.createDelivery.link"/></a>-->
-
     <h3><@spring.message "usercabinet.order.creation.title"/></h3>
 
-    <@l.delivery_order_creation "/userCabinet" />
+    <@l.delivery_order_creation "/user" />
 
     <p></p>
     <p></p>

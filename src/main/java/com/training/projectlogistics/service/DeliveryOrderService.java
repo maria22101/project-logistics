@@ -8,6 +8,7 @@ import com.training.projectlogistics.model.dto.DeliveryOrderDTO;
 import com.training.projectlogistics.model.enums.Cargo;
 import com.training.projectlogistics.model.enums.Delivery_order_status;
 import com.training.projectlogistics.repository.*;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -35,7 +37,7 @@ public class DeliveryOrderService {
     @Autowired
     Weight_inputRepository weight_inputRepository;
 
-    public void createDeliveryOrder(String username,
+    public void addDeliveryOrder(String username,
                                     DeliveryOrderDTO deliveryOrderDTO) {
 
         User user = userRepository.findByUsername(username).get();

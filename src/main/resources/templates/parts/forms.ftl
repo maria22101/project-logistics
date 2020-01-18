@@ -60,7 +60,23 @@
             <@spring.showErrors "<br>"/><br><br>
 
             <@spring.message "order.cargo"/><br>
-            <@spring.formInput "deliveryOrderDTO.cargo"/>
+
+<#--            <#assign options = {"REGULAR": "REGULAR", "FRAGILE": "FRAGILE"} />-->
+
+<#--            <@spring.formSingleSelect "deliveryOrderDTO.cargo" options />-->
+
+            <select>
+                <#list cargoEnum as enum>
+                    <option value="${enum}">${enum}</option>
+                </#list>
+            </select>
+
+<#--            <select>-->
+<#--                <#list cargoEnum as enum>-->
+<#--                    <option value="${enum}">${enum}</option>-->
+<#--                </#list>-->
+<#--            </select>-->
+
             <@spring.showErrors "<br>"/><br><br>
 
             <input type="submit" value="Submit">

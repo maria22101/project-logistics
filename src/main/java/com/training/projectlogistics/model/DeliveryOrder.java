@@ -2,6 +2,7 @@ package com.training.projectlogistics.model;
 
 import com.training.projectlogistics.model.enums.Cargo;
 import com.training.projectlogistics.model.enums.Delivery_order_status;
+import com.training.projectlogistics.model.validators.CustomerTypeSubset;
 import lombok.*;
 
 import javax.persistence.*;
@@ -33,6 +34,7 @@ public class DeliveryOrder {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "cargo", nullable = false)
+    @CustomerTypeSubset(anyOf = {Cargo.FRAGILE, Cargo.REGULAR})
     private Cargo cargo;
 
     @Digits(integer=5, fraction=2)

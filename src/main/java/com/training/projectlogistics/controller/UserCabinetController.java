@@ -1,6 +1,7 @@
 package com.training.projectlogistics.controller;
 
 import com.training.projectlogistics.model.dto.DeliveryOrderDTO;
+import com.training.projectlogistics.model.enums.Cargo;
 import com.training.projectlogistics.repository.DeliveryOrderRepository;
 import com.training.projectlogistics.repository.UserRepository;
 import com.training.projectlogistics.service.DeliveryOrderService;
@@ -19,19 +20,14 @@ import java.security.Principal;
 public class UserCabinetController {
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    DeliveryOrderRepository deliveryOrderRepository;
-
-    @Autowired
     DeliveryOrderService deliveryOrderService;
 
-    //
+    //TODO - find option to fill object in post
     @GetMapping
     public String greetUser(Principal principal, Model model) {
         model.addAttribute("username", principal.getName());
         model.addAttribute("deliveryOrderDTO", new DeliveryOrderDTO());
+        model.addAttribute("cargoEnum", Cargo.values());
         return "userCabinet";
     }
 
@@ -49,6 +45,4 @@ public class UserCabinetController {
 
         return "redirect:/user";
     }
-
-
 }

@@ -7,25 +7,26 @@
     <h2><@spring.message "admincabinet.title"/></h2>
     <h3><@spring.message "admincabinet.userlist.indication"/></h3>
 
-<#--    <table>-->
-<#--        <thead>-->
-<#--        <tr>-->
-<#--            <th>Id</th>-->
-<#--            <th>Name</th>-->
-<#--            <th>Role</th>-->
-<#--        </tr>-->
-<#--        </thead>-->
-
-<#--        <tbody>-->
-<#--        <#list users as user>-->
-<#--            <tr>-->
-<#--                <td>${user.id}</td>-->
-<#--                <td>${user.username}</td>-->
-<#--                <td><#list user.roles as role>${role}<#sep>, </#list></td>-->
-<#--            </tr>-->
-<#--        </#list>-->
-<#--        </tbody>-->
-<#--    </table>-->
+    <table border="0.5">
+        <thead>
+        <tr>
+            <th><@spring.message "admincabinet.user.id"/></th>
+            <th><@spring.message "admincabinet.user.username"/></th>
+            <th><@spring.message "admincabinet.user.email"/></th>
+            <th><@spring.message "admincabinet.user.role"/></th>
+        </tr>
+        </thead>
+        <tbody>
+        <#list allUsers as u>
+            <tr>
+                <td>${u.id}</td>
+                <td>${u.username}</td>
+                <td>${u.email}</td>
+                <td>${u.role}</td>
+            </tr>
+        </#list>
+        </tbody>
+    </table>
 
     <p></p>
     <a href="?lang=en"><@spring.message "lang.eng"/></a><br>

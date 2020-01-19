@@ -1,6 +1,6 @@
 package com.training.projectlogistics.model.validators;
 
-import com.training.projectlogistics.model.enums.Cargo;
+import com.training.projectlogistics.model.enums.WeightCategory;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -16,7 +16,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 @Constraint(validatedBy = CustomerTypeSubSetValidator.class)
 public @interface CustomerTypeSubset {
-    Cargo[] anyOf();
+    WeightCategory[] anyOf();
 
     String message() default "must be any of {anyOf}";
 

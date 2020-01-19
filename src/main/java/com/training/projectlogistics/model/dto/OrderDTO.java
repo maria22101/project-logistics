@@ -1,14 +1,7 @@
 package com.training.projectlogistics.model.dto;
 
-import com.training.projectlogistics.model.enums.Cargo;
-import com.training.projectlogistics.model.validators.CustomerTypeSubset;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
@@ -21,7 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @ToString
-public class DeliveryOrderDTO {
+public class OrderDTO {
     @NonNull
     @NotEmpty
     private String source;
@@ -43,10 +36,4 @@ public class DeliveryOrderDTO {
     @DecimalMin(value = "20.0", inclusive = false)
     @Digits(integer=2, fraction=2)
     private BigDecimal weight;
-
-//    @NonNull
-    @NotEmpty
-    @CustomerTypeSubset(anyOf = {Cargo.FRAGILE, Cargo.REGULAR})
-    @Enumerated(EnumType.STRING)
-    private Cargo cargo;
 }

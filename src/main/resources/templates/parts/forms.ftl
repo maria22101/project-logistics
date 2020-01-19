@@ -25,7 +25,7 @@
 
 <#macro delivery_order_creation path>
 
-<#--    <@spring.bind "deliveryOrderDTO" />-->
+<#--    <@spring.bind "orderDTO" />-->
 <#--    <form action="${path}" method="post">-->
 <#--        <div><label> <@spring.message "order.source"/> <input type="text" name="source"/> </label></div>-->
 <#--        <div><label> <@spring.message "order.destination"/> <input type="text" name="destination"/> </label></div>-->
@@ -35,41 +35,35 @@
 <#--        <div><input type="submit" value=<@spring.message "order.placing.button"/>></div>-->
 <#--    </form>-->
 
-    <@spring.bind "deliveryOrderDTO"/>
-    <#if deliveryOrderDTO?? && noErrors??>
+    <@spring.bind "orderDTO"/>
+    <#if orderDTO?? && noErrors??>
         Your submitted data<br>
-        First name: ${deliveryOrderDTO.source}<br>
-        Last name: ${deliveryOrderDTO.destination}<br>
+        First name: ${orderDTO.source}<br>
+        Last name: ${orderDTO.destination}<br>
     <#else>
         <form action="${path}" method="post">
 
             <@spring.message "order.route.source"/><br>
-            <@spring.formInput "deliveryOrderDTO.source"/>
+            <@spring.formInput "orderDTO.source"/>
             <@spring.showErrors "<br>"/><br><br>
 
             <@spring.message "order.route.destination"/><br>
-            <@spring.formInput "deliveryOrderDTO.destination"/>
+            <@spring.formInput "orderDTO.destination"/>
             <@spring.showErrors "<br>"/><br><br>
 
             <@spring.message "order.delivery.date"/><br>
-            <@spring.formInput "deliveryOrderDTO.deliveryDate"/>
+            <@spring.formInput "orderDTO.deliveryDate"/>
             <@spring.showErrors "<br>"/><br><br>
 
             <@spring.message "order.weight"/><br>
-            <@spring.formInput "deliveryOrderDTO.weight"/>
+            <@spring.formInput "orderDTO.weight"/>
             <@spring.showErrors "<br>"/><br><br>
 
             <@spring.message "order.cargo"/><br>
 
-<#--            <#assign options = {"REGULAR": "REGULAR", "FRAGILE": "FRAGILE"} />-->
+            <#assign options = {"REGULAR": "REGULAR", "FRAGILE": "FRAGILE"} />
 
-<#--            <@spring.formSingleSelect "deliveryOrderDTO.cargo" options />-->
-
-            <select>
-                <#list cargoEnum as enum>
-                    <option value="${enum}">${enum}</option>
-                </#list>
-            </select>
+            <@spring.formSingleSelect "orderDTO.cargo" options />
 
 <#--            <select>-->
 <#--                <#list cargoEnum as enum>-->

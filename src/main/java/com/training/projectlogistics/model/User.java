@@ -41,7 +41,7 @@ public class User implements UserDetails {
     private Role role;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<DeliveryOrder> delivery_orders = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 
     public User(String username, String password) {
         this.username = username;

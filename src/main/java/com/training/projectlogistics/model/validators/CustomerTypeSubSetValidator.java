@@ -1,13 +1,13 @@
 package com.training.projectlogistics.model.validators;
 
-import com.training.projectlogistics.model.enums.Cargo;
+import com.training.projectlogistics.model.enums.WeightCategory;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Arrays;
 
-public class CustomerTypeSubSetValidator implements ConstraintValidator<CustomerTypeSubset, Cargo> {
-    private Cargo[] subset;
+public class CustomerTypeSubSetValidator implements ConstraintValidator<CustomerTypeSubset, WeightCategory> {
+    private WeightCategory[] subset;
 
     @Override
     public void initialize(CustomerTypeSubset constraint) {
@@ -15,7 +15,7 @@ public class CustomerTypeSubSetValidator implements ConstraintValidator<Customer
     }
 
     @Override
-    public boolean isValid(Cargo value, ConstraintValidatorContext context) {
+    public boolean isValid(WeightCategory value, ConstraintValidatorContext context) {
         return value == null || Arrays.asList(subset).contains(value);
     }
 }

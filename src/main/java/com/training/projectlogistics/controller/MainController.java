@@ -1,7 +1,7 @@
 package com.training.projectlogistics.controller;
 
-import com.training.projectlogistics.model.DeliveryRoute;
-import com.training.projectlogistics.repository.DeliveryRouteRepository;
+import com.training.projectlogistics.model.Route;
+import com.training.projectlogistics.repository.RouteRepository;
 import com.training.projectlogistics.repository.UserRepository;
 import com.training.projectlogistics.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +20,14 @@ public class MainController {
 
     //TODO: remove and ensure all functionality is placed in the Services
     @Autowired
-    DeliveryRouteRepository deliveryRouteRepository;
+    RouteRepository routeRepository;
 
     @Autowired
     UserService userService;
 
     @GetMapping("/")
     public String greetingAll(Model model) {
-        Iterable<DeliveryRoute> routes = deliveryRouteRepository.findAll();
+        Iterable<Route> routes = routeRepository.findAll();
         model.addAttribute("routes", routes);
 
         return "main_general";
@@ -35,7 +35,7 @@ public class MainController {
 
     @GetMapping("/main_authenticated")
     public String greetingAuthenticated(Model model) {
-        Iterable<DeliveryRoute> routes = deliveryRouteRepository.findAll();
+        Iterable<Route> routes = routeRepository.findAll();
         model.addAttribute("routes", routes);
 
         return "main_authenticated";

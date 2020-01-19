@@ -1,10 +1,7 @@
 package com.training.projectlogistics.controller;
 
-import com.training.projectlogistics.model.dto.DeliveryOrderDTO;
-import com.training.projectlogistics.model.enums.Cargo;
-import com.training.projectlogistics.repository.DeliveryOrderRepository;
-import com.training.projectlogistics.repository.UserRepository;
-import com.training.projectlogistics.service.DeliveryOrderService;
+import com.training.projectlogistics.model.dto.OrderDTO;
+import com.training.projectlogistics.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,19 +17,18 @@ import java.security.Principal;
 public class UserCabinetController {
 
     @Autowired
-    DeliveryOrderService deliveryOrderService;
+    OrderService orderService;
 
     //TODO - find option to fill object in post
     @GetMapping
     public String greetUser(Principal principal, Model model) {
         model.addAttribute("username", principal.getName());
-        model.addAttribute("deliveryOrderDTO", new DeliveryOrderDTO());
-        model.addAttribute("cargoEnum", Cargo.values());
+        model.addAttribute("deliveryOrderDTO", new OrderDTO());
         return "userCabinet";
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addDeliveryOrder(@ModelAttribute("deliveryOrderDTO") @Valid DeliveryOrderDTO deliveryOrderDTO,
+    public String addDeliveryOrder(@ModelAttribute("deliveryOrderDTO") @Valid OrderDTO orderDTO,
                                    BindingResult bindingResult,
                                    Principal principal,
                                    Model model) {
@@ -41,7 +37,7 @@ public class UserCabinetController {
             model.addAttribute("noErrors", true);
         }
 
-        deliveryOrderService.addDeliveryOrder(principal.getName(), deliveryOrderDTO);
+        orderService.addOrder(principal.getName(), orderDTO);
 
         return "redirect:/user";
     }

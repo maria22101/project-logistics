@@ -16,7 +16,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "delivery_route")
-public class DeliveryRoute {
+public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -31,6 +31,6 @@ public class DeliveryRoute {
     @Column(name = "basic_rate", nullable = false)
     private BigDecimal basicRate;
 
-    @OneToMany(mappedBy = "delivery_route", fetch = FetchType.EAGER)
-    private List<DeliveryOrder> delivery_orders = new ArrayList<>();
+    @OneToMany(mappedBy = "route", fetch = FetchType.EAGER)
+    private List<DeliveryItem> deliveryItems = new ArrayList<>();
 }

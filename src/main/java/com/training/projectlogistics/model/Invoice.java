@@ -3,6 +3,7 @@ package com.training.projectlogistics.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -12,18 +13,17 @@ import javax.persistence.*;
 @ToString
 
 @Entity
-@Table(name = "invoice",
-        uniqueConstraints={@UniqueConstraint(columnNames={"delivery_order_number"})})
-public class Invoice {
+@Table(name = "invoice")
+public class Invoice{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "invoice_number")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "invoice_number", nullable = false)
     private Long invoiceNumber;
 
     @Column(name = "is_paid", nullable = false)
     private boolean isPaid;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "delivery_order_number", referencedColumnName = "delivery_order_number", unique=true)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "delivery_order_number")
     private Order order;
 }

@@ -4,6 +4,7 @@ import com.training.projectlogistics.model.enums.OrderStatus;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
@@ -15,27 +16,33 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "delivery_order")
-public class Order {
+public class Order{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "delivery_order_number", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_number", nullable = false)
     private Long orderNumber;
 
-    @Column(name = "delivery_date", nullable = false)
+    @Column(name = "delivery_date")
     private LocalDate deliveryDate;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "delivery_item_id", referencedColumnName = "id")
-    private DeliveryItem deliveryItem;
+    @JoinColumn(name = "route_id", referencedColumnName = "id")
+    private Route route;
+
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "weight_category", referencedColumnName = "weight_category")
+    private WeightRate weightRate;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToOne(mappedBy = "order")
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "order")
     private Invoice invoice;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "delivery_order_status", nullable = false)
+    @Column(name = "order_status", nullable = false)
     private OrderStatus orderStatus;
 }

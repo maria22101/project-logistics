@@ -23,12 +23,12 @@ public class UserCabinetController {
     @GetMapping
     public String greetUser(Principal principal, Model model) {
         model.addAttribute("username", principal.getName());
-        model.addAttribute("deliveryOrderDTO", new OrderDTO());
+        model.addAttribute("orderDTO", new OrderDTO());
         return "userCabinet";
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addDeliveryOrder(@ModelAttribute("deliveryOrderDTO") @Valid OrderDTO orderDTO,
+    public String addDeliveryOrder(@ModelAttribute("orderDTO") @Valid OrderDTO orderDTO,
                                    BindingResult bindingResult,
                                    Principal principal,
                                    Model model) {

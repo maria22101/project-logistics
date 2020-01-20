@@ -59,20 +59,6 @@
             <@spring.formInput "orderDTO.weight"/>
             <@spring.showErrors "<br>"/><br><br>
 
-            <@spring.message "order.cargo"/><br>
-
-            <#assign options = {"REGULAR": "REGULAR", "FRAGILE": "FRAGILE"} />
-
-            <@spring.formSingleSelect "orderDTO.cargo" options />
-
-<#--            <select>-->
-<#--                <#list cargoEnum as enum>-->
-<#--                    <option value="${enum}">${enum}</option>-->
-<#--                </#list>-->
-<#--            </select>-->
-
-            <@spring.showErrors "<br>"/><br><br>
-
             <input type="submit" value="Submit">
         </form>
     </#if>

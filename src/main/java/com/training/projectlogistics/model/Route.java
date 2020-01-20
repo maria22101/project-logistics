@@ -32,5 +32,5 @@ public class Route {
     private BigDecimal basicRate;
 
     @OneToMany(mappedBy = "route", fetch = FetchType.EAGER)
-    private List<DeliveryItem> deliveryItems = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 }

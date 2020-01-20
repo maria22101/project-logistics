@@ -36,5 +36,5 @@ public class WeightRate {
     private BigDecimal weightCoefficient;
 
     @OneToMany(mappedBy = "weightRate", fetch = FetchType.EAGER)
-    private List<DeliveryItem> deliveryItems = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 }

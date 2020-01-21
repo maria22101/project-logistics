@@ -1,6 +1,7 @@
 package com.training.projectlogistics.model.dto;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
@@ -24,7 +25,7 @@ public class OrderDTO {
     private String destination;
 
     @NonNull
-//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate deliveryDate;
 
 //    @NonNull

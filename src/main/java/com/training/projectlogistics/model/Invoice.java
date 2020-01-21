@@ -13,7 +13,9 @@ import java.io.Serializable;
 @ToString
 
 @Entity
-@Table(name = "invoice")
+@Table(name = "invoice",
+        uniqueConstraints={@UniqueConstraint(columnNames = "delivery_order_number",
+                name = "uniqueOrderNumberConstraint")})
 public class Invoice{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +25,7 @@ public class Invoice{
     @Column(name = "is_paid", nullable = false)
     private boolean isPaid;
 
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "delivery_order_number")
+    @OneToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_order_number", referencedColumnName = "order_number", unique = true)
     private Order order;
 }

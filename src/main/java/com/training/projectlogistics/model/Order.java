@@ -2,6 +2,7 @@ package com.training.projectlogistics.model;
 
 import com.training.projectlogistics.model.enums.OrderStatus;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,6 +23,7 @@ public class Order{
     @Column(name = "order_number", nullable = false)
     private Long orderNumber;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "delivery_date")
     private LocalDate deliveryDate;
 

@@ -8,39 +8,46 @@ import com.training.projectlogistics.repository.WeightRateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 @Service
 public class OrderService {
     private OrderRepository orderRepository;
     private UserRepository userRepository;
     private RouteRepository routeRepository;
     private WeightRateRepository weightRateRepository;
+    private AddressRepository addressRepository;
 
     @Autowired
     public OrderService(OrderRepository orderRepository,
                         UserRepository userRepository,
                         RouteRepository routeRepository,
-                        WeightRateRepository weightRateRepository) {
+                        WeightRateRepository weightRateRepository,
+                        AddressRepository addressRepository) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.routeRepository = routeRepository;
-        this.weightRateRepository = weightRateRepository;;
+        this.weightRateRepository = weightRateRepository;
+        this.addressRepository = addressRepository;
     }
 
 // 3 - build Order instance
     public void addOrder(String username, OrderDTO orderDTO) {
 
         User user = userRepository.findByUsername(username).get();
+        Address address;
+        if(getAddressFromDB(orderDTO) == null) {
+            address = new Address(orderDTO.getStreet(), orderDTO.getHouse(), orderDTO.getApartment());
+        }else {
+            address = getAddressFromDB(orderDTO);
+        }
 
         Order order = Order.builder()
                 .deliveryDate(orderDTO.getDeliveryDate())
                 .route(getRouteFromDB(orderDTO))
                 .weightRate(getWeightRateFromDB(orderDTO))
+                .cargoType(orderDTO.getCargoType())
+                .address(getAddressFromDB(orderDTO))
                 .orderStatus(OrderStatus.OPEN)
                 .user(user)
-//                .invoice(null)
                 .build();
 
         orderRepository.save(order);
@@ -57,6 +64,16 @@ public class OrderService {
     private WeightRate getWeightRateFromDB(OrderDTO orderDTO) {
         return weightRateRepository
                 .findByWeightFromLessThanAndWeightToGreaterThan(orderDTO.getWeight(), orderDTO.getWeight())
+                .get();
+    }
+
+    //1c - get the relevant Address
+    private Address getAddressFromDB(OrderDTO orderDTO) {
+        return addressRepository
+                .findAddressesByStreetAndHouseAndApartment(
+                        orderDTO.getStreet(),
+                        orderDTO.getHouse(),
+                        orderDTO.getApartment())
                 .get();
     }
 }

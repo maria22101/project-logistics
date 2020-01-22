@@ -1,5 +1,7 @@
 package com.training.projectlogistics.model.dto;
 
+import com.training.projectlogistics.model.enums.CargoType;
+import com.training.projectlogistics.model.validators.CargoTypeSubset;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -25,6 +27,18 @@ public class OrderDTO {
     private String destination;
 
     @NonNull
+    @NotEmpty
+    String street;
+
+    @NonNull
+    @NotEmpty
+    String house;
+
+    @NonNull
+    @NotEmpty
+    String apartment;
+
+    @NonNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate deliveryDate;
 
@@ -37,4 +51,9 @@ public class OrderDTO {
     @DecimalMin(value = "20.0", inclusive = false)
     @Digits(integer=2, fraction=2)
     private BigDecimal weight;
+
+    @NonNull
+    @NotEmpty
+    @CargoTypeSubset(anyOf = {CargoType.FRAGILE, CargoType.REGULAR})
+    private CargoType cargoType;
 }

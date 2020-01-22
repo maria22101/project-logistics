@@ -1,6 +1,7 @@
 package com.training.projectlogistics.controller;
 
 import com.training.projectlogistics.model.dto.OrderDTO;
+import com.training.projectlogistics.model.enums.CargoType;
 import com.training.projectlogistics.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,9 +24,17 @@ public class UserCabinetController {
     @GetMapping
     public String greetUser(Principal principal, Model model) {
         model.addAttribute("username", principal.getName());
-        model.addAttribute("orderDTO", new OrderDTO());
         return "userCabinet";
     }
+
+    @GetMapping("/order")
+    public String placeOrder(Model model) {
+        model.addAttribute("orderDTO", new OrderDTO());
+        model.addAttribute("cargoTypeEnum", CargoType.values());
+        return "placingOrder";
+    }
+
+
 
     @RequestMapping(method = RequestMethod.POST)
     public String addDeliveryOrder(@ModelAttribute("orderDTO") @Valid OrderDTO orderDTO,
@@ -37,7 +46,7 @@ public class UserCabinetController {
             model.addAttribute("noErrors", true);
         }
 
-        orderService.addOrder(principal.getName(), orderDTO);
+        orderService.addOrder(principal.getName(), orderDTO, addressDTO);
 
         return "redirect:/user";
     }

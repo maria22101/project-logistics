@@ -6,11 +6,11 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Arrays;
 
-public class CustomerTypeSubSetValidator implements ConstraintValidator<CustomerTypeSubset, WeightCategory> {
+public class WeightCategoryEnumValidator implements ConstraintValidator<WeightCategorySubset, WeightCategory> {
     private WeightCategory[] subset;
 
     @Override
-    public void initialize(CustomerTypeSubset constraint) {
+    public void initialize(WeightCategorySubset constraint) {
         this.subset = constraint.anyOf();
     }
 

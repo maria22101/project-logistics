@@ -1,11 +1,12 @@
 package com.training.projectlogistics.model;
 
+import com.training.projectlogistics.model.enums.CargoType;
 import com.training.projectlogistics.model.enums.OrderStatus;
+import com.training.projectlogistics.model.validators.CargoTypeSubset;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
@@ -24,7 +25,7 @@ public class Order{
     private Long orderNumber;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "delivery_date")
+    @Column(name = "delivery_date", nullable = false)
     private LocalDate deliveryDate;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
@@ -34,6 +35,14 @@ public class Order{
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "weight_category", referencedColumnName = "weight_category")
     private WeightRate weightRate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "cargo_type", nullable = false)
+    private CargoType cargoType;
+
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_address_id", referencedColumnName = "id")
+    private Address address;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -45,6 +54,7 @@ public class Order{
     private Invoice invoice;
 
     @Enumerated(EnumType.STRING)
+    @CargoTypeSubset(anyOf = {CargoType.FRAGILE, CargoType.REGULAR})
     @Column(name = "order_status", nullable = false)
     private OrderStatus orderStatus;
 }

@@ -28,4 +28,8 @@ public class Invoice{
     @OneToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_order_number", referencedColumnName = "order_number", unique = true)
     private Order order;
+
+    public Invoice(Order order) {
+        this.order = order;
+    }
 }

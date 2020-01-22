@@ -1,13 +1,12 @@
-<#import "parts/common.ftl" as c>
 <#import "parts/forms.ftl" as l>
 <#import "/spring.ftl" as spring/>
 
 <@c.page>
 
-    <h2><@spring.message "usercabinet.title"/>${username}!</h2>
-    <h3><@spring.message "usercabinet.orderlist.indication"/></h3>
 
-    <a href="/user/order"><@spring.message "usercabinet.order.creation.link"/></a>
+    <h3><@spring.message "usercabinet.order.creation.title"/></h3>
+
+    <@l.delivery_order_creation "/user/order" />
 
     <p></p>
     <p></p>

@@ -7,7 +7,7 @@
     <h2><@spring.message "usercabinet.title"/>${username}!</h2>
     <h3><@spring.message "usercabinet.orderlist.indication"/></h3>
 
-    <a href="/user/order"><@spring.message "usercabinet.order.creation.link"/></a>
+    <a href="/user/placeOrder"><@spring.message "usercabinet.order.creation.link"/></a>
 
     <p></p>
     <p></p>

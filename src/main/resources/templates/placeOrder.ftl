@@ -1,3 +1,4 @@
+<#import "parts/common.ftl" as c>
 <#import "parts/forms.ftl" as l>
 <#import "/spring.ftl" as spring/>
 
@@ -6,7 +7,7 @@
 
     <h3><@spring.message "usercabinet.order.creation.title"/></h3>
 
-    <@l.delivery_order_creation "/user/order" />
+    <@l.delivery_order_creation "/user/placeOrder" />
 
     <p></p>
     <p></p>

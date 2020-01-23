@@ -33,21 +33,17 @@ public class OrderService {
     public void addOrder(String username, OrderDTO orderDTO) {
 
         User user = userRepository.findByUsername(username).get();
-        Address address;
-        if(getAddressFromDB(orderDTO) == null) {
-            address = new Address(orderDTO.getStreet(), orderDTO.getHouse(), orderDTO.getApartment());
-        }else {
-            address = getAddressFromDB(orderDTO);
-        }
+        Address address = getAddressFromDB(orderDTO);
+        addressRepository.save(address);
 
         Order order = Order.builder()
                 .deliveryDate(orderDTO.getDeliveryDate())
                 .route(getRouteFromDB(orderDTO))
                 .weightRate(getWeightRateFromDB(orderDTO))
                 .cargoType(orderDTO.getCargoType())
-                .address(getAddressFromDB(orderDTO))
-                .orderStatus(OrderStatus.OPEN)
+                .address(address)
                 .user(user)
+                .orderStatus(OrderStatus.OPEN)
                 .build();
 
         orderRepository.save(order);
@@ -63,7 +59,9 @@ public class OrderService {
     // 1b - get the relevant WeightRate
     private WeightRate getWeightRateFromDB(OrderDTO orderDTO) {
         return weightRateRepository
-                .findByWeightFromLessThanAndWeightToGreaterThan(orderDTO.getWeight(), orderDTO.getWeight())
+                .findByWeightFromIsLessThanEqualAndWeightToGreaterThanEqual(
+                        orderDTO.getWeight(),
+                        orderDTO.getWeight())
                 .get();
     }
 
@@ -74,6 +72,9 @@ public class OrderService {
                         orderDTO.getStreet(),
                         orderDTO.getHouse(),
                         orderDTO.getApartment())
-                .get();
+                .orElseGet(() -> new Address(
+                            orderDTO.getStreet(),
+                            orderDTO.getHouse(),
+                            orderDTO.getApartment()));
     }
 }

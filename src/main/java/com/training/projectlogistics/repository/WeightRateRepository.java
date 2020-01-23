@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 public interface WeightRateRepository extends JpaRepository<WeightRate, Long> {
-    Optional<WeightRate> getByWeightCategory(String weightCategory);
     Optional<WeightRate> findByWeightFromLessThanAndWeightToGreaterThan(BigDecimal weight1, BigDecimal weight2);
+    Optional<WeightRate> findByWeightFromIsLessThanEqualAndWeightToGreaterThanEqual
+            (BigDecimal weight1, BigDecimal weight2);
 }

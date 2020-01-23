@@ -33,9 +33,9 @@ public class Address {
     @OneToMany(mappedBy = "address", fetch = FetchType.EAGER)
     private List<Order> orders = new ArrayList<>();
 
-    public Address(String street, String house, String appartment) {
+    public Address(String street, String house, String apartment) {
         this.street = street;
         this.house = house;
-        this.apartment = appartment;
+        this.apartment = apartment;
     }
 }

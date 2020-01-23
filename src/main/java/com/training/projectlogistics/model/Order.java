@@ -38,6 +38,7 @@ public class Order{
 
     @Enumerated(EnumType.STRING)
     @Column(name = "cargo_type", nullable = false)
+    @CargoTypeSubset(anyOf = {CargoType.FRAGILE, CargoType.REGULAR})
     private CargoType cargoType;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
@@ -54,7 +55,6 @@ public class Order{
     private Invoice invoice;
 
     @Enumerated(EnumType.STRING)
-    @CargoTypeSubset(anyOf = {CargoType.FRAGILE, CargoType.REGULAR})
     @Column(name = "order_status", nullable = false)
     private OrderStatus orderStatus;
 }

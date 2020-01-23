@@ -49,8 +49,8 @@
             <@spring.formInput "orderDTO.house"/>
             <@spring.showErrors "<br>"/><br><br>
 
-            <@spring.message "order.address.appartment"/><br>
-            <@spring.formInput "orderDTO.destination"/>
+            <@spring.message "order.address.apartment"/><br>
+            <@spring.formInput "orderDTO.apartment"/>
             <@spring.showErrors "<br>"/><br><br>
 
             <@spring.message "order.delivery.date"/><br>
@@ -61,15 +61,9 @@
             <@spring.formInput "orderDTO.weight"/>
             <@spring.showErrors "<br>"/><br><br>
 
-<#--            <#assign options = {"REGULAR": "REGULAR", "FRAGILE": "FRAGILE"} />&ndash;&gt;-->
-
-<#--            <@spring.formSingleSelect "orderDTO.cargoType" options />-->
-
-            <select>
-                <#list cargoTypeEnum as enum>
-                    <option value="${enum}">${enum.description}</option>
-                </#list>
-            </select><br><br>
+            <@spring.message "order.cargo"/><br>
+            <@spring.formSingleSelect "orderDTO.cargoType", cargoTypes, ""/>
+            <@spring.showErrors "<br>"/><br><br>
 
             <input type="submit" value="Submit">
         </form>

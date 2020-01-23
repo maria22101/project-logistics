@@ -27,9 +27,15 @@ public class AdminCabinetController {
         return "adminCabinet/adminMain";
     }
 
+    @GetMapping("/orders")
+    public String displayOrders(Model model) {
+        model.addAttribute("orders", adminService.getAllOrders());
+        return "adminCabinet/orderList";
+    }
+
     @GetMapping("/users")
     public String displayUsers(Model model) {
-        model.addAttribute("allUsers", adminService.getAllUsers());
+        model.addAttribute("users", adminService.getAllUsers());
         return "adminCabinet/userList";
     }
 }

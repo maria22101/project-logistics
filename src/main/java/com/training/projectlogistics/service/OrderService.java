@@ -5,11 +5,16 @@ import com.training.projectlogistics.model.dto.OrderDTO;
 import com.training.projectlogistics.model.enums.OrderStatus;
 import com.training.projectlogistics.repository.*;
 import com.training.projectlogistics.repository.WeightRateRepository;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -32,7 +37,7 @@ public class OrderService {
         this.addressRepository = addressRepository;
     }
 
-// 3 - build Order instance
+    // 3 - build Order instance
     //TODO - transactional?
     public void addOrder(String username, OrderDTO orderDTO) {
 
@@ -48,6 +53,7 @@ public class OrderService {
                 .address(address)
                 .user(user)
                 .orderStatus(OrderStatus.OPEN)
+                .sum(getSum(orderDTO))
                 .build();
 
         orderRepository.save(order);
@@ -60,13 +66,14 @@ public class OrderService {
                 .getBasicRate();
     }
 
-    public BigDecimal getBasicRouteRate(String source, String destination) {
-        return getOrderSumBySourceAndDestination(source, destination);
-    }
+    private BigDecimal getSum(OrderDTO orderDTO) {
+        BigDecimal basicRate = routeRepository
+                .findBySourceAndDestination(orderDTO.getSource(), orderDTO.getDestination())
+                .get()
+                .getBasicRate();
 
-    public BigDecimal getOrderSum(OrderDTO orderDTO) {
-        BigDecimal basicRate = getBasicRouteRate(orderDTO.getSource(), orderDTO.getDestination());
         BigDecimal weightCoefficient = getWeightRateFromDB(orderDTO).getWeightCoefficient();
+
         return basicRate
                 .multiply(weightCoefficient)
                 .setScale(2, RoundingMode.HALF_UP);
@@ -96,8 +103,8 @@ public class OrderService {
                         orderDTO.getHouse(),
                         orderDTO.getApartment())
                 .orElseGet(() -> new Address(
-                            orderDTO.getStreet(),
-                            orderDTO.getHouse(),
-                            orderDTO.getApartment()));
+                        orderDTO.getStreet(),
+                        orderDTO.getHouse(),
+                        orderDTO.getApartment()));
     }
 }

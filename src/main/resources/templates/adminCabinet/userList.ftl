@@ -4,7 +4,7 @@
 
 <@c.page>
 
-    <h3><@spring.message "admincabinet.userlist.indication"/></h3>
+    <h3><@spring.message "admincabinet.userlist.title"/></h3>
 
     <table border="0.5">
         <thead>
@@ -16,7 +16,7 @@
         </tr>
         </thead>
         <tbody>
-        <#list allUsers as u>
+        <#list users as u>
             <tr>
                 <td>${u.id}</td>
                 <td>${u.username}</td>

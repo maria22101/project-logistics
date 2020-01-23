@@ -6,8 +6,8 @@
 
     <h2><@spring.message "admincabinet.title"/></h2>
 
-<#--    <a href="/"><@spring.message "admincabinet.orderlist.link"/></a>-->
-    <a href="/admin/users"><@spring.message "admincabinet.userlist.link"/></a>
+    <a href="/admin/orders"><@spring.message "admincabinet.orderlist.link"/></a><br>
+    <a href="/admin/users"><@spring.message "admincabinet.userlist.link"/></a><br>
 <#--    <a href="/"><@spring.message "admincabinet.routelist.link"/></a>-->
 <#--    <a href="/"><@spring.message "admincabinet.weight.rates.link"/></a>-->
 

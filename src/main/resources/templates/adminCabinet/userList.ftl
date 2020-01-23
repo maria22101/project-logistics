@@ -1,10 +1,9 @@
-<#import "parts/common.ftl" as c>
-<#import "parts/forms.ftl" as l>
+<#import "../parts/common.ftl" as c>
+<#import "../parts/forms.ftl" as l>
 <#import "/spring.ftl" as spring/>
 
 <@c.page>
 
-    <h2><@spring.message "admincabinet.title"/></h2>
     <h3><@spring.message "admincabinet.userlist.indication"/></h3>
 
     <table border="0.5">

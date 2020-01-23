@@ -8,6 +8,9 @@ import com.training.projectlogistics.repository.WeightRateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 @Service
 public class OrderService {
     private OrderRepository orderRepository;
@@ -30,6 +33,7 @@ public class OrderService {
     }
 
 // 3 - build Order instance
+    //TODO - transactional?
     public void addOrder(String username, OrderDTO orderDTO) {
 
         User user = userRepository.findByUsername(username).get();
@@ -47,6 +51,25 @@ public class OrderService {
                 .build();
 
         orderRepository.save(order);
+    }
+
+    public BigDecimal getOrderSumBySourceAndDestination(String source, String destination) {
+        return routeRepository
+                .findBySourceAndDestination(source, destination)
+                .get()
+                .getBasicRate();
+    }
+
+    public BigDecimal getBasicRouteRate(String source, String destination) {
+        return getOrderSumBySourceAndDestination(source, destination);
+    }
+
+    public BigDecimal getOrderSum(OrderDTO orderDTO) {
+        BigDecimal basicRate = getBasicRouteRate(orderDTO.getSource(), orderDTO.getDestination());
+        BigDecimal weightCoefficient = getWeightRateFromDB(orderDTO).getWeightCoefficient();
+        return basicRate
+                .multiply(weightCoefficient)
+                .setScale(2, RoundingMode.HALF_UP);
     }
 
     // 1a - get the relevant Route

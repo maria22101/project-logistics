@@ -30,7 +30,7 @@ public class MainController {
         Iterable<Route> routes = routeRepository.findAll();
         model.addAttribute("routes", routes);
 
-        return "main_general";
+        return "general/main_general";
     }
 
     @GetMapping("/main_authenticated")
@@ -38,7 +38,7 @@ public class MainController {
         Iterable<Route> routes = routeRepository.findAll();
         model.addAttribute("routes", routes);
 
-        return "main_authenticated";
+        return "general/main_authenticated";
     }
 
     //TODO - create implementation avoiding if-s
@@ -51,6 +51,6 @@ public class MainController {
         if (userService.getUserRole(principal.getName()).toString().equals("ADMIN")) {
             return "redirect:/admin";
         }
-        return "main_general";
+        return "general/main_general";
     }
 }

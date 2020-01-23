@@ -1,5 +1,5 @@
-<#import "parts/common.ftl" as c>
-<#import "parts/forms.ftl" as l>
+<#import "../parts/common.ftl" as c>
+<#import "../parts/forms.ftl" as l>
 <#import "/spring.ftl" as spring/>
 
 <@c.page>

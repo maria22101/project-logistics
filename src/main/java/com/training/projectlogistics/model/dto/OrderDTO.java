@@ -47,6 +47,7 @@ public class OrderDTO {
 //    @DecimalMax("30.00")
 //    @Column(precision=10, scale=2)
 
+    // TODO - max value - property?
     @DecimalMin(value = "0.0", inclusive = false)
     @DecimalMin(value = "20.0", inclusive = false)
     @Digits(integer=2, fraction=2)

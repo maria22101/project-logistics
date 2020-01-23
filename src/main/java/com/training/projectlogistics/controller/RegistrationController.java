@@ -25,7 +25,7 @@ public class RegistrationController {
 
     @GetMapping
     public String registration() {
-        return "registration";
+        return "general/registration";
     }
 
     //TODO - setup message output when user exists
@@ -34,7 +34,7 @@ public class RegistrationController {
         Optional<User> userFromDb = userRepository.findByUsername(user.getUsername());
         if (userFromDb.isPresent()) {
             model.addAttribute("message", "User exists!");
-            return "registration";
+            return "general/registration";
         }
 
         String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());

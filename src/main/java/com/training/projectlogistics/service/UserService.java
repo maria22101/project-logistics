@@ -22,11 +22,6 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    //TODO - check for an empty result
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
     public Role getUserRole(String username) {
         return userRepository.findByUsername(username).get().getRole();
     }

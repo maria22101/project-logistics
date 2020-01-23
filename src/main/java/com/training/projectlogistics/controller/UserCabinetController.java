@@ -6,18 +6,10 @@ import com.training.projectlogistics.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/user")
@@ -31,16 +23,15 @@ public class UserCabinetController {
     @GetMapping
     public String greetUser(Principal principal, Model model) {
         model.addAttribute("username", principal.getName());
-        return "userCabinet";
+        return "userCabinet/userMain";
     }
 
     @GetMapping("/placeOrder")
     public String placeOrder(Model model) {
         model.addAttribute("orderDTO", new OrderDTO());
         model.addAttribute("cargoTypes", CargoType.values());
-        return "placeOrder";
+        return "userCabinet/placeOrder";
     }
-
 
     @PostMapping("/placeOrder")
     public String addOrder(@ModelAttribute("orderDTO") OrderDTO orderDTO,

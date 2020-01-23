@@ -4,28 +4,42 @@ import com.training.projectlogistics.model.Invoice;
 import com.training.projectlogistics.model.Order;
 import com.training.projectlogistics.model.User;
 import com.training.projectlogistics.model.enums.OrderStatus;
-import com.training.projectlogistics.repository.InvoiceRepository;
-import com.training.projectlogistics.repository.OrderRepository;
-import com.training.projectlogistics.repository.UserRepository;
+import com.training.projectlogistics.model.enums.Role;
+import com.training.projectlogistics.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminService {
     private OrderRepository orderRepository;
     private UserRepository userRepository;
     private InvoiceRepository invoiceRepository;
+    private RouteRepository routeRepository;
+    private WeightRateRepository weightRateRepository;
 
     @Autowired
     public AdminService(OrderRepository orderRepository,
                         UserRepository userRepository,
-                        InvoiceRepository invoiceRepository) {
+                        InvoiceRepository invoiceRepository,
+                        RouteRepository routeRepository,
+                        WeightRateRepository weightRateRepository) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.invoiceRepository = invoiceRepository;
+        this.routeRepository = routeRepository;
+        this.weightRateRepository = weightRateRepository;
+    }
+
+    //TODO - check for an empty result
+    public List<User> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .filter(user -> user.getRole().equals(Role.USER))
+                .collect(Collectors.toList());
     }
 
     //TODO - check for an empty result

@@ -1,5 +1,6 @@
 package com.training.projectlogistics.controller;
 
+import com.training.projectlogistics.service.AdminService;
 import com.training.projectlogistics.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,15 +13,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 //@PreAuthorize("hasAuthority('ADMIN')")
 public class AdminCabinetController {
     private UserService userService;
+    private AdminService adminService;
 
     @Autowired
-    public AdminCabinetController(UserService userService) {
+    public AdminCabinetController(UserService userService,
+                                  AdminService adminService) {
         this.userService = userService;
+        this.adminService = adminService;
     }
 
     @GetMapping
     public String greetAdmin(Model model) {
-        model.addAttribute("allUsers", userService.getAllUsers());
-        return "adminCabinet";
+        return "adminCabinet/adminMain";
+    }
+
+    @GetMapping("/users")
+    public String displayUsers(Model model) {
+        model.addAttribute("allUsers", adminService.getAllUsers());
+        return "adminCabinet/userList";
     }
 }

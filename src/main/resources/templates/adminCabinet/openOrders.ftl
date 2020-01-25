@@ -17,7 +17,7 @@
             <th><@spring.message "order.cargo"/></th>
             <th><@spring.message "order.sum"/></th>
             <th><@spring.message "order.status"/></th>
-            <th></th>
+            <th><@spring.message "order.action"/></th>
         </tr>
         </thead>
         <tbody>

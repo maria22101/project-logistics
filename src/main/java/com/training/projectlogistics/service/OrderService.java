@@ -34,8 +34,8 @@ public class OrderService {
     }
 
     //TODO - check for an empty result
-    public List<Order> getOpenOrdersByUserName(String username) {
-        return orderRepository.findOrdersByOrderStatusAndUser_Username(OrderStatus.OPEN, username);
+    public List<Order> getInvoicedOrdersByUserName(String username) {
+        return orderRepository.findOrdersByOrderStatusAndUser_Username(OrderStatus.INVOICED, username);
     }
 
     //TODO - process null

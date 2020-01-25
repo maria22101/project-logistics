@@ -13,11 +13,11 @@
             <th><@spring.message "order.username"/></th>
             <th><@spring.message "order.route.source"/></th>
             <th><@spring.message "order.route.destination"/></th>
-            <th><@spring.message "order.weight"/></th>
-            <th><@spring.message "order.cargo"/></th>
+            <th><@spring.message "order.delivery.date"/></th>
             <th><@spring.message "order.sum"/></th>
             <th><@spring.message "order.status"/></th>
-            <th></th>
+            <th><@spring.message "order.invoice.number"/></th>
+            <th><@spring.message "order.action"/></th>
         </tr>
         </thead>
         <tbody>

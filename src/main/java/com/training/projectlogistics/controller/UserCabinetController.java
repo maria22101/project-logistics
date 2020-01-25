@@ -47,7 +47,7 @@ public class UserCabinetController {
 
     @GetMapping("/invoicedOrders")
     public String displayOpenOrders(Principal principal, Model model) {
-        model.addAttribute("openOrders", orderService.getOpenOrdersByUserName(principal.getName()));
+        model.addAttribute("openOrders", orderService.getInvoicedOrdersByUserName(principal.getName()));
 
         return "userCabinet/userInvoicedOrders";
     }

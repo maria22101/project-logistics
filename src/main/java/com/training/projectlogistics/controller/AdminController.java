@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/admin")
 //@PreAuthorize("hasAuthority('ADMIN')")
-public class AdminCabinetController {
+public class AdminController {
     private UserService userService;
     private AdminService adminService;
     private OrderService orderService;
 
     @Autowired
-    public AdminCabinetController(UserService userService,
-                                  AdminService adminService,
-                                  OrderService orderService) {
+    public AdminController(UserService userService,
+                           AdminService adminService,
+                           OrderService orderService) {
         this.userService = userService;
         this.adminService = adminService;
         this.orderService = orderService;
@@ -62,7 +62,7 @@ public class AdminCabinetController {
 //    }
 
     @PostMapping("/openOrders")
-    public String displayEditedOrders(@RequestParam("orderNumber") Long orderNumber) {
+    public String issueInvoice(@RequestParam("orderNumber") Long orderNumber) {
         Order editingOrder = orderService.getOrderByNumber(orderNumber);
         adminService.issueInvoice(editingOrder);
 

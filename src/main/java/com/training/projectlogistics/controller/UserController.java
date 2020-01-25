@@ -4,6 +4,7 @@ import com.training.projectlogistics.model.Order;
 import com.training.projectlogistics.model.dto.OrderDTO;
 import com.training.projectlogistics.model.enums.CargoType;
 import com.training.projectlogistics.service.AdminService;
+import com.training.projectlogistics.service.InvoiceService;
 import com.training.projectlogistics.service.OrderCreationService;
 import com.training.projectlogistics.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +18,19 @@ import java.security.Principal;
 @Controller
 @RequestMapping("/user")
 //@PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
-public class UserCabinetController {
-    private AdminService adminService;
+public class UserController {
     private OrderCreationService orderCreationService;
     private OrderService orderService;
+    private InvoiceService invoiceService;
+
 
     @Autowired
-    public UserCabinetController(AdminService adminService,
-                                 OrderCreationService orderCreationService,
-                                 OrderService orderService) {
-        this.adminService = adminService;
+    public UserController(OrderCreationService orderCreationService,
+                          OrderService orderService,
+                          InvoiceService invoiceService) {
         this.orderCreationService = orderCreationService;
         this.orderService = orderService;
+        this.invoiceService = invoiceService;
     }
 
     //TODO - find option to fill object in post
@@ -54,8 +56,7 @@ public class UserCabinetController {
 
     @PostMapping("/invoicedOrders")
     public String displayEditedOrders(@RequestParam("orderNumber") Long orderNumber) {
-        Order payingOrder = orderService.getOrderByNumber(orderNumber);
-        //implement userService method payIvoice()
+        invoiceService.payInvoiceOfOrderNumber(orderNumber);
 
         return "redirect:/user";
     }

@@ -65,7 +65,7 @@
             <@spring.formSingleSelect "orderDTO.cargoType", cargoTypes, ""/>
             <@spring.showErrors "<br>"/><br><br>
 
-            <input type="submit" value="Submit">
+            <input type="submit" value="<@spring.message "usercabinet.order.placing.button"/>">
         </form>
     </#if>
 </#macro>

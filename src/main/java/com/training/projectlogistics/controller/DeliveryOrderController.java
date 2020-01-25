@@ -2,7 +2,7 @@ package com.training.projectlogistics.controller;
 
 import com.training.projectlogistics.repository.OrderRepository;
 import com.training.projectlogistics.repository.UserRepository;
-import com.training.projectlogistics.service.OrderService;
+import com.training.projectlogistics.service.OrderCreationService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 //@Controller
@@ -16,7 +16,7 @@ public class DeliveryOrderController {
     OrderRepository orderRepository;
 
     @Autowired
-    OrderService orderService;
+    OrderCreationService orderCreationService;
 
 //    @PostMapping()
 //    public String addDeliveryOrder(@Valid @ModelAttribute DeliveryOrderDTO deliveryOrderDTO,

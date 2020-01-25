@@ -37,36 +37,13 @@ public class AdminService {
         this.weightRateRepository = weightRateRepository;
     }
 
-    //TODO - check for an empty result
-    public List<User> getAllUsers() {
-        return userRepository.findAll()
-                .stream()
-                .filter(user -> user.getRole().equals(Role.USER))
-                .collect(Collectors.toList());
-    }
-
-    //TODO - check for an empty result
-    //TODO - how to get orders' sum?
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
-    }
-
-    //TODO - check for an empty result
-    //TODO - how to get orders' sum?
-    public List<Order> getOpenOrders() {
-        return orderRepository.findOrdersByOrderStatus(OrderStatus.OPEN);
-    }
-
-    //TODO - check for an empty result
-    //TODO - how to get orders' sum?
-    public List<Order> getOrdersByUser(User user) {
-        return orderRepository.findOrdersByUser(user);
-    }
-
+    //TODO - split?
     @Transactional
     public void issueInvoice(Order order) {
         order.setOrderStatus(OrderStatus.INVOICED);
+        Invoice invoice = new Invoice(order);
+
         orderRepository.save(order);
-        invoiceRepository.save(new Invoice(order));
+        invoiceRepository.save(invoice);
     }
 }

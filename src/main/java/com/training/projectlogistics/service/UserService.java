@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -31,5 +32,9 @@ public class UserService implements UserDetailsService {
         Optional<User> user = userRepository.findByUsername(username);
         user.orElseThrow(() -> new UsernameNotFoundException("Username " + username + " not found"));
         return user.get();
+    }
+
+    public List<User> getUsersByRole(Role role) {
+        return userRepository.findUsersByRole(role);
     }
 }

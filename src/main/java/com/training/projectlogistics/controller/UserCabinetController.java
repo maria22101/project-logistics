@@ -1,7 +1,10 @@
 package com.training.projectlogistics.controller;
 
+import com.training.projectlogistics.model.Order;
 import com.training.projectlogistics.model.dto.OrderDTO;
 import com.training.projectlogistics.model.enums.CargoType;
+import com.training.projectlogistics.service.AdminService;
+import com.training.projectlogistics.service.OrderCreationService;
 import com.training.projectlogistics.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,15 +18,46 @@ import java.security.Principal;
 @RequestMapping("/user")
 //@PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
 public class UserCabinetController {
+    private AdminService adminService;
+    private OrderCreationService orderCreationService;
+    private OrderService orderService;
 
     @Autowired
-    OrderService orderService;
+    public UserCabinetController(AdminService adminService,
+                                 OrderCreationService orderCreationService,
+                                 OrderService orderService) {
+        this.adminService = adminService;
+        this.orderCreationService = orderCreationService;
+        this.orderService = orderService;
+    }
 
     //TODO - find option to fill object in post
     @GetMapping
     public String greetUser(Principal principal, Model model) {
         model.addAttribute("username", principal.getName());
         return "userCabinet/userMain";
+    }
+
+    @GetMapping("/orders")
+    public String displayAllOrders(Principal principal, Model model) {
+        model.addAttribute("orders", orderService.getOrdersByUserName(principal.getName()));
+
+        return "userCabinet/userOrders";
+    }
+
+    @GetMapping("/invoicedOrders")
+    public String displayOpenOrders(Principal principal, Model model) {
+        model.addAttribute("openOrders", orderService.getOpenOrdersByUserName(principal.getName()));
+
+        return "userCabinet/userInvoicedOrders";
+    }
+
+    @PostMapping("/invoicedOrders")
+    public String displayEditedOrders(@RequestParam("orderNumber") Long orderNumber) {
+        Order payingOrder = orderService.getOrderByNumber(orderNumber);
+        //implement userService method payIvoice()
+
+        return "redirect:/user";
     }
 
     @GetMapping("/placeOrder")
@@ -43,7 +77,7 @@ public class UserCabinetController {
             model.addAttribute("noErrors", true);
         }
 
-        orderService.addOrder(principal.getName(), orderDTO);
+        orderCreationService.addOrder(principal.getName(), orderDTO);
 
         return "redirect:/user";
     }

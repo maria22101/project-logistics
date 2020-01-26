@@ -26,7 +26,7 @@
                 <td>${order.user.username}</td>
                 <td>${order.route.source}</td>
                 <td>${order.route.destination}</td>
-                <td>${order.weightRate.weightCategory}</td>
+                <td>${order.weight}</td>
                 <td>${order.cargoType}</td>
                 <td>${order.sum}</td>
                 <td>${order.orderStatus}</td>

@@ -5,6 +5,7 @@ import com.training.projectlogistics.model.validators.CargoTypeSubset;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
@@ -49,7 +50,7 @@ public class OrderDTO {
 
     // TODO - max value - property?
     @DecimalMin(value = "0.0", inclusive = false)
-    @DecimalMin(value = "20.0", inclusive = false)
+    @DecimalMax(value = "20.0", inclusive = true)
     @Digits(integer=2, fraction=2)
     private BigDecimal weight;
 

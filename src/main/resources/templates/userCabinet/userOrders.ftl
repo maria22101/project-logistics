@@ -13,6 +13,7 @@
             <th><@spring.message "order.username"/></th>
             <th><@spring.message "order.route.source"/></th>
             <th><@spring.message "order.route.destination"/></th>
+            <th><@spring.message "order.delivery.date"/></th>
             <th><@spring.message "order.weight"/></th>
             <th><@spring.message "order.cargo"/></th>
             <th><@spring.message "order.sum"/></th>
@@ -26,7 +27,8 @@
                 <td>${order.user.username}</td>
                 <td>${order.route.source}</td>
                 <td>${order.route.destination}</td>
-                <td>${order.weightRate.weightCategory}</td>
+                <td>${order.deliveryDate}</td>
+                <td>${order.weight}</td>
                 <td>${order.cargoType}</td>
                 <td>${order.sum}</td>
                 <td>${order.orderStatus}</td>

@@ -31,6 +31,9 @@ public class Route {
     @Column(name = "basic_rate", nullable = false)
     private BigDecimal basicRate;
 
-    @OneToMany(mappedBy = "route", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "route", fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "route", fetch = FetchType.LAZY)
+    private List<Address> addresses = new ArrayList<>();
 }

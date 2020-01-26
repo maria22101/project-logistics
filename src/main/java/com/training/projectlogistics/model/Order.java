@@ -7,6 +7,9 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -33,18 +36,20 @@ public class Order{
     @JoinColumn(name = "route_id", referencedColumnName = "id")
     private Route route;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "weight_category", referencedColumnName = "weight_category")
-    private WeightRate weightRate;
+    @DecimalMin(value = "0.0", inclusive = false)
+    @DecimalMax(value = "20.0", inclusive = true)
+    @Digits(integer=2, fraction=2)
+    @Column(name = "weight", nullable = false)
+    private BigDecimal weight;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "cargo_type", nullable = false)
     @CargoTypeSubset(anyOf = {CargoType.FRAGILE, CargoType.REGULAR})
     private CargoType cargoType;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "delivery_address_id", referencedColumnName = "id")
-    private Address address;
+//    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "delivery_address_id", referencedColumnName = "id")
+//    private Address address;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")

@@ -19,22 +19,13 @@ import java.util.stream.Collectors;
 @Service
 public class AdminService {
     private OrderRepository orderRepository;
-    private UserRepository userRepository;
     private InvoiceRepository invoiceRepository;
-    private RouteRepository routeRepository;
-    private WeightRateRepository weightRateRepository;
 
     @Autowired
     public AdminService(OrderRepository orderRepository,
-                        UserRepository userRepository,
-                        InvoiceRepository invoiceRepository,
-                        RouteRepository routeRepository,
-                        WeightRateRepository weightRateRepository) {
+                        InvoiceRepository invoiceRepository) {
         this.orderRepository = orderRepository;
-        this.userRepository = userRepository;
         this.invoiceRepository = invoiceRepository;
-        this.routeRepository = routeRepository;
-        this.weightRateRepository = weightRateRepository;
     }
 
     //TODO - split?

@@ -30,12 +30,17 @@ public class Address {
     @Column(name = "apartment")
     String apartment;
 
-    @OneToMany(mappedBy = "address", fetch = FetchType.EAGER)
-    private List<Order> orders = new ArrayList<>();
+//    @OneToMany(mappedBy = "address", fetch = FetchType.EAGER)
+//    private List<Order> orders = new ArrayList<>();
 
-    public Address(String street, String house, String apartment) {
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "route_id", referencedColumnName = "id")
+    private Route route;
+
+    public Address(String street, String house, String apartment, Route route) {
         this.street = street;
         this.house = house;
         this.apartment = apartment;
+        this.route = route;
     }
 }

@@ -20,11 +20,21 @@
         </thead>
         <tbody>
         <#list routes as route>
-            <tr>
-                <td>${route.source}</td>
-                <td>${route.destination}</td>
-                <td>${route.basicRate}</td>
-            </tr>
+
+            <#if .locale?starts_with("ua")>
+                <tr>
+                    <td>${route.sourceUA}</td>
+                    <td>${route.destinationUA}</td>
+                    <td>${route.basicRate}</td>
+                </tr>
+            <#else>
+                <tr>
+                    <td>${route.source}</td>
+                    <td>${route.destination}</td>
+                    <td>${route.basicRate}</td>
+                </tr>
+            </#if>
+
         </#list>
         </tbody>
     </table>

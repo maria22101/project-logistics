@@ -30,9 +30,6 @@ public class Address {
     @Column(name = "apartment")
     String apartment;
 
-//    @OneToMany(mappedBy = "address", fetch = FetchType.EAGER)
-//    private List<Order> orders = new ArrayList<>();
-
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "route_id", referencedColumnName = "id")
     private Route route;

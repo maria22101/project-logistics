@@ -1,6 +1,7 @@
 package com.training.projectlogistics.controller;
 
 import com.training.projectlogistics.model.Order;
+import com.training.projectlogistics.model.User;
 import com.training.projectlogistics.model.dto.OrderDTO;
 import com.training.projectlogistics.model.enums.CargoType;
 import com.training.projectlogistics.service.AdminService;
@@ -8,6 +9,7 @@ import com.training.projectlogistics.service.InvoiceService;
 import com.training.projectlogistics.service.OrderCreationService;
 import com.training.projectlogistics.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,21 +37,22 @@ public class UserController {
 
     //TODO - find option to fill object in post
     @GetMapping
-    public String greetUser(Principal principal, Model model) {
-        model.addAttribute("username", principal.getName());
+    public String greetUser(@AuthenticationPrincipal User user,
+                            Model model) {
+        model.addAttribute("name", user.getName());
         return "userCabinet/userMain";
     }
 
     @GetMapping("/orders")
     public String displayAllOrders(Principal principal, Model model) {
-        model.addAttribute("orders", orderService.getOrdersByUserName(principal.getName()));
+        model.addAttribute("orders", orderService.getOrdersByEmail(principal.getName()));
 
         return "userCabinet/userOrders";
     }
 
     @GetMapping("/invoicedOrders")
     public String displayOpenOrders(Principal principal, Model model) {
-        model.addAttribute("openOrders", orderService.getInvoicedOrdersByUserName(principal.getName()));
+        model.addAttribute("openOrders", orderService.getInvoicedOrdersByEmail(principal.getName()));
 
         return "userCabinet/userInvoicedOrders";
     }

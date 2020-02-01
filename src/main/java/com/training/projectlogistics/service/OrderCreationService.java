@@ -37,9 +37,9 @@ public class OrderCreationService {
 
     // 3 - build Order instance
     //TODO - transactional?
-    public void addOrder(String username, OrderDTO orderDTO) {
+    public void addOrder(String email, OrderDTO orderDTO) {
 
-        User user = userRepository.findByUsername(username).get();
+        User user = userRepository.findByEmail(email).get();
         Address address = getAddressFromDB(orderDTO);
         addressRepository.save(address);
 

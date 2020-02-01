@@ -1,7 +1,6 @@
 package com.training.projectlogistics.service;
 
 import com.training.projectlogistics.model.User;
-import com.training.projectlogistics.model.dto.UsersDTO;
 import com.training.projectlogistics.model.enums.Role;
 import com.training.projectlogistics.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -23,14 +21,14 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    public Role getUserRole(String username) {
-        return userRepository.findByUsername(username).get().getRole();
+    public Role getUserRole(String email) {
+        return userRepository.findByEmail(email).get().getRole();
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByUsername(username);
-        user.orElseThrow(() -> new UsernameNotFoundException("Username " + username + " not found"));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<User> user = userRepository.findByEmail(email);
+        user.orElseThrow(() -> new UsernameNotFoundException("email " + email + " not found"));
         return user.get();
     }
 

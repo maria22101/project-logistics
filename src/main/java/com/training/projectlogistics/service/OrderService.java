@@ -29,13 +29,13 @@ public class OrderService {
     }
 
     //TODO - check for an empty result
-    public List<Order> getOrdersByUserName(String username) {
-        return orderRepository.findOrdersByUser_Username(username);
+    public List<Order> getOrdersByEmail(String email) {
+        return orderRepository.findOrdersByUser_Email(email);
     }
 
     //TODO - check for an empty result
-    public List<Order> getInvoicedOrdersByUserName(String username) {
-        return orderRepository.findOrdersByOrderStatusAndUser_Username(OrderStatus.INVOICED, username);
+    public List<Order> getInvoicedOrdersByEmail(String email) {
+        return orderRepository.findOrdersByOrderStatusAndUser_Email(OrderStatus.INVOICED, email);
     }
 
     //TODO - process null

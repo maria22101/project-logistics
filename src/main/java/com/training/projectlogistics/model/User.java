@@ -27,8 +27,11 @@ public class User implements UserDetails {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "username", nullable = false)
-    private String username;
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "surname", nullable = false)
+    private String surname;
 
     @Column(name = "password", nullable = false)
     private String password;
@@ -43,14 +46,19 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
 
-    public User(String username, String password) {
-        this.username = username;
+    public User(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Stream.of(getRole()).collect(Collectors.toList());
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     @Override

@@ -31,7 +31,7 @@ public class RegistrationController {
     //TODO - setup message output when user exists
     @PostMapping
     public String addUser(User user, Model model) {
-        Optional<User> userFromDb = userRepository.findByUsername(user.getUsername());
+        Optional<User> userFromDb = userRepository.findByEmail(user.getEmail());
         if (userFromDb.isPresent()) {
             model.addAttribute("message", "User exists!");
             return "general/registration";

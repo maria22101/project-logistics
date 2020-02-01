@@ -36,7 +36,7 @@ public class OrderDTO {
     String house;
 
     @NonNull
-    @NotEmpty
+//    @NotEmpty
     String apartment;
 
     @NonNull

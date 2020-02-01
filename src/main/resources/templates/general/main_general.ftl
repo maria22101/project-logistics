@@ -8,7 +8,9 @@
 
     <br>
     <span><@spring.message "main.login.indication"/></span>
-    <a href="/login"><@spring.message "main.login.link"/></a><br>
+    <a href="/login"><@spring.message "main.login.link"/></a>
+
+    <br/><br/>
 
     <span><@spring.message "main.registration.indication"/></span>
     <a href="/registration"><@spring.message "main.registration.link"/></a>

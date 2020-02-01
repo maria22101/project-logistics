@@ -22,11 +22,17 @@ public class Route {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "source", nullable = false)
+    @Column(name = "source")
     private String source;
+
+    @Column(name = "source_ua", nullable = false)
+    private String sourceUA;
 
     @Column(name = "destination", nullable = false)
     private String destination;
+
+    @Column(name = "destination_ua")
+    private String destinationUA;
 
     @Column(name = "basic_rate", nullable = false)
     private BigDecimal basicRate;

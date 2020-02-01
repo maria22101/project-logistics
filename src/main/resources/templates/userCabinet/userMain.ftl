@@ -4,7 +4,7 @@
 
 <@c.page>
 
-    <h2><@spring.message "usercabinet.title"/>${username}!</h2>
+    <h2><@spring.message "usercabinet.title"/>${name}!</h2>
 
     <a href="/user/orders"><@spring.message "cabinet.orderlist.link"/></a><br><br>
     <a href="/user/invoicedOrders"><@spring.message "usercabinet.invoiced.orderlist.link"/></a><br><br>

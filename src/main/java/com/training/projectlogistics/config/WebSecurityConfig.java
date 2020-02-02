@@ -41,15 +41,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/login", "/registration").permitAll() // routes allowed for all
-                .antMatchers("/admin/**").hasAuthority("ADMIN")
-                .antMatchers("/user/**").hasAnyAuthority("USER","ADMIN")
                 .anyRequest().authenticated() // for all other routes authentication required
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .failureUrl("/login?error=true")
-                .successHandler(loginSuccessHandler)
+                    .formLogin()
+                    .loginPage("/login")
+                    .failureUrl("/login?error=true")
+                    .successHandler(loginSuccessHandler)
                 .and()
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll();
+                    .logout()
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/").permitAll();
     }
 }

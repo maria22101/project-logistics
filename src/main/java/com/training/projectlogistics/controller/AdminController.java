@@ -6,13 +6,14 @@ import com.training.projectlogistics.service.AdminService;
 import com.training.projectlogistics.service.OrderService;
 import com.training.projectlogistics.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin")
-//@PreAuthorize("hasAuthority('ADMIN')")
+@PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
     private UserService userService;
     private AdminService adminService;

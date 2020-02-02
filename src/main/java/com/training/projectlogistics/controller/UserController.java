@@ -1,10 +1,8 @@
 package com.training.projectlogistics.controller;
 
-import com.training.projectlogistics.model.Order;
 import com.training.projectlogistics.model.User;
 import com.training.projectlogistics.model.dto.OrderDTO;
 import com.training.projectlogistics.model.enums.CargoType;
-import com.training.projectlogistics.service.AdminService;
 import com.training.projectlogistics.service.InvoiceService;
 import com.training.projectlogistics.service.OrderCreationService;
 import com.training.projectlogistics.service.OrderService;
@@ -47,21 +45,21 @@ public class UserController {
     public String displayAllOrders(Principal principal, Model model) {
         model.addAttribute("orders", orderService.getOrdersByEmail(principal.getName()));
 
-        return "userCabinet/userOrders";
+        return "userCabinet/orders";
     }
 
     @GetMapping("/invoicedOrders")
     public String displayOpenOrders(Principal principal, Model model) {
         model.addAttribute("openOrders", orderService.getInvoicedOrdersByEmail(principal.getName()));
 
-        return "userCabinet/userInvoicedOrders";
+        return "userCabinet/invoicedOrders";
     }
 
     @PostMapping("/invoicedOrders")
     public String displayEditedOrders(@RequestParam("orderNumber") Long orderNumber) {
         invoiceService.payInvoiceOfOrderNumber(orderNumber);
 
-        return "redirect:/user";
+        return "redirect:/user/invoicedOrders";
     }
 
     @GetMapping("/placeOrder")

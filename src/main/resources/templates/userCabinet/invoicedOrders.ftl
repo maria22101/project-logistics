@@ -10,7 +10,6 @@
         <thead>
         <tr>
             <th><@spring.message "order.number"/></th>
-            <th><@spring.message "order.username"/></th>
             <th><@spring.message "order.route.source"/></th>
             <th><@spring.message "order.route.destination"/></th>
             <th><@spring.message "order.delivery.date"/></th>
@@ -24,7 +23,6 @@
         <#list openOrders as order>
             <tr>
                 <td>${order.orderNumber}</td>
-                <td>${order.user.username}</td>
                 <td>${order.route.source}</td>
                 <td>${order.route.destination}</td>
                 <td>${order.deliveryDate}</td>

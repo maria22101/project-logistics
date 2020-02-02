@@ -46,7 +46,7 @@ public class AdminController {
         return "adminCabinet/orders";
     }
 
-    @GetMapping("/openOrders")
+    @GetMapping("/open_orders")
     public String displayOpenOrders(Model model) {
         model.addAttribute("openOrders", orderService.getOpenOrders());
 
@@ -61,18 +61,25 @@ public class AdminController {
 //        return "adminCabinet/orderEdit";
 //    }
 
-    @PostMapping("/openOrders")
+    @PostMapping("/open_orders")
     public String issueInvoice(@RequestParam("orderNumber") Long orderNumber) {
         Order editingOrder = orderService.getOrderByNumber(orderNumber);
         adminService.issueInvoice(editingOrder);
 
-        return "redirect:/admin/orders";
+        return "redirect:/admin/open_orders";
     }
 
     @GetMapping("/users")
     public String displayUsers(Model model) {
         model.addAttribute("users", userService.getUsersByRole(Role.USER));
 
-        return "adminCabinet/userList";
+        return "adminCabinet/users";
+    }
+
+    @GetMapping("/routes")
+    public String displayRoutes(Model model) {
+        model.addAttribute("routes", adminService.getAllRoutes());
+
+        return "adminCabinet/routes";
     }
 }

@@ -10,8 +10,9 @@
         <thead>
         <tr>
             <th><@spring.message "admincabinet.user.id"/></th>
-            <th><@spring.message "admincabinet.user.username"/></th>
-            <th><@spring.message "admincabinet.user.email"/></th>
+            <th><@spring.message "name.indication"/></th>
+            <th><@spring.message "surname.indication"/></th>
+            <th><@spring.message "email.indication"/></th>
             <th><@spring.message "admincabinet.user.role"/></th>
         </tr>
         </thead>
@@ -19,7 +20,8 @@
         <#list users as u>
             <tr>
                 <td>${u.id}</td>
-                <td>${u.username}</td>
+                <td>${u.name}</td>
+                <td>${u.surname}</td>
                 <td>${u.email}</td>
                 <td>${u.role}</td>
             </tr>

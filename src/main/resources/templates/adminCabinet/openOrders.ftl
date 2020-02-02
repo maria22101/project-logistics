@@ -10,7 +10,9 @@
         <thead>
         <tr>
             <th><@spring.message "order.number"/></th>
-            <th><@spring.message "order.username"/></th>
+            <th><@spring.message "name.indication"/></th>
+            <th><@spring.message "surname.indication"/></th>
+            <th><@spring.message "email.indication"/></th>
             <th><@spring.message "order.route.source"/></th>
             <th><@spring.message "order.route.destination"/></th>
             <th><@spring.message "order.weight"/></th>
@@ -24,7 +26,9 @@
         <#list openOrders as order>
             <tr>
                 <td>${order.orderNumber}</td>
-                <td>${order.user.username}</td>
+                <td>${order.user.name}</td>
+                <td>${order.user.surname}</td>
+                <td>${order.user.email}</td>
                 <td>${order.route.source}</td>
                 <td>${order.route.destination}</td>
                 <td>${order.weight}</td>
@@ -33,7 +37,7 @@
                 <td>${order.orderStatus}</td>
 
                 <td>
-                    <form action="/admin/openOrders" method="post">
+                    <form action="/admin/open_orders" method="post">
                         <div>
                             <input type="hidden" value="${order.orderNumber}" name="orderNumber">
                             <input type="submit" value="<@spring.message "admincabinet.issue.invoice.button"/>">

@@ -7,10 +7,9 @@
     <h2><@spring.message "admincabinet.title"/></h2>
 
     <a href="/admin/orders"><@spring.message "cabinet.orderlist.link"/></a><br><br>
-    <a href="/admin/openOrders"><@spring.message "admincabinet.open.orderlist.link"/></a><br><br>
-    <a href="/admin/users"><@spring.message "admincabinet.userlist.link"/></a><br>
-<#--    <a href="/"><@spring.message "admincabinet.routelist.link"/></a>-->
-<#--    <a href="/"><@spring.message "admincabinet.weight.rates.link"/></a>-->
+    <a href="/admin/open_orders"><@spring.message "admincabinet.open.orderlist.link"/></a><br><br>
+    <a href="/admin/users"><@spring.message "admincabinet.userlist.link"/></a><br><br>
+    <a href="/admin/routes"><@spring.message "admincabinet.routelist.link"/></a>
 
     <p></p>
     <a href="?lang=en"><@spring.message "lang.eng"/></a><br>

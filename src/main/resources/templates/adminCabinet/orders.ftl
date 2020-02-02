@@ -47,6 +47,6 @@
     <@l.logout />
 
     <p></p>
-    <a href="/main_authenticated"><@spring.message "main.page.link"/></a>
+    <a href="/"><@spring.message "main.page.link"/></a>
 
 </@c.page>

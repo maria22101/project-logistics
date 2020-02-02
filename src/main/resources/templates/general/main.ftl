@@ -1,12 +1,12 @@
+<#import "../parts/common.ftl" as c>
 <#import "/spring.ftl" as spring/>
 
-<#macro main>
+<@c.page>
 
     <h2><@spring.message "main.title"/></h2>
 
     <a href="?lang=en"><@spring.message "lang.eng"/></a><br>
     <a href="?lang=ua"><@spring.message "lang.ua"/></a>
-
 
     <h3><@spring.message "main.services"/></h3>
 
@@ -39,4 +39,13 @@
         </tbody>
     </table>
 
-</#macro>
+    <br>
+    <span><@spring.message "main.login.indication"/></span>
+    <a href="/login"><@spring.message "main.login.link"/></a>
+
+    <br/><br/>
+
+    <span><@spring.message "main.registration.indication"/></span>
+    <a href="/registration"><@spring.message "main.registration.link"/></a>
+
+</@c.page>

@@ -4,6 +4,7 @@ import com.training.projectlogistics.model.Order;
 import com.training.projectlogistics.model.enums.Role;
 import com.training.projectlogistics.service.AdminService;
 import com.training.projectlogistics.service.OrderService;
+import com.training.projectlogistics.service.RouteService;
 import com.training.projectlogistics.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,14 +19,17 @@ public class AdminController {
     private UserService userService;
     private AdminService adminService;
     private OrderService orderService;
+    private RouteService routeService;
 
     @Autowired
     public AdminController(UserService userService,
                            AdminService adminService,
-                           OrderService orderService) {
+                           OrderService orderService,
+                           RouteService routeService) {
         this.userService = userService;
         this.adminService = adminService;
         this.orderService = orderService;
+        this.routeService = routeService;
     }
 
     @GetMapping
@@ -79,7 +83,7 @@ public class AdminController {
 
     @GetMapping("/routes")
     public String displayRoutes(Model model) {
-        model.addAttribute("routes", adminService.getAllRoutes());
+        model.addAttribute("routes", routeService.getAllRoutes());
 
         return "adminCabinet/routes";
     }

@@ -35,4 +35,8 @@ public class UserService implements UserDetailsService {
     public List<User> getUsersByRole(Role role) {
         return userRepository.findUsersByRole(role);
     }
+
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).get();
+    }
 }

@@ -1,57 +1,60 @@
 package com.training.projectlogistics.controller;
 
-import com.training.projectlogistics.model.Route;
-import com.training.projectlogistics.repository.RouteRepository;
-import com.training.projectlogistics.repository.UserRepository;
+import com.training.projectlogistics.service.RouteService;
 import com.training.projectlogistics.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.security.Principal;
-import java.util.Locale;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class MainController {
-
-    //TODO: remove and ensure all functionality is placed in the Services
-    @Autowired
-    UserRepository userRepository;
-
-    //TODO: remove and ensure all functionality is placed in the Services
-    @Autowired
-    RouteRepository routeRepository;
+    private RouteService routeService;
+    private UserService userService;
 
     @Autowired
-    UserService userService;
+    public MainController(RouteService routeService,
+                          UserService userService) {
+        this.routeService = routeService;
+        this.userService = userService;
+    }
 
     @GetMapping("/")
-    public String greetingAll(Model model) {
-        Iterable<Route> routes = routeRepository.findAll();
-        model.addAttribute("routes", routes);
+    public String greetingAll(HttpServletRequest request,
+                              HttpServletResponse response,
+                              Model model) {
 
-        return "general/main_general";
+        logoutAuthenticated(request, response);
+        model.addAttribute("routes", routeService.getAllRoutes());
+
+        return "general/main";
     }
 
-    @GetMapping("/main_authenticated")
-    public String greetingAuthenticated(Model model) {
-        Iterable<Route> routes = routeRepository.findAll();
-        model.addAttribute("routes", routes);
+    @GetMapping("/login")
+    public String enterLogin(HttpServletRequest request,
+                             HttpServletResponse response,
+                             Model model) {
 
-        return "general/main_authenticated";
+        logoutAuthenticated(request, response);
+
+        return "general/login";
     }
 
-    //TODO - create implementation avoiding if-s
-    //TODO - implement error handling
-    @GetMapping("/cabinet")
-    public String returnToAdminCabinet(Principal principal) {
-        if (userService.getUserRole(principal.getName()).toString().equals("USER")) {
-            return "redirect:/user";
+    private void logoutAuthenticated(HttpServletRequest request,
+                                     HttpServletResponse response) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth != null) {
+            new SecurityContextLogoutHandler()
+                    .logout(request, response, auth);
+            request.getSession().invalidate();
         }
-        if (userService.getUserRole(principal.getName()).toString().equals("ADMIN")) {
-            return "redirect:/admin";
-        }
-        return "general/main_general";
     }
 }

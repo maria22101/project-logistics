@@ -21,7 +21,7 @@
         <tbody>
         <#list routes as route>
 
-            <#if .locale?starts_with("ua")>
+            <#if .locale?starts_with("UA")>
                 <tr>
                     <td>${route.sourceUA}</td>
                     <td>${route.destinationUA}</td>

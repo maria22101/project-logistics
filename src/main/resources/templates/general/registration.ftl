@@ -3,7 +3,12 @@
 <#import "/spring.ftl" as spring />
 
 <@c.page>
-    <h4><@spring.message "registration.page.title"/></h4>
+    <h3><@spring.message "registration.page.title"/></h3>
+
+    <#if errorMessage??>
+        <h4 class="error"><@spring.message "${errorMessage}"/></h4>
+    </#if>
+
     <@l.registration "/registration" />
 
     <p></p>

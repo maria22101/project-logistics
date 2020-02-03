@@ -1,7 +1,6 @@
 package com.training.projectlogistics.controller;
 
 import com.training.projectlogistics.service.RouteService;
-import com.training.projectlogistics.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,13 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class MainController {
     private RouteService routeService;
-    private UserService userService;
 
     @Autowired
-    public MainController(RouteService routeService,
-                          UserService userService) {
+    public MainController(RouteService routeService) {
         this.routeService = routeService;
-        this.userService = userService;
     }
 
     @GetMapping("/")
@@ -30,7 +26,7 @@ public class MainController {
                               HttpServletResponse response,
                               Model model) {
 
-        logoutAuthenticated(request, response);
+        logoutIfAuthenticated(request, response);
         model.addAttribute("routes", routeService.getAllRoutes());
 
         return "general/main";
@@ -41,12 +37,12 @@ public class MainController {
                              HttpServletResponse response,
                              Model model) {
 
-        logoutAuthenticated(request, response);
+        logoutIfAuthenticated(request, response);
 
         return "general/login";
     }
 
-    private void logoutAuthenticated(HttpServletRequest request,
+    private void logoutIfAuthenticated(HttpServletRequest request,
                                      HttpServletResponse response) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

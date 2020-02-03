@@ -34,6 +34,10 @@
             tr.even{
                 background-color: #1076F5;
             }
+
+            .error {
+                color: orangered;
+            }
         </style>
     </head>
     <body>

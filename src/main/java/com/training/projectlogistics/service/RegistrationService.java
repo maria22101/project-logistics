@@ -20,16 +20,22 @@ public class RegistrationService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public void addUser(User user) throws NotUniqueEmailException {
+    public void addUser(User user) throws NotUniqueEmailException, DatabaseIssueException {
+
         if (userRepository
                 .findByEmail(user.getEmail())
                 .isPresent()) {
-
             throw new NotUniqueEmailException(user.getEmail());
         }
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRole(Role.USER);
-        userRepository.save(user);
+
+        try {
+            userRepository.save(user);
+        }catch (Exception ex) {
+            throw new DatabaseIssueException("Database issue");
+        }
+
     }
 }

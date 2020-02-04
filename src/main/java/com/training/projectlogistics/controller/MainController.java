@@ -21,7 +21,6 @@ public class MainController {
     @GetMapping("/")
     public String greetingAll(@AuthenticationPrincipal User user,
                               Model model) {
-
         if(user !=null) {
             SecurityContextHolder.clearContext();
         }
@@ -34,7 +33,6 @@ public class MainController {
     @GetMapping("/login")
     public String enterLogin(@AuthenticationPrincipal User user,
                              Model model) {
-
         if(user !=null) {
             SecurityContextHolder.clearContext();
         }

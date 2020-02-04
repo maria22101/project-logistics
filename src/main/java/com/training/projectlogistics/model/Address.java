@@ -21,13 +21,13 @@ public class Address {
     @Column(name = "id", nullable = false)
     Long id;
 
-    @Column(name = "street")
+    @Column(name = "street", nullable = false)
     String street;
 
-    @Column(name = "house")
+    @Column(name = "house", nullable = false)
     String house;
 
-    @Column(name = "apartment")
+    @Column(name = "apartment", nullable = true)
     String apartment;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)

@@ -1,17 +1,40 @@
 <#import "/spring.ftl" as spring/>
 
 <#macro registration path>
+<#--    <form action="${path}" method="post">-->
+<#--        <div><label> <@spring.message "name.indication"/> <input type="text" name="name"/> </label></div>-->
+<#--        <br/>-->
+<#--        <div><label> <@spring.message "surname.indication"/> <input type="text" name="surname"/> </label></div>-->
+<#--        <br/>-->
+<#--        <div><label> <@spring.message "email.indication"/> <input type="text" name="email"/> </label></div>-->
+<#--        <br/>-->
+<#--        <div><label> <@spring.message "password.indication"/> <input type="password" name="password"/> </label></div>-->
+<#--        <br/>-->
+<#--        <div><input type="submit" value=<@spring.message "registration.button"/>></div>-->
+<#--    </form>-->
+
+    <@spring.bind "user"/>
     <form action="${path}" method="post">
-        <div><label> <@spring.message "name.indication"/> <input type="text" name="name"/> </label></div>
-        <br/>
-        <div><label> <@spring.message "surname.indication"/> <input type="text" name="surname"/> </label></div>
-        <br/>
-        <div><label> <@spring.message "email.indication"/> <input type="text" name="email"/> </label></div>
-        <br/>
-        <div><label> <@spring.message "password.indication"/> <input type="password" name="password"/> </label></div>
-        <br/>
-        <div><input type="submit" value=<@spring.message "registration.button"/>></div>
+
+        <@spring.message "name.indication"/><br>
+        <@spring.formInput "user.name"/>
+        <@spring.showErrors "<br>"/><br><br>
+
+        <@spring.message "surname.indication"/><br>
+        <@spring.formInput "user.surname"/>
+        <@spring.showErrors "<br>"/><br><br>
+
+        <@spring.message "email.indication"/><br>
+        <@spring.formInput "user.email"/>
+        <@spring.showErrors "<br>"/><br><br>
+
+        <@spring.message "password.indication"/><br>
+        <@spring.formInput "user.password"/>
+        <@spring.showErrors "<br>"/><br><br>
+
+        <input type="submit" value="<@spring.message "registration.button"/>">
     </form>
+
 </#macro>
 
 <#macro login path>
@@ -35,8 +58,8 @@
     <@spring.bind "orderDTO"/>
     <#if orderDTO?? && noErrors??>
         Your submitted data<br>
-        First name: ${orderDTO.source}<br>
-        Last name: ${orderDTO.destination}<br>
+        Source: ${orderDTO.source}<br>
+        Destination: ${orderDTO.destination}<br>
     <#else>
         <form action="${path}" method="post">
 

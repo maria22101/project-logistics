@@ -46,9 +46,11 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
 
-    public User(String email, String password) {
-        this.email = email;
+    public User(String name, String surname, String password, String email) {
+        this.name = name;
+        this.surname = surname;
         this.password = password;
+        this.email = email;
     }
 
     @Override

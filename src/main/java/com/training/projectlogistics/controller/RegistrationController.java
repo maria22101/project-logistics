@@ -1,24 +1,19 @@
 package com.training.projectlogistics.controller;
 
+import com.training.projectlogistics.controller.unility.UserValidator;
 import com.training.projectlogistics.model.User;
 import com.training.projectlogistics.service.DatabaseIssueException;
 import com.training.projectlogistics.service.NotUniqueEmailException;
 import com.training.projectlogistics.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
-
+import javax.validation.Valid;
 import static com.training.projectlogistics.controller.TextConstants.*;
 
 
@@ -26,24 +21,36 @@ import static com.training.projectlogistics.controller.TextConstants.*;
 @RequestMapping("/registration")
 public class RegistrationController {
     private RegistrationService registrationService;
+    private UserValidator userValidator;
 
     @Autowired
-    public RegistrationController(RegistrationService registrationService) {
+    public RegistrationController(RegistrationService registrationService,
+                                  UserValidator userValidator) {
         this.registrationService = registrationService;
+        this.userValidator = userValidator;
     }
 
     @GetMapping
-    public String enterRegistration(@AuthenticationPrincipal User user) {
-        if (user != null) {
+    public String enterRegistration(@AuthenticationPrincipal User authenticatedUser,
+                                    Model model) {
+        if (authenticatedUser != null) {
             SecurityContextHolder.clearContext();
         }
+        model.addAttribute("user", new User());
 
         return "general/registration";
     }
 
     @PostMapping
-    public String addUser(User user, Model model)
+    public String addUser(@ModelAttribute @Valid User user,
+                          BindingResult result,
+                          Model model)
             throws NotUniqueEmailException, DatabaseIssueException {
+
+        userValidator.validate(user, result);
+        if (result.hasErrors()) {
+            return "general/registration";
+        }
 
         registrationService.addUser(user);
 

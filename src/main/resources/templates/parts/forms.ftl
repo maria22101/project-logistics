@@ -1,17 +1,6 @@
 <#import "/spring.ftl" as spring/>
 
 <#macro registration path>
-<#--    <form action="${path}" method="post">-->
-<#--        <div><label> <@spring.message "name.indication"/> <input type="text" name="name"/> </label></div>-->
-<#--        <br/>-->
-<#--        <div><label> <@spring.message "surname.indication"/> <input type="text" name="surname"/> </label></div>-->
-<#--        <br/>-->
-<#--        <div><label> <@spring.message "email.indication"/> <input type="text" name="email"/> </label></div>-->
-<#--        <br/>-->
-<#--        <div><label> <@spring.message "password.indication"/> <input type="password" name="password"/> </label></div>-->
-<#--        <br/>-->
-<#--        <div><input type="submit" value=<@spring.message "registration.button"/>></div>-->
-<#--    </form>-->
 
     <@spring.bind "user"/>
     <form action="${path}" method="post">
@@ -55,48 +44,42 @@
 
 <#macro delivery_order_creation path>
 
-    <@spring.bind "orderDTO"/>
-    <#if orderDTO?? && noErrors??>
-        Your submitted data<br>
-        Source: ${orderDTO.source}<br>
-        Destination: ${orderDTO.destination}<br>
-    <#else>
+    <@spring.bind "orderAddressDTO"/>
         <form action="${path}" method="post">
 
             <@spring.message "order.route.source"/><br>
-            <@spring.formInput "orderDTO.source"/>
+            <@spring.formInput "orderAddressDTO.source"/>
             <@spring.showErrors "<br>"/><br><br>
 
             <@spring.message "order.route.destination"/><br>
-            <@spring.formInput "orderDTO.destination"/>
+            <@spring.formInput "orderAddressDTO.destination"/>
             <@spring.showErrors "<br>"/><br><br>
 
             <@spring.message "order.address.street"/><br>
-            <@spring.formInput "orderDTO.street"/>
+            <@spring.formInput "orderAddressDTO.street"/>
             <@spring.showErrors "<br>"/><br><br>
 
             <@spring.message "order.address.house"/><br>
-            <@spring.formInput "orderDTO.house"/>
+            <@spring.formInput "orderAddressDTO.house"/>
             <@spring.showErrors "<br>"/><br><br>
 
             <@spring.message "order.address.apartment"/><br>
-            <@spring.formInput "orderDTO.apartment"/>
+            <@spring.formInput "orderAddressDTO.apartment"/>
             <@spring.showErrors "<br>"/><br><br>
 
             <@spring.message "order.delivery.date"/><br>
-            <@spring.formInput "orderDTO.deliveryDate"/>
+            <@spring.formInput "orderAddressDTO.deliveryDate"/>
             <@spring.showErrors "<br>"/><br><br>
 
             <@spring.message "order.weight"/><br>
-            <@spring.formInput "orderDTO.weight"/>
+            <@spring.formInput "orderAddressDTO.weight"/>
             <@spring.showErrors "<br>"/><br><br>
 
             <@spring.message "order.cargo"/><br>
-            <@spring.formSingleSelect "orderDTO.cargoType", cargoTypes, ""/>
+            <@spring.formSingleSelect "orderAddressDTO.cargoType", cargoTypes, ""/>
             <@spring.showErrors "<br>"/><br><br>
 
             <input type="submit" value="<@spring.message "usercabinet.order.placing.button"/>">
         </form>
-    </#if>
 </#macro>
 

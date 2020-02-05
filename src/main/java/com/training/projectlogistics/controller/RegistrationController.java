@@ -43,8 +43,7 @@ public class RegistrationController {
 
     @PostMapping
     public String addUser(@ModelAttribute @Valid User user,
-                          BindingResult result,
-                          Model model)
+                          BindingResult result)
             throws NotUniqueEmailException, DatabaseIssueException {
 
         userValidator.validate(user, result);

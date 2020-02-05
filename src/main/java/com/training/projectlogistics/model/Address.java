@@ -27,12 +27,15 @@ public class Address {
     @Column(name = "house", nullable = false)
     String house;
 
-    @Column(name = "apartment", nullable = true)
+    @Column(name = "apartment")
     String apartment;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "route_id", referencedColumnName = "id")
     private Route route;
+
+    @OneToMany(mappedBy = "address", fetch = FetchType.LAZY)
+    private List<Order> orders = new ArrayList<>();
 
     public Address(String street, String house, String apartment, Route route) {
         this.street = street;

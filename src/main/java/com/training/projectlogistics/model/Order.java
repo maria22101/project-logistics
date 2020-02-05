@@ -36,6 +36,10 @@ public class Order{
     @JoinColumn(name = "route_id", referencedColumnName = "id")
     private Route route;
 
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private Address address;
+
     @DecimalMin(value = "0.0", inclusive = false)
     @DecimalMax(value = "20.0", inclusive = true)
     @Digits(integer=2, fraction=2)
@@ -46,10 +50,6 @@ public class Order{
     @Column(name = "cargo_type", nullable = false)
     @CargoTypeSubset(anyOf = {CargoType.FRAGILE, CargoType.REGULAR})
     private CargoType cargoType;
-
-//    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "delivery_address_id", referencedColumnName = "id")
-//    private Address address;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")

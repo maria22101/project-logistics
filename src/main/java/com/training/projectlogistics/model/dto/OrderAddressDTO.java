@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @ToString
-public class OrderDTO {
+public class OrderAddressDTO {
     @NonNull
     @NotEmpty
     private String source;
@@ -35,7 +35,7 @@ public class OrderDTO {
     @NotEmpty
     String house;
 
-    @NonNull
+//    @NonNull
 //    @NotEmpty
     String apartment;
 

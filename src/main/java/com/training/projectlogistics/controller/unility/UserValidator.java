@@ -8,11 +8,10 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import java.util.regex.Pattern;
-
 import static com.training.projectlogistics.controller.TextConstants.*;
 import static com.training.projectlogistics.controller.unility.RegexContainer.*;
 
+//TODO - substitute text with text constants
 @Component
 public class UserValidator implements Validator {
     @Override

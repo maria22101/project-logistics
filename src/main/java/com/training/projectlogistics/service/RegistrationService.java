@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.util.Optional;
 
+import static com.training.projectlogistics.controller.TextConstants.DATABASE_ISSUE;
+
 @Service
 public class RegistrationService {
     private UserRepository userRepository;
@@ -34,7 +36,7 @@ public class RegistrationService {
         try {
             userRepository.save(user);
         }catch (Exception ex) {
-            throw new DatabaseIssueException("Database issue");
+            throw new DatabaseIssueException(DATABASE_ISSUE);
         }
 
     }

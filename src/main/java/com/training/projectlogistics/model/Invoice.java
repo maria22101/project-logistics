@@ -13,7 +13,7 @@ import java.io.Serializable;
 @ToString
 
 @Entity
-@Table(name = "invoice",
+@Table(name = "invoices",
         uniqueConstraints={@UniqueConstraint(columnNames = "delivery_order_number",
                 name = "uniqueOrderNumberConstraint")})
 public class Invoice{

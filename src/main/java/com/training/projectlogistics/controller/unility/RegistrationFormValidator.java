@@ -13,7 +13,7 @@ import static com.training.projectlogistics.controller.unility.RegexContainer.*;
 
 //TODO - substitute text with text constants
 @Component
-public class UserValidator implements Validator {
+public class RegistrationFormValidator implements Validator {
     @Override
     public boolean supports(Class<?> aClass) {
         return User.class.equals(aClass);

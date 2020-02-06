@@ -1,4 +1,4 @@
-package com.training.projectlogistics.model.enums;
+package com.training.projectlogistics.enums;
 
 public enum OrderStatus {
     OPEN,

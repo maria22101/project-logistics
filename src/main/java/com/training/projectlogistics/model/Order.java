@@ -1,7 +1,7 @@
 package com.training.projectlogistics.model;
 
-import com.training.projectlogistics.model.enums.CargoType;
-import com.training.projectlogistics.model.enums.OrderStatus;
+import com.training.projectlogistics.enums.CargoType;
+import com.training.projectlogistics.enums.OrderStatus;
 import com.training.projectlogistics.model.validators.CargoTypeSubset;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,24 +21,28 @@ import java.time.LocalDate;
 @ToString
 
 @Entity
-@Table(name = "delivery_order")
+@Table(name = "orders")
 public class Order{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_number", nullable = false)
     private Long orderNumber;
 
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "dispatch_address_id", referencedColumnName = "id")
+    private Address dispatchAddress;
+
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_address_id", referencedColumnName = "id")
+    private Address deliveryAddress;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "delivery_date", nullable = false)
     private LocalDate deliveryDate;
-
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "route_id", referencedColumnName = "id")
-    private Route route;
-
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private Address address;
 
     @DecimalMin(value = "0.0", inclusive = false)
     @DecimalMax(value = "20.0", inclusive = true)
@@ -51,19 +55,19 @@ public class Order{
     @CargoTypeSubset(anyOf = {CargoType.FRAGILE, CargoType.REGULAR})
     private CargoType cargoType;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
-
-    @OneToOne(fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            mappedBy = "order")
-    private Invoice invoice;
+    @Column(name = "sum", nullable = false)
+    private BigDecimal sum;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "order_status", nullable = false)
     private OrderStatus orderStatus;
 
-    @Column(name = "sum", nullable = false)
-    private BigDecimal sum;
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "route_id", referencedColumnName = "id")
+    private Route route;
+
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "order")
+    private Invoice invoice;
 }

@@ -1,6 +1,6 @@
 package com.training.projectlogistics.model.dto;
 
-import com.training.projectlogistics.model.enums.CargoType;
+import com.training.projectlogistics.enums.CargoType;
 import com.training.projectlogistics.model.validators.CargoTypeSubset;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,26 +18,38 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @ToString
-public class OrderAddressDTO {
+public class OrderDTO {
     @NonNull
     @NotEmpty
-    private String source;
+    private String dispatchCity;
 
     @NonNull
     @NotEmpty
-    private String destination;
+    private String dispatchStreet;
 
     @NonNull
     @NotEmpty
-    String street;
-
-    @NonNull
-    @NotEmpty
-    String house;
+    String dispatchHouse;
 
 //    @NonNull
 //    @NotEmpty
-    String apartment;
+    String dispatchApartment;
+
+    @NonNull
+    @NotEmpty
+    private String deliveryCity;
+
+    @NonNull
+    @NotEmpty
+    private String deliveryStreet;
+
+    @NonNull
+    @NotEmpty
+    String deliveryHouse;
+
+    //    @NonNull
+//    @NotEmpty
+    String deliveryApartment;
 
     @NonNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -54,8 +66,6 @@ public class OrderAddressDTO {
     @Digits(integer=2, fraction=2)
     private BigDecimal weight;
 
-    @NonNull
-    @NotEmpty
     @CargoTypeSubset(anyOf = {CargoType.FRAGILE, CargoType.REGULAR})
     private CargoType cargoType;
 }

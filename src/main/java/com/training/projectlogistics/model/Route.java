@@ -15,31 +15,28 @@ import java.util.List;
 @ToString
 
 @Entity
-@Table(name = "delivery_route")
+@Table(name = "routes")
 public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "source")
-    private String source;
+    @Column(name = "point_one")
+    private String pointOne;
 
-    @Column(name = "source_ua", nullable = false)
-    private String sourceUA;
+    @Column(name = "point_one_ua", nullable = false)
+    private String pointOneUA;
 
-    @Column(name = "destination", nullable = false)
-    private String destination;
+    @Column(name = "point_two", nullable = false)
+    private String pointTwo;
 
-    @Column(name = "destination_ua")
-    private String destinationUA;
+    @Column(name = "point_two_ua")
+    private String pointTwoUA;
 
     @Column(name = "basic_rate", nullable = false)
     private BigDecimal basicRate;
 
     @OneToMany(mappedBy = "route", fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
-
-    @OneToMany(mappedBy = "route", fetch = FetchType.LAZY)
-    private List<Address> addresses = new ArrayList<>();
 }

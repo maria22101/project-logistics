@@ -1,9 +1,9 @@
 package com.training.projectlogistics.controller;
 
-import com.training.projectlogistics.controller.unility.UserValidator;
+import com.training.projectlogistics.controller.unility.RegistrationFormValidator;
 import com.training.projectlogistics.model.User;
-import com.training.projectlogistics.service.DatabaseIssueException;
-import com.training.projectlogistics.service.NotUniqueEmailException;
+import com.training.projectlogistics.exceptions.DatabaseIssueException;
+import com.training.projectlogistics.exceptions.NotUniqueEmailException;
 import com.training.projectlogistics.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,13 +21,13 @@ import static com.training.projectlogistics.controller.TextConstants.*;
 @RequestMapping("/registration")
 public class RegistrationController {
     private RegistrationService registrationService;
-    private UserValidator userValidator;
+    private RegistrationFormValidator registrationFormValidator;
 
     @Autowired
     public RegistrationController(RegistrationService registrationService,
-                                  UserValidator userValidator) {
+                                  RegistrationFormValidator registrationFormValidator) {
         this.registrationService = registrationService;
-        this.userValidator = userValidator;
+        this.registrationFormValidator = registrationFormValidator;
     }
 
     @GetMapping
@@ -46,7 +46,7 @@ public class RegistrationController {
                           BindingResult result)
             throws NotUniqueEmailException, DatabaseIssueException {
 
-        userValidator.validate(user, result);
+        registrationFormValidator.validate(user, result);
         if (result.hasErrors()) {
             return "general/registration";
         }

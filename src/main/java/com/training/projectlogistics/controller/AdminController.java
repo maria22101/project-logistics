@@ -1,7 +1,7 @@
 package com.training.projectlogistics.controller;
 
 import com.training.projectlogistics.model.Order;
-import com.training.projectlogistics.model.enums.Role;
+import com.training.projectlogistics.enums.Role;
 import com.training.projectlogistics.service.AdminService;
 import com.training.projectlogistics.service.OrderService;
 import com.training.projectlogistics.service.RouteService;

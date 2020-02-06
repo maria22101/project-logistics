@@ -2,7 +2,7 @@ package com.training.projectlogistics.service;
 
 import com.training.projectlogistics.model.Invoice;
 import com.training.projectlogistics.model.Order;
-import com.training.projectlogistics.model.enums.OrderStatus;
+import com.training.projectlogistics.enums.OrderStatus;
 import com.training.projectlogistics.repository.InvoiceRepository;
 import com.training.projectlogistics.repository.OrderRepository;
 import org.springframework.stereotype.Service;

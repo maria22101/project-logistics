@@ -15,8 +15,7 @@ public interface TextConstants {
     String ERROR_COMMENT_PASSWORD = "input.error.password";
 
     //order creation form validation
-    String ERROR_COMMENT_SOURCE = "input.error.source";
-    String ERROR_COMMENT_DESTINATION = "input.error.destination";
+    String ERROR_COMMENT_CITY = "input.error.source";
     String ERROR_COMMENT_STREET = "input.error.street";
     String ERROR_COMMENT_HOUSE = "input.error.house";
     String ERROR_COMMENT_APARTMENT = "input.error.apartment";

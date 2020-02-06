@@ -1,8 +1,9 @@
 package com.training.projectlogistics.service;
 
+import com.training.projectlogistics.exceptions.DatabaseIssueException;
 import com.training.projectlogistics.model.*;
-import com.training.projectlogistics.model.dto.OrderAddressDTO;
-import com.training.projectlogistics.model.enums.OrderStatus;
+import com.training.projectlogistics.model.dto.OrderDTO;
+import com.training.projectlogistics.enums.OrderStatus;
 import com.training.projectlogistics.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,73 +33,75 @@ public class OrderCreationService {
         this.addressRepository = addressRepository;
     }
 
+    //TODO: dispatchAddress and deliveryAddress - get from the form accordingly
     // 3 - build Order instance
     @Transactional
-    public void addOrder(String email, OrderAddressDTO orderAddressDTO)
+    public void addOrder(String email, OrderDTO orderDTO)
             throws DatabaseIssueException {
 
         User user = userRepository
                 .findByEmail(email)
                 .orElseThrow(() -> new DatabaseIssueException(DATABASE_ISSUE));
 
-        Address address = getAddressFromDB(orderAddressDTO);
+        Address address = getDispatchAddressFromDB(orderDTO);
         addressRepository.save(address);
 
         Order order = Order.builder()
-                .deliveryDate(orderAddressDTO.getDeliveryDate())
-                .route(getRouteFromDB(orderAddressDTO))
-                .weight(orderAddressDTO.getWeight())
-                .cargoType(orderAddressDTO.getCargoType())
-                .address(address)
                 .user(user)
+                .dispatchAddress(address)
+                .deliveryAddress(address)
+                .deliveryDate(orderDTO.getDeliveryDate())
+                .weight(orderDTO.getWeight())
+                .cargoType(orderDTO.getCargoType())
+                .sum(getSum(orderDTO))
                 .orderStatus(OrderStatus.OPEN)
-                .sum(getSum(orderAddressDTO))
+                .route(getRouteFromDB(orderDTO))
                 .build();
 
         orderRepository.save(order);
     }
 
     // 1 - get the relevant Route
-    private Route getRouteFromDB(OrderAddressDTO orderAddressDTO)
+    private Route getRouteFromDB(OrderDTO orderDTO)
             throws DatabaseIssueException {
 
         return routeRepository
-                .findBySourceAndDestination(orderAddressDTO.getSource(), orderAddressDTO.getDestination())
+                .findByPointOneAndPointTwo(orderDTO.getDispatchCity(), orderDTO.getDeliveryCity())
                 .orElseThrow(() -> new DatabaseIssueException(DATABASE_ISSUE));
     }
 
     // 2 - get the relevant Address
-    private Address getAddressFromDB(OrderAddressDTO orderAddressDTO)
+    private Address getDispatchAddressFromDB(OrderDTO orderDTO)
             throws DatabaseIssueException {
 
         return addressRepository
-                .findAddressesByStreetAndHouseAndApartmentAndRoute(
-                        orderAddressDTO.getStreet(),
-                        orderAddressDTO.getHouse(),
-                        orderAddressDTO.getApartment(),
-                        getRouteFromDB(orderAddressDTO))
+                .findAddressesByCityAndStreetAndHouseAndApartment(
+                        orderDTO.getDispatchCity(),
+                        orderDTO.getDispatchStreet(),
+                        orderDTO.getDispatchHouse(),
+                        orderDTO.getDispatchApartment())
                 .orElse(Address.builder()
-                        .street(orderAddressDTO.getStreet())
-                        .house((orderAddressDTO.getHouse()))
-                        .apartment(orderAddressDTO.getApartment())
-                        .route(getRouteFromDB(orderAddressDTO))
+                        .city(orderDTO.getDispatchCity())
+                        .street(orderDTO.getDispatchStreet())
+                        .house(orderDTO.getDispatchHouse())
+                        .apartment(orderDTO.getDispatchApartment())
                         .build());
     }
 
     // getting basic rate from the Route
-    private BigDecimal getSum(OrderAddressDTO orderAddressDTO)
+    private BigDecimal getSum(OrderDTO orderDTO)
             throws DatabaseIssueException {
-        BigDecimal basicRate = getRouteFromDB(orderAddressDTO)
+        BigDecimal basicRate = getRouteFromDB(orderDTO)
                 .getBasicRate();
 
         return basicRate
-                .multiply(getWeightRateCoefficient(orderAddressDTO))
+                .multiply(getWeightRateCoefficient(orderDTO))
                 .setScale(2, RoundingMode.HALF_UP);
     }
 
     // defining weight coefficient from weight_rates.properties file data
-    private BigDecimal getWeightRateCoefficient(OrderAddressDTO orderAddressDTO) {
-        BigDecimal weight = orderAddressDTO.getWeight().setScale(2, RoundingMode.HALF_UP);
+    private BigDecimal getWeightRateCoefficient(OrderDTO orderDTO) {
+        BigDecimal weight = orderDTO.getWeight().setScale(2, RoundingMode.HALF_UP);
         BigDecimal weightRateCoefficient;
 
             if (weight.compareTo(new BigDecimal(WEIGHT_LIGHT_UPPER_BOUND)) <= 0) {

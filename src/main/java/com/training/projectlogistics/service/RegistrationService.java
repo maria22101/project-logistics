@@ -1,13 +1,12 @@
 package com.training.projectlogistics.service;
 
+import com.training.projectlogistics.exceptions.DatabaseIssueException;
+import com.training.projectlogistics.exceptions.NotUniqueEmailException;
 import com.training.projectlogistics.model.User;
-import com.training.projectlogistics.model.enums.Role;
+import com.training.projectlogistics.enums.Role;
 import com.training.projectlogistics.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.sql.SQLException;
-import java.util.Optional;
 
 import static com.training.projectlogistics.controller.TextConstants.DATABASE_ISSUE;
 

@@ -1,9 +1,10 @@
 package com.training.projectlogistics.controller;
 
-import com.training.projectlogistics.controller.unility.OrderAddressDTOValidator;
+import com.training.projectlogistics.controller.unility.OrderFormValidator;
+import com.training.projectlogistics.exceptions.DatabaseIssueException;
 import com.training.projectlogistics.model.User;
-import com.training.projectlogistics.model.dto.OrderAddressDTO;
-import com.training.projectlogistics.model.enums.CargoType;
+import com.training.projectlogistics.model.dto.OrderDTO;
+import com.training.projectlogistics.enums.CargoType;
 import com.training.projectlogistics.model.validators.CargoTypeEnumValidator;
 import com.training.projectlogistics.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,19 +27,20 @@ public class UserController {
     private OrderCreationService orderCreationService;
     private OrderService orderService;
     private InvoiceService invoiceService;
-    private OrderAddressDTOValidator orderAddressDTOValidator;
-    private CargoTypeEnumValidator cargoTypeEnumValidator;
+    private OrderFormValidator orderFormValidator;
+//    private CargoTypeEnumValidator cargoTypeEnumValidator;
 
     @Autowired
     public UserController(OrderCreationService orderCreationService,
                           OrderService orderService,
                           InvoiceService invoiceService,
-                          OrderAddressDTOValidator orderAddressDTOValidator,
-                          CargoTypeEnumValidator cargoTypeEnumValidator) {
+                          OrderFormValidator orderFormValidator
+//            ,CargoTypeEnumValidator cargoTypeEnumValidator
+    ) {
         this.orderCreationService = orderCreationService;
         this.orderService = orderService;
         this.invoiceService = invoiceService;
-        this.cargoTypeEnumValidator = cargoTypeEnumValidator;
+//        this.cargoTypeEnumValidator = cargoTypeEnumValidator;
     }
 
     @GetMapping
@@ -71,23 +73,23 @@ public class UserController {
 
     @GetMapping("/placeOrder")
     public String placeOrder(Model model) {
-        model.addAttribute("orderAddressDTO", new OrderAddressDTO());
+        model.addAttribute("orderDTO", new OrderDTO());
         model.addAttribute("cargoTypes", CargoType.values());
         return "userCabinet/placeOrder";
     }
 
     @PostMapping("/placeOrder")
-    public String addOrder(@ModelAttribute("orderDTO") @Valid OrderAddressDTO orderAddressDTO,
+    public String addOrder(@ModelAttribute("orderDTO") @Valid OrderDTO orderDTO,
                            BindingResult result,
                            Principal principal)
             throws DatabaseIssueException {
 
-        orderAddressDTOValidator.validate(orderAddressDTO, result);
+        orderFormValidator.validate(orderDTO, result);
         if (result.hasErrors()) {
             return "userCabinet/placeOrder";
         }
 
-        orderCreationService.addOrder(principal.getName(), orderAddressDTO);
+        orderCreationService.addOrder(principal.getName(), orderDTO);
 
         return "redirect:/user";
     }

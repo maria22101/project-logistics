@@ -11,11 +11,8 @@ public interface RegexContainer {
 
     String REGEX_PASSWORD = "^.{6,20}$";
 
-    String REGEX_SOURCE_UKR = "^[А-ЩЬЮЯҐІЇЄ][-А-ЩЬЮЯҐІЇЄа-щьюяґіїє' ]{1,30}$";
-    String REGEX_SOURCE_ENG = "^[A-Z][-A-Za-z ]{1,30}$";
-
-    String REGEX_DESTINATION_UKR = "^[А-ЩЬЮЯҐІЇЄ][-А-ЩЬЮЯҐІЇЄа-щьюяґіїє' ]{1,30}$";
-    String REGEX_DESTINATION_ENG = "^[A-Z][-A-Za-z ]{1,30}$";
+    String REGEX_CITY_UKR = "^[А-ЩЬЮЯҐІЇЄ][-А-ЩЬЮЯҐІЇЄа-щьюяґіїє' ]{1,30}$";
+    String REGEX_CITY_ENG = "^[A-Z][-A-Za-z ]{1,30}$";
 
     String REGEX_STREET_UKR = "^[А-ЩЬЮЯҐІЇЄ][-А-ЩЬЮЯҐІЇЄа-щьюяґіїє' ]{1,40}$";
     String REGEX_STREET_ENG = "^[A-Z][-A-Za-z ]{1,40}$";

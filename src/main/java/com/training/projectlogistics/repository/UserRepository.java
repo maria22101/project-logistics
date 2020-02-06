@@ -1,7 +1,7 @@
 package com.training.projectlogistics.repository;
 
 import com.training.projectlogistics.model.User;
-import com.training.projectlogistics.model.enums.Role;
+import com.training.projectlogistics.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

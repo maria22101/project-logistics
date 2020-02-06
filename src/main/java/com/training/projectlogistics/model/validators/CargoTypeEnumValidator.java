@@ -1,7 +1,6 @@
 package com.training.projectlogistics.model.validators;
 
-import com.training.projectlogistics.model.enums.CargoType;
-import org.springframework.stereotype.Component;
+import com.training.projectlogistics.enums.CargoType;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

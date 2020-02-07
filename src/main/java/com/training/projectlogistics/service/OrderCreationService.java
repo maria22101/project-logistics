@@ -5,15 +5,19 @@ import com.training.projectlogistics.model.*;
 import com.training.projectlogistics.model.dto.OrderDTO;
 import com.training.projectlogistics.enums.OrderStatus;
 import com.training.projectlogistics.repository.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Optional;
 
-import static com.training.projectlogistics.controller.TextConstants.*;
+import static com.training.projectlogistics.constants.BusinessInputConstants.*;
+import static com.training.projectlogistics.constants.TextConstants.*;
 
+@Slf4j
 @Service
 public class OrderCreationService {
 
@@ -33,7 +37,6 @@ public class OrderCreationService {
         this.addressRepository = addressRepository;
     }
 
-    //TODO: dispatchAddress and deliveryAddress - get from the form accordingly
     // 3 - build Order instance
     @Transactional
     public void addOrder(String email, OrderDTO orderDTO)
@@ -43,13 +46,14 @@ public class OrderCreationService {
                 .findByEmail(email)
                 .orElseThrow(() -> new DatabaseIssueException(DATABASE_ISSUE));
 
-        Address address = getDispatchAddressFromDB(orderDTO);
-        addressRepository.save(address);
+
+        Address dispatchAddress = defineDispatchAddress(orderDTO);
+        Address deliveryAddress = defineDeliveryAddress(orderDTO);
 
         Order order = Order.builder()
                 .user(user)
-                .dispatchAddress(address)
-                .deliveryAddress(address)
+                .dispatchAddress(dispatchAddress)
+                .deliveryAddress(deliveryAddress)
                 .deliveryDate(orderDTO.getDeliveryDate())
                 .weight(orderDTO.getWeight())
                 .cargoType(orderDTO.getCargoType())
@@ -58,6 +62,8 @@ public class OrderCreationService {
                 .route(getRouteFromDB(orderDTO))
                 .build();
 
+        addressRepository.save(dispatchAddress);
+        addressRepository.save(deliveryAddress);
         orderRepository.save(order);
     }
 
@@ -66,25 +72,55 @@ public class OrderCreationService {
             throws DatabaseIssueException {
 
         return routeRepository
-                .findByPointOneAndPointTwo(orderDTO.getDispatchCity(), orderDTO.getDeliveryCity())
+                .findByPointOneAndPointTwoOrPointTwoAndPointOne
+                        (orderDTO.getDispatchCity(),
+                         orderDTO.getDeliveryCity(),
+                         orderDTO.getDispatchCity(),
+                         orderDTO.getDeliveryCity())
                 .orElseThrow(() -> new DatabaseIssueException(DATABASE_ISSUE));
     }
 
-    // 2 - get the relevant Address
-    private Address getDispatchAddressFromDB(OrderDTO orderDTO)
-            throws DatabaseIssueException {
+    // 2 - check Addresses presence in DB and create those if absent
 
+    private Optional<Address> getDispatchAddressFromDB(OrderDTO orderDTO) {
         return addressRepository
                 .findAddressesByCityAndStreetAndHouseAndApartment(
                         orderDTO.getDispatchCity(),
                         orderDTO.getDispatchStreet(),
                         orderDTO.getDispatchHouse(),
-                        orderDTO.getDispatchApartment())
-                .orElse(Address.builder()
+                        orderDTO.getDispatchApartment());
+    }
+
+    private Optional<Address> getDeliveryAddressFromDB(OrderDTO orderDTO) {
+        return addressRepository
+                .findAddressesByCityAndStreetAndHouseAndApartment(
+                        orderDTO.getDeliveryCity(),
+                        orderDTO.getDeliveryStreet(),
+                        orderDTO.getDeliveryHouse(),
+                        orderDTO.getDeliveryApartment());
+    }
+
+    private Address defineDispatchAddress(OrderDTO orderDTO)
+            throws DatabaseIssueException {
+
+        return getDispatchAddressFromDB(orderDTO).orElse(
+                Address.builder()
                         .city(orderDTO.getDispatchCity())
                         .street(orderDTO.getDispatchStreet())
                         .house(orderDTO.getDispatchHouse())
                         .apartment(orderDTO.getDispatchApartment())
+                        .build());
+    }
+
+    private Address defineDeliveryAddress(OrderDTO orderDTO)
+            throws DatabaseIssueException {
+
+        return getDeliveryAddressFromDB(orderDTO).orElse(
+                Address.builder()
+                        .city(orderDTO.getDeliveryCity())
+                        .street(orderDTO.getDeliveryStreet())
+                        .house(orderDTO.getDeliveryHouse())
+                        .apartment(orderDTO.getDeliveryApartment())
                         .build());
     }
 
@@ -101,19 +137,21 @@ public class OrderCreationService {
 
     // defining weight coefficient from weight_rates.properties file data
     private BigDecimal getWeightRateCoefficient(OrderDTO orderDTO) {
-        BigDecimal weight = orderDTO.getWeight().setScale(2, RoundingMode.HALF_UP);
+        BigDecimal weight = orderDTO.getWeight();
         BigDecimal weightRateCoefficient;
 
-            if (weight.compareTo(new BigDecimal(WEIGHT_LIGHT_UPPER_BOUND)) <= 0) {
-                weightRateCoefficient = new BigDecimal(WEIGHT_LIGHT_COEFFICIENT);
+        if (weight.compareTo(new BigDecimal(WEIGHT_LIGHT_UPPER_BOUND)) <= 0) {
+            weightRateCoefficient = new BigDecimal(WEIGHT_LIGHT_COEFFICIENT);
 
-            }else if(weight.compareTo(new BigDecimal(WEIGHT_MEDIUM_UPPER_BOUND)) <= 0) {
-                weightRateCoefficient = new BigDecimal(WEIGHT_MEDIUM_COEFFICIENT);
+        } else if (weight.compareTo(new BigDecimal(WEIGHT_MEDIUM_UPPER_BOUND)) <= 0) {
+            weightRateCoefficient = new BigDecimal(WEIGHT_MEDIUM_COEFFICIENT);
 
-            }else {
-                weightRateCoefficient = new BigDecimal(WEIGHT_HEAVY_COEFFICIENT);
-            }
-
-            return weightRateCoefficient;
+        } else {
+            weightRateCoefficient = new BigDecimal(WEIGHT_HEAVY_COEFFICIENT);
         }
+
+        log.info("weight coefficient amounts to: " + weightRateCoefficient.toString());
+
+        return weightRateCoefficient;
+    }
 }

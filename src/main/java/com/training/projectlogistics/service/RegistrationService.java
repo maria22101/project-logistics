@@ -8,7 +8,7 @@ import com.training.projectlogistics.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static com.training.projectlogistics.controller.TextConstants.DATABASE_ISSUE;
+import static com.training.projectlogistics.constants.TextConstants.DATABASE_ISSUE;
 
 @Service
 public class RegistrationService {

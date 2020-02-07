@@ -107,7 +107,7 @@
 
             <div>
             <@spring.message "order.cargo"/><@spring.formSingleSelect "orderDTO.cargoType", cargoTypes, ""/>
-<#--            <@spring.showErrors "<br>"/>-->
+            <@spring.showErrors "<br>"/>
             </div>
 
             </br></br>

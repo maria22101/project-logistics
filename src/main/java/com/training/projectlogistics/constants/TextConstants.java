@@ -1,4 +1,4 @@
-package com.training.projectlogistics.controller;
+package com.training.projectlogistics.constants;
 
 import org.springframework.validation.ValidationUtils;
 
@@ -23,14 +23,7 @@ public interface TextConstants {
     String ERROR_COMMENT_WEIGHT = "input.error.weight";
     String ERROR_COMMENT_CARGO_TYPE = "input.error.cargotype";
 
-    String WEIGHT_LIGHT_LOWER_BOUND = "weight.light.lower.bound.value";
-    String WEIGHT_LIGHT_UPPER_BOUND = "weight.light.upper.bound.value";
-    String WEIGHT_MEDIUM_LOWER_BOUND = "weight.medium.lower.bound.value";
-    String WEIGHT_MEDIUM_UPPER_BOUND = "weight.medium.upper.bound.value";
-    String WEIGHT_HEAVY_LOWER_BOUND = "weight.heavy.lower.bound.value";
-    String WEIGHT_HEAVY_UPPER_BOUND = "weight.heavy.upper.bound.value";
-
-    String WEIGHT_LIGHT_COEFFICIENT = "weight.coeff.light";
-    String WEIGHT_MEDIUM_COEFFICIENT = "weight.coeff.medium";
-    String WEIGHT_HEAVY_COEFFICIENT = "weight.coeff.heavy";
+    //enums localization
+    String CARGO_REGULAR = "CargoType.REGULAR";
+    String CARGO_FRAGILE = "CargoType.FRAGILE";
 }

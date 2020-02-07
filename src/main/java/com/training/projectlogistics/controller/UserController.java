@@ -1,11 +1,9 @@
 package com.training.projectlogistics.controller;
 
-import com.training.projectlogistics.controller.unility.OrderFormValidator;
 import com.training.projectlogistics.exceptions.DatabaseIssueException;
 import com.training.projectlogistics.model.User;
 import com.training.projectlogistics.model.dto.OrderDTO;
 import com.training.projectlogistics.enums.CargoType;
-import com.training.projectlogistics.model.validators.CargoTypeEnumValidator;
 import com.training.projectlogistics.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,10 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Locale;
 
-import static com.training.projectlogistics.controller.TextConstants.DATABASE_ISSUE;
+import static com.training.projectlogistics.constants.TextConstants.DATABASE_ISSUE;
 
 @Controller
 @RequestMapping("/user")
@@ -27,20 +25,18 @@ public class UserController {
     private OrderCreationService orderCreationService;
     private OrderService orderService;
     private InvoiceService invoiceService;
-    private OrderFormValidator orderFormValidator;
-//    private CargoTypeEnumValidator cargoTypeEnumValidator;
+//    private OrderFormValidator orderFormValidator;
 
     @Autowired
     public UserController(OrderCreationService orderCreationService,
                           OrderService orderService,
-                          InvoiceService invoiceService,
-                          OrderFormValidator orderFormValidator
-//            ,CargoTypeEnumValidator cargoTypeEnumValidator
+                          InvoiceService invoiceService
+//            , OrderFormValidator orderFormValidator
     ) {
         this.orderCreationService = orderCreationService;
         this.orderService = orderService;
         this.invoiceService = invoiceService;
-//        this.cargoTypeEnumValidator = cargoTypeEnumValidator;
+//        this.orderFormValidator = orderFormValidator;
     }
 
     @GetMapping
@@ -72,22 +68,22 @@ public class UserController {
     }
 
     @GetMapping("/placeOrder")
-    public String placeOrder(Model model) {
+    public String placeOrder(Model model, Locale locale) {
         model.addAttribute("orderDTO", new OrderDTO());
         model.addAttribute("cargoTypes", CargoType.values());
         return "userCabinet/placeOrder";
     }
 
     @PostMapping("/placeOrder")
-    public String addOrder(@ModelAttribute("orderDTO") @Valid OrderDTO orderDTO,
+    public String addOrder(@ModelAttribute("orderDTO") OrderDTO orderDTO,
                            BindingResult result,
                            Principal principal)
             throws DatabaseIssueException {
 
-        orderFormValidator.validate(orderDTO, result);
-        if (result.hasErrors()) {
-            return "userCabinet/placeOrder";
-        }
+//        orderFormValidator.validate(orderDTO, result);
+//        if (result.hasErrors()) {
+//            return "userCabinet/placeOrder";
+//        }
 
         orderCreationService.addOrder(principal.getName(), orderDTO);
 

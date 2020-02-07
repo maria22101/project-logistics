@@ -1,4 +1,4 @@
-package com.training.projectlogistics.controller.unility;
+package com.training.projectlogistics.constants;
 
 public interface RegexContainer {
     String REGEX_NAME_UKR = "^[А-ЩЬЮЯҐІЇЄ][а-щьюяґіїє']{1,20}$";

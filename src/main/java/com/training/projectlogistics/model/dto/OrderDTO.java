@@ -31,8 +31,8 @@ public class OrderDTO {
     @NotEmpty
     String dispatchHouse;
 
-//    @NonNull
-//    @NotEmpty
+    @NonNull
+    @NotEmpty
     String dispatchApartment;
 
     @NonNull
@@ -47,20 +47,21 @@ public class OrderDTO {
     @NotEmpty
     String deliveryHouse;
 
-    //    @NonNull
-//    @NotEmpty
+    @NonNull
+    @NotEmpty
     String deliveryApartment;
 
     @NonNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate deliveryDate;
 
-//    @NonNull
-//    @NotEmpty
 //    @DecimalMax("30.00")
 //    @Column(precision=10, scale=2)
 
     // TODO - max value - property?
+
+    @NonNull
+    @NotEmpty
     @DecimalMin(value = "0.0", inclusive = false)
     @DecimalMax(value = "20.0", inclusive = true)
     @Digits(integer=2, fraction=2)

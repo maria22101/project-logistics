@@ -8,8 +8,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import static com.training.projectlogistics.controller.TextConstants.*;
-import static com.training.projectlogistics.controller.unility.RegexContainer.*;
+import static com.training.projectlogistics.constants.TextConstants.*;
+import static com.training.projectlogistics.constants.RegexContainer.*;
 
 //TODO - substitute text with text constants
 @Component

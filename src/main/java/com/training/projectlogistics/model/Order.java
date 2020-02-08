@@ -44,15 +44,15 @@ public class Order{
     @Column(name = "delivery_date", nullable = false)
     private LocalDate deliveryDate;
 
-    @DecimalMin(value = "0.0", inclusive = false)
-    @DecimalMax(value = "20.0", inclusive = true)
+    @DecimalMin(value = "0.00", inclusive = false)
+    @DecimalMax(value = "20.00", inclusive = true)
     @Digits(integer=2, fraction=2)
     @Column(name = "weight", nullable = false)
     private BigDecimal weight;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "cargo_type", nullable = false)
-    @CargoTypeSubset(anyOf = {CargoType.FRAGILE, CargoType.REGULAR})
+    @CargoTypeSubset(anyOf = {CargoType.REGULAR, CargoType.FRAGILE})
     private CargoType cargoType;
 
     @Column(name = "sum", nullable = false)

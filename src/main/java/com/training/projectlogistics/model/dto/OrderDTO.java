@@ -3,7 +3,10 @@ package com.training.projectlogistics.model.dto;
 import com.training.projectlogistics.enums.CargoType;
 import com.training.projectlogistics.model.validators.CargoTypeSubset;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
@@ -19,54 +22,54 @@ import java.time.LocalDate;
 @Builder
 @ToString
 public class OrderDTO {
-    @NonNull
-    @NotEmpty
+//    @NonNull
+//    @NotEmpty
     private String dispatchCity;
 
-    @NonNull
-    @NotEmpty
+//    @NonNull
+//    @NotEmpty
     private String dispatchStreet;
 
-    @NonNull
-    @NotEmpty
+//    @NonNull
+//    @NotEmpty
     String dispatchHouse;
 
-    @NonNull
-    @NotEmpty
+//    @NonNull
+//    @NotEmpty
     String dispatchApartment;
 
-    @NonNull
-    @NotEmpty
+//    @NonNull
+//    @NotEmpty
     private String deliveryCity;
 
-    @NonNull
-    @NotEmpty
+//    @NonNull
+//    @NotEmpty
     private String deliveryStreet;
 
-    @NonNull
-    @NotEmpty
+//    @NonNull
+//    @NotEmpty
     String deliveryHouse;
 
-    @NonNull
-    @NotEmpty
+//    @NonNull
+//    @NotEmpty
     String deliveryApartment;
 
-    @NonNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate deliveryDate;
+//    @NonNull
+//    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate deliverydate;
 
 //    @DecimalMax("30.00")
 //    @Column(precision=10, scale=2)
 
     // TODO - max value - property?
 
-    @NonNull
-    @NotEmpty
-    @DecimalMin(value = "0.0", inclusive = false)
-    @DecimalMax(value = "20.0", inclusive = true)
-    @Digits(integer=2, fraction=2)
+//    @NonNull
+//    @NotEmpty
+//    @DecimalMin(value = "0.00", inclusive = false)
+//    @DecimalMax(value = "20.00", inclusive = true)
+//    @Digits(integer=2, fraction=2)
     private BigDecimal weight;
 
     @CargoTypeSubset(anyOf = {CargoType.FRAGILE, CargoType.REGULAR})
-    private CargoType cargoType;
+    private CargoType cargotype;
 }

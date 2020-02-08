@@ -9,7 +9,7 @@ public interface RegexContainer {
 
     String REGEX_EMAIL = "^[-\\w.]+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}$";
 
-    String REGEX_PASSWORD = "^.{6,20}$";
+    String REGEX_PASSWORD = "^.{3,20}$";
 
     String REGEX_CITY_UKR = "^[А-ЩЬЮЯҐІЇЄ][-А-ЩЬЮЯҐІЇЄа-щьюяґіїє' ]{1,30}$";
     String REGEX_CITY_ENG = "^[A-Z][-A-Za-z ]{1,30}$";

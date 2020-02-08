@@ -5,6 +5,7 @@ import com.training.projectlogistics.model.User;
 import com.training.projectlogistics.exceptions.DatabaseIssueException;
 import com.training.projectlogistics.exceptions.NotUniqueEmailException;
 import com.training.projectlogistics.service.RegistrationService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import static com.training.projectlogistics.constants.TextConstants.*;
 
-
+@Slf4j
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
@@ -46,12 +47,17 @@ public class RegistrationController {
                           BindingResult result)
             throws NotUniqueEmailException, DatabaseIssueException {
 
+        log.info("inside RegistrationController, inside addUser() before validation");
+
         registrationFormValidator.validate(user, result);
         if (result.hasErrors()) {
+            log.info("inside RegistrationController, inside addUser(): checked that form has errors");
             return "general/registration";
         }
 
         registrationService.addUser(user);
+
+        log.info("inside RegistrationController, inside addUser() form valid, user added");
 
         return "redirect:/login";
     }

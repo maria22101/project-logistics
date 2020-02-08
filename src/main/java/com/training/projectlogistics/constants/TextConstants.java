@@ -15,10 +15,14 @@ public interface TextConstants {
     String ERROR_COMMENT_PASSWORD = "input.error.password";
 
     //order creation form validation
-    String ERROR_COMMENT_CITY = "input.error.source";
-    String ERROR_COMMENT_STREET = "input.error.street";
-    String ERROR_COMMENT_HOUSE = "input.error.house";
-    String ERROR_COMMENT_APARTMENT = "input.error.apartment";
+    String ERROR_COMMENT_DISPATCH_CITY = "input.error.dispatch.city";
+    String ERROR_COMMENT_DELIVERY_CITY = "input.error.delivery.city";
+    String ERROR_COMMENT_DISPATCH_STREET = "input.error.dispatch.street";
+    String ERROR_COMMENT_DELIVERY_STREET = "input.error.delivery.street";
+    String ERROR_COMMENT_DISPATCH_HOUSE = "input.error.dispatch.house";
+    String ERROR_COMMENT_DELIVERY_HOUSE = "input.error.delivery.house";
+    String ERROR_COMMENT_DISPATCH_APARTMENT = "input.error.dispatch.apartment";
+    String ERROR_COMMENT_DELIVERY_APARTMENT = "input.error.delivery.apartment";
     String ERROR_COMMENT_DELIVERY_DATE = "input.error.delivery.date";
     String ERROR_COMMENT_WEIGHT = "input.error.weight";
     String ERROR_COMMENT_CARGO_TYPE = "input.error.cargotype";

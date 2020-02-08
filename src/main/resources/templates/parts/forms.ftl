@@ -48,67 +48,79 @@
         <form action="${path}" method="post">
 
             <div>
-            <@spring.message "order.dispatch.city"/><@spring.formInput "orderDTO.dispatchCity"/>
-            <@spring.showErrors "<br>"/>
+            <@spring.message "order.dispatch.city"/>
+            <@spring.formInput "orderDTO.dispatchCity"/>
+            <@spring.showErrors ", "/>
             </div>
 
             <div>
-            <@spring.message "order.dispatch.street"/><@spring.formInput "orderDTO.dispatchStreet"/>
-            <@spring.showErrors "<br>"/>
+            <@spring.message "order.dispatch.street"/>
+            <@spring.formInput "orderDTO.dispatchStreet"/>
+            <@spring.showErrors ", "/>
             </div>
 
             <div>
-            <@spring.message "order.dispatch.house"/><@spring.formInput "orderDTO.dispatchHouse"/>
-            <@spring.showErrors "<br>"/>
+            <@spring.message "order.dispatch.house"/>
+            <@spring.formInput "orderDTO.dispatchHouse"/>
+            <@spring.showErrors ", "/>
             </div>
 
             <div>
-            <@spring.message "order.dispatch.apartment"/><@spring.formInput "orderDTO.dispatchApartment"/>
-            <@spring.showErrors "<br>"/>
+            <@spring.message "order.dispatch.apartment"/>
+            <@spring.formInput "orderDTO.dispatchApartment"/>
+            <@spring.showErrors ", "/>
             </div>
 
             </br></br>
 
             <div>
-            <@spring.message "order.delivery.city"/><@spring.formInput "orderDTO.deliveryCity"/>
-            <@spring.showErrors "<br>"/>
+            <@spring.message "order.delivery.city"/>
+            <@spring.formInput "orderDTO.deliveryCity"/>
+            <@spring.showErrors ", "/>
             </div>
 
             <div>
-            <@spring.message "order.delivery.street"/><@spring.formInput "orderDTO.deliveryStreet"/>
-            <@spring.showErrors "<br>"/>
+            <@spring.message "order.delivery.street"/>
+            <@spring.formInput "orderDTO.deliveryStreet"/>
+            <@spring.showErrors ", "/>
             </div>
 
             <div>
-            <@spring.message "order.delivery.house"/><@spring.formInput "orderDTO.deliveryHouse"/>
-            <@spring.showErrors "<br>"/>
+            <@spring.message "order.delivery.house"/>
+            <@spring.formInput "orderDTO.deliveryHouse"/>
+            <@spring.showErrors ", "/>
             </div>
 
             <div>
-            <@spring.message "order.delivery.apartment"/><@spring.formInput "orderDTO.deliveryApartment"/>
-            <@spring.showErrors "<br>"/>
+            <@spring.message "order.delivery.apartment"/>
+            <@spring.formInput "orderDTO.deliveryApartment"/>
+            <@spring.showErrors ", "/>
             </div>
 
             </br></br>
 
             <div>
-            <@spring.message "order.delivery.date"/><@spring.formInput "orderDTO.deliveryDate"/>
-            <@spring.showErrors "<br>"/>
+            <@spring.message "order.delivery.date"/>
+            <@spring.formInput "orderDTO.deliverydate"/>
+            <@spring.showErrors ", "/>
             </div>
 
             <p></p>
 
             <div>
-            <@spring.message "order.weight"/><@spring.formInput "orderDTO.weight"/>
-            <@spring.showErrors "<br>"/>
+            <@spring.message "order.weight"/>
+            <@spring.formInput "orderDTO.weight"/>
+            <@spring.showErrors ", "/>
             </div>
 
             <p></p>
 
             <div>
-            <@spring.message "order.cargo"/><@spring.formSingleSelect "orderDTO.cargoType", cargoTypes, ""/>
-            <@spring.showErrors "<br>"/>
+            <@spring.message "order.cargo"/>
+            <@spring.formSingleSelect "orderDTO.cargotype", cargoTypes, " "/>
+            <@spring.showErrors ", "/>
             </div>
+
 
             </br></br>
 

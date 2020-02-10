@@ -9,8 +9,8 @@
     <table border="0.5">
         <thead>
         <tr>
-            <th><@spring.message "main.from"/></th>
-            <th><@spring.message "main.to"/></th>
+            <th><@spring.message "main.route.point.one"/></th>
+            <th><@spring.message "main.route.point.two"/></th>
             <th><@spring.message "main.cost"/></th>
         </tr>
         </thead>
@@ -18,14 +18,14 @@
         <#list routes as route>
             <#if .locale?starts_with("ua")>
                 <tr>
-                    <td>${route.sourceUA}</td>
-                    <td>${route.destinationUA}</td>
+                    <td>${route.pointOneUA}</td>
+                    <td>${route.pointTwoUA}</td>
                     <td>${route.basicRate}</td>
                 </tr>
             <#else>
                 <tr>
-                    <td>${route.source}</td>
-                    <td>${route.destination}</td>
+                    <td>${route.pointOne}</td>
+                    <td>${route.pointTwo}</td>
                     <td>${route.basicRate}</td>
                 </tr>
             </#if>

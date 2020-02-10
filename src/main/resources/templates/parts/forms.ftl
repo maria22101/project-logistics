@@ -47,9 +47,11 @@
     <@spring.bind "orderDTO"/>
         <form action="${path}" method="post">
 
+            <@spring.bind "routeCities" />
+
             <div>
             <@spring.message "order.dispatch.city"/>
-            <@spring.formInput "orderDTO.dispatchCity"/>
+            <@spring.formSingleSelect "orderDTO.dispatchCity", routeCities, " "/>
             <@spring.showErrors ", "/>
             </div>
 
@@ -75,7 +77,7 @@
 
             <div>
             <@spring.message "order.delivery.city"/>
-            <@spring.formInput "orderDTO.deliveryCity"/>
+            <@spring.formSingleSelect "orderDTO.deliveryCity", routeCities ""/>
             <@spring.showErrors ", "/>
             </div>
 
@@ -101,7 +103,7 @@
 
             <div>
             <@spring.message "order.delivery.date"/>
-            <@spring.formInput "orderDTO.deliverydate"/>
+            <@spring.formInput "orderDTO.deliveryDate"/>
             <@spring.showErrors ", "/>
             </div>
 
@@ -117,10 +119,9 @@
 
             <div>
             <@spring.message "order.cargo"/>
-            <@spring.formSingleSelect "orderDTO.cargotype", cargoTypes, " "/>
+            <@spring.formSingleSelect "orderDTO.cargoType", cargoTypes ""/>
             <@spring.showErrors ", "/>
             </div>
-
 
             </br></br>
 

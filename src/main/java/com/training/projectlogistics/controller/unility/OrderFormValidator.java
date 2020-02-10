@@ -34,21 +34,21 @@ public class OrderFormValidator implements Validator {
         ValidationUtils.rejectIfEmpty(errors, "deliveryCity", ERROR_COMMENT_DELIVERY_CITY);
         ValidationUtils.rejectIfEmpty(errors, "deliveryStreet", ERROR_COMMENT_DELIVERY_STREET);
         ValidationUtils.rejectIfEmpty(errors, "deliveryHouse", ERROR_COMMENT_DELIVERY_HOUSE);
-        ValidationUtils.rejectIfEmpty(errors, "deliverydate", ERROR_COMMENT_DELIVERY_DATE);
+        ValidationUtils.rejectIfEmpty(errors, "deliveryDate", ERROR_COMMENT_DELIVERY_DATE);
         ValidationUtils.rejectIfEmpty(errors, "weight", ERROR_COMMENT_WEIGHT);
-        ValidationUtils.rejectIfEmpty(errors, "cargotype", ERROR_COMMENT_CARGO_TYPE);
+//        ValidationUtils.rejectIfEmpty(errors, "cargoType", ERROR_COMMENT_CARGO_TYPE);
 
-//        String regexCity = (LocaleContextHolder.getLocale().toString().equals("ua")
-//                ? REGEX_CITY_UKR : REGEX_CITY_ENG);
+        String regexCity = (LocaleContextHolder.getLocale().toString().equals("ua")
+                ? REGEX_CITY_UKR : REGEX_CITY_ENG);
 //        String regexStreet = (LocaleContextHolder.getLocale().toString().equals("ua")
 //                ? REGEX_STREET_UKR : REGEX_STREET_ENG);
 //        String regexHouse = (LocaleContextHolder.getLocale().toString().equals("ua")
 //                ? REGEX_HOUSE_UKR : REGEX_HOUSE_ENG);
 //        String regexCargo = (LocaleContextHolder.getLocale().toString().equals("ua")
 //                ? REGEX_CARGO_TYPE_UKR : REGEX_CARGO_TYPE_ENG);
-////
-//        if ((StringUtils.hasText(dto.getDispatchcity()) &&
-//                !dto.getDispatchcity().matches(regexCity))) {
+
+//        if ((StringUtils.hasText(dto.getDispatchCity()) &&
+//                !dto.getDispatchCity().matches(regexCity))) {
 //            errors.rejectValue("dispatchcity", ERROR_COMMENT_CITY);
 //        }
 //        if ((StringUtils.hasText(dto.getDispatchstreet()) &&
@@ -90,11 +90,10 @@ public class OrderFormValidator implements Validator {
 ////                !dto.getWeight().toString().matches(REGEX_WEIGHT))) {
 ////            errors.rejectValue("weight", ERROR_COMMENT_WEIGHT);
 ////        }
-//        if ((StringUtils.hasText(dto.getCargoType().toString()) &&
-//                !dto.getCargoType().toString().matches(regexCargo))) {
+//        if (dto.getCargoType() == null) {
 //            errors.rejectValue("cargoType", ERROR_COMMENT_CARGO_TYPE);
 //        }
 
-        log.info("Order creation form validation completed. Errors content: " + errors.toString());
+        log.info("OrderFormValidator end. Errors: " + errors.toString());
     }
 }

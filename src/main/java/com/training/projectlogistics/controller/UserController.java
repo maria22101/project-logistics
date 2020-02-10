@@ -8,6 +8,7 @@ import com.training.projectlogistics.enums.CargoType;
 import com.training.projectlogistics.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -15,10 +16,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Locale;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.training.projectlogistics.constants.TextConstants.DATABASE_ISSUE;
 
@@ -30,16 +35,19 @@ public class UserController {
     private OrderCreationService orderCreationService;
     private OrderService orderService;
     private InvoiceService invoiceService;
+    private RouteService routeService;
     private OrderFormValidator orderFormValidator;
 
     @Autowired
     public UserController(OrderCreationService orderCreationService,
                           OrderService orderService,
                           InvoiceService invoiceService,
+                          RouteService routeService,
                           OrderFormValidator orderFormValidator) {
         this.orderCreationService = orderCreationService;
         this.orderService = orderService;
         this.invoiceService = invoiceService;
+        this.routeService = routeService;
         this.orderFormValidator = orderFormValidator;
     }
 
@@ -71,10 +79,31 @@ public class UserController {
         return "redirect:/user/invoicedOrders";
     }
 
+//    public ModelAndView get() {
+//        ModelAndView mav = new ModelAndView();
+//        List<String> routeCities = routeService.getAllRoutesPoints();;
+//        mav.addObject("routeCities", routeCities);
+//        mav.setViewName("cityMap");
+//
+//        return mav;
+//    }
+
     @GetMapping("/placeOrder")
     public String placeOrder(Model model) {
+//        Map<String, String> cityMap = routeService.getAllRoutesPoints()
+//                .stream()
+//                .collect(Collectors.toMap(city -> city, city -> city));
+//
+//        Map<String, Object> m = new HashMap();
+//        m.put("cityMap", cityMap);;
+
         model.addAttribute("orderDTO", new OrderDTO());
+        model.addAttribute("routeCities", routeService.getAllRoutesPoints());
         model.addAttribute("cargoTypes", CargoType.values());
+
+//        log.info("routeCities: " + routeCities);
+//        log.info("cargoTypes: " + Arrays.toString(cargoTypes));
+
         return "userCabinet/placeOrder";
     }
 
@@ -91,6 +120,8 @@ public class UserController {
             log.info("inside UserController, inside addOrder(): checked that form has errors");
             return "userCabinet/placeOrder";
         }
+
+        log.info("OrderDTO created: " + orderDTO.toString());
 
         orderCreationService.addOrder(principal.getName(), orderDTO);
 

@@ -1,5 +1,6 @@
 package com.training.projectlogistics.model.dto;
 
+import com.training.projectlogistics.constants.TextConstants;
 import com.training.projectlogistics.enums.CargoType;
 import com.training.projectlogistics.model.validators.CargoTypeSubset;
 import lombok.*;
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @ToString
+@Component
 public class OrderDTO {
 //    @NonNull
 //    @NotEmpty
@@ -55,8 +57,8 @@ public class OrderDTO {
     String deliveryApartment;
 
 //    @NonNull
-//    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDate deliverydate;
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate deliveryDate;
 
 //    @DecimalMax("30.00")
 //    @Column(precision=10, scale=2)
@@ -70,6 +72,9 @@ public class OrderDTO {
 //    @Digits(integer=2, fraction=2)
     private BigDecimal weight;
 
-    @CargoTypeSubset(anyOf = {CargoType.FRAGILE, CargoType.REGULAR})
-    private CargoType cargotype;
+//    @NotEmpty(message = TextConstants.ERROR_COMMENT_CARGO_TYPE)
+    @CargoTypeSubset(anyOf = {CargoType.FRAGILE, CargoType.REGULAR}, message = TextConstants.ERROR_COMMENT_CARGO_TYPE)
+    private CargoType cargoType;
+
+
 }

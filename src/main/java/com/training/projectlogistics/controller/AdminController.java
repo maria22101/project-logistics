@@ -37,13 +37,6 @@ public class AdminController {
         return "adminCabinet/adminMain";
     }
 
-//    @GetMapping("/orders")
-//    public String displayOrders(Model model) {
-//        model.addAttribute("orders", adminService.getAllOrders());
-//
-//        return "adminCabinet/orderList";
-//    }
-
     @GetMapping("/orders")
     public String displayAllOrders(Model model) {
         model.addAttribute("orders", orderService.getAllOrders());

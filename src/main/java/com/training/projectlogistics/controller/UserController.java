@@ -2,6 +2,7 @@ package com.training.projectlogistics.controller;
 
 import com.training.projectlogistics.controller.unility.OrderFormValidator;
 import com.training.projectlogistics.exceptions.DatabaseIssueException;
+import com.training.projectlogistics.model.Order;
 import com.training.projectlogistics.model.User;
 import com.training.projectlogistics.model.dto.OrderDTO;
 import com.training.projectlogistics.enums.CargoType;
@@ -72,13 +73,6 @@ public class UserController {
         return "userCabinet/invoicedOrders";
     }
 
-    @PostMapping("/invoicedOrders")
-    public String displayEditedOrders(@RequestParam("orderNumber") Long orderNumber) {
-        invoiceService.payInvoiceOfOrderNumber(orderNumber);
-
-        return "redirect:/user/invoicedOrders";
-    }
-
 //    public ModelAndView get() {
 //        ModelAndView mav = new ModelAndView();
 //        List<String> routeCities = routeService.getAllRoutesPoints();;
@@ -126,6 +120,20 @@ public class UserController {
         orderCreationService.addOrder(principal.getName(), orderDTO);
 
         return "redirect:/user";
+    }
+
+    @GetMapping("/invoicedOrders/{orderNumber}")
+    public String orderDetails(@PathVariable("orderNumber") Long orderNumber, Model model) {
+        model.addAttribute("order", orderService.getOrderByNumber(orderNumber));
+
+        return "userCabinet/orderDetails";
+    }
+
+    @PostMapping("/invoicedOrders/{orderNumber}")
+    public String payOrder(@PathVariable("orderNumber") Long orderNumber) {
+        invoiceService.payInvoiceOfOrderNumber(orderNumber);
+
+        return "redirect:/user/invoicedOrders";
     }
 
     @ExceptionHandler(DatabaseIssueException.class)

@@ -18,6 +18,7 @@
             <th><@spring.message "order.weight"/></th>
             <th><@spring.message "order.cargo"/></th>
             <th><@spring.message "order.sum"/></th>
+            <th><@spring.message "order.invoice.number"/></th>
             <th><@spring.message "order.status"/></th>
         </tr>
         </thead>
@@ -33,6 +34,9 @@
                 <td>${order.weight}</td>
                 <td>${order.cargoType}</td>
                 <td>${order.sum}</td>
+                <td>
+                    ${(order.invoice.invoiceNumber)!''}
+                </td>
                 <td>${order.orderStatus}</td>
             </tr>
         </#list>

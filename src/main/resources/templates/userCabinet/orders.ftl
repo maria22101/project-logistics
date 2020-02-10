@@ -11,13 +11,7 @@
         <tr>
             <th><@spring.message "order.number"/></th>
             <th><@spring.message "order.dispatch.city"/></th>
-            <th><@spring.message "order.dispatch.street"/></th>
-            <th><@spring.message "order.dispatch.house"/></th>
-            <th><@spring.message "order.dispatch.apartment"/></th>
             <th><@spring.message "order.delivery.city"/></th>
-            <th><@spring.message "order.delivery.street"/></th>
-            <th><@spring.message "order.delivery.house"/></th>
-            <th><@spring.message "order.delivery.apartment"/></th>
             <th><@spring.message "order.delivery.date"/></th>
             <th><@spring.message "order.weight"/></th>
             <th><@spring.message "order.cargo"/></th>
@@ -30,13 +24,7 @@
             <tr>
                 <td>${order.orderNumber}</td>
                 <td>${order.dispatchAddress.city}</td>
-                <td>${order.dispatchAddress.street}</td>
-                <td>${order.dispatchAddress.house}</td>
-                <td>${order.dispatchAddress.apartment}</td>
                 <td>${order.deliveryAddress.city}</td>
-                <td>${order.deliveryAddress.street}</td>
-                <td>${order.deliveryAddress.house}</td>
-                <td>${order.deliveryAddress.apartment}</td>
                 <td>${order.deliveryDate}</td>
                 <td>${order.weight}</td>
                 <td>${order.cargoType}</td>

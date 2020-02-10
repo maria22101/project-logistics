@@ -51,14 +51,6 @@ public class AdminController {
         return "adminCabinet/openOrders";
     }
 
-//    @GetMapping("/orders/{orderNumber}")
-//    public String orderStatusChange(@PathVariable("orderNumber") Long orderNumber, Model model) {
-//        model.addAttribute("order", orderService.getOrderByNumber(orderNumber));
-//        model.addAttribute("statuses", OrderStatus.values());
-//
-//        return "adminCabinet/orderEdit";
-//    }
-
     @PostMapping("/open_orders")
     public String issueInvoice(@RequestParam("orderNumber") Long orderNumber) {
         Order editingOrder = orderService.getOrderByNumber(orderNumber);

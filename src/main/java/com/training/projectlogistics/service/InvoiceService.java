@@ -1,5 +1,7 @@
 package com.training.projectlogistics.service;
 
+import com.training.projectlogistics.exceptions.DatabaseFetchException;
+import com.training.projectlogistics.exceptions.DatabaseSaveException;
 import com.training.projectlogistics.model.Invoice;
 import com.training.projectlogistics.model.Order;
 import com.training.projectlogistics.enums.OrderStatus;
@@ -20,16 +22,25 @@ public class InvoiceService {
         this.orderRepository = orderRepository;
     }
 
-    //TODO - split?
     @Transactional
-    public void payInvoiceOfOrderNumber(Long orderNumber) {
-        Invoice invoice = invoiceRepository.findByOrder_OrderNumber(orderNumber).get();
+    public void payInvoiceOfOrderNumber(Long orderNumber)
+            throws DatabaseFetchException, DatabaseSaveException {
+
+        Invoice invoice = invoiceRepository.findByOrder_OrderNumber(orderNumber)
+                .orElseThrow(DatabaseFetchException::new);
+
         invoice.setPaid(true);
 
-        Order order = orderRepository.findOrderByOrderNumber(orderNumber).get();
+        Order order = orderRepository.findOrderByOrderNumber(orderNumber)
+                .orElseThrow(DatabaseFetchException::new);
+
         order.setOrderStatus(OrderStatus.READY_FOR_DISPATCH);
 
-        invoiceRepository.save(invoice);
-        orderRepository.save(order);
+        try {
+            invoiceRepository.save(invoice);
+            orderRepository.save(order);
+        } catch (Exception e) {
+            throw new DatabaseSaveException();
+        }
     }
 }

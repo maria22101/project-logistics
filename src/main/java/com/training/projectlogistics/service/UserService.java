@@ -1,5 +1,6 @@
 package com.training.projectlogistics.service;
 
+import com.training.projectlogistics.exceptions.DatabaseFetchException;
 import com.training.projectlogistics.model.User;
 import com.training.projectlogistics.enums.Role;
 import com.training.projectlogistics.repository.UserRepository;
@@ -21,22 +22,12 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    public Role getUserRole(String email) {
-        return userRepository.findByEmail(email).get().getRole();
-    }
-
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByEmail(email);
-        user.orElseThrow(() -> new UsernameNotFoundException("email " + email + " not found"));
-        return user.get();
-    }
+    public UserDetails loadUserByUsername(String email)
+            throws UsernameNotFoundException {
 
-    public List<User> getUsersByRole(Role role) {
-        return userRepository.findUsersByRole(role);
-    }
-
-    public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email).get();
+        return userRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("email " + email + " not found"));
     }
 }

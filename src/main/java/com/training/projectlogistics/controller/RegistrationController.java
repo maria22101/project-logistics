@@ -1,8 +1,9 @@
 package com.training.projectlogistics.controller;
 
 import com.training.projectlogistics.controller.unility.RegistrationFormValidator;
+import com.training.projectlogistics.exceptions.DatabaseSaveException;
 import com.training.projectlogistics.model.User;
-import com.training.projectlogistics.exceptions.DatabaseIssueException;
+import com.training.projectlogistics.exceptions.DatabaseFetchException;
 import com.training.projectlogistics.exceptions.NotUniqueEmailException;
 import com.training.projectlogistics.service.RegistrationService;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +46,9 @@ public class RegistrationController {
     @PostMapping
     public String addUser(@ModelAttribute @Valid User user,
                           BindingResult result)
-            throws NotUniqueEmailException, DatabaseIssueException {
+            throws NotUniqueEmailException,
+                   DatabaseFetchException,
+                   DatabaseSaveException {
 
         log.info("inside RegistrationController, inside addUser() before validation");
 
@@ -63,20 +66,16 @@ public class RegistrationController {
     }
 
     @ExceptionHandler(NotUniqueEmailException.class)
-    public String handleNotUniqueEmailException(NotUniqueEmailException ex,
-                                                Model model) {
+    public String handleNotUniqueEmailException(Model model) {
         model.addAttribute("errorMessage", EMAIL_EXISTS);
 
         return "general/error";
     }
 
-    @ExceptionHandler(DatabaseIssueException.class)
-    public String handleDatabaseIssueException(DatabaseIssueException ex,
-                                               Model model) {
-        model.addAttribute("errorMessage", DATABASE_ISSUE);
+    @ExceptionHandler(DatabaseFetchException.class)
+    public String handleDatabaseIssueException(DatabaseFetchException e, Model model) {
+        model.addAttribute("errorMessage", e.toString());
 
         return "general/error";
     }
-
-
 }

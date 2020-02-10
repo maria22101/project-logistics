@@ -78,7 +78,6 @@
 
     <form action="/user/invoicedOrders/${order.orderNumber}" method="post">
          <div>
-<#--             <input type="hidden" value="${order.orderNumber}" name="orderNumber">-->
              <input type="submit" value="<@spring.message "usercabinet.invoice.payment.button"/>">
          </div>
     </form>

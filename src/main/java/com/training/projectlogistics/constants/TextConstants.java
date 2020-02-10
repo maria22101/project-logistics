@@ -6,7 +6,8 @@ import java.math.BigDecimal;
 
 public interface TextConstants {
     String EMAIL_EXISTS = "registration.emailexist.error.message";
-    String DATABASE_ISSUE = "database.action.failed";
+    String DATABASE_FETCH_ISSUE = "database.fetch.issue";
+    String DATABASE_SAVING_ISSUE = "database.saving.issue";
 
     //registration form validation
     String ERROR_COMMENT_NAME = "input.error.name";

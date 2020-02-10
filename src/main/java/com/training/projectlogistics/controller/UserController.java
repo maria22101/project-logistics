@@ -1,32 +1,23 @@
 package com.training.projectlogistics.controller;
 
 import com.training.projectlogistics.controller.unility.OrderFormValidator;
-import com.training.projectlogistics.exceptions.DatabaseIssueException;
-import com.training.projectlogistics.model.Order;
+import com.training.projectlogistics.exceptions.DatabaseFetchException;
+import com.training.projectlogistics.exceptions.DatabaseSaveException;
 import com.training.projectlogistics.model.User;
 import com.training.projectlogistics.model.dto.OrderDTO;
 import com.training.projectlogistics.enums.CargoType;
 import com.training.projectlogistics.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static com.training.projectlogistics.constants.TextConstants.DATABASE_ISSUE;
 
 @Slf4j
 @Controller
@@ -56,21 +47,8 @@ public class UserController {
     public String greetUser(@AuthenticationPrincipal User user,
                             Model model) {
         model.addAttribute("name", user.getName());
+
         return "userCabinet/userMain";
-    }
-
-    @GetMapping("/orders")
-    public String displayAllOrders(Principal principal, Model model) {
-        model.addAttribute("orders", orderService.getOrdersByEmail(principal.getName()));
-
-        return "userCabinet/orders";
-    }
-
-    @GetMapping("/invoicedOrders")
-    public String displayOpenOrders(Principal principal, Model model) {
-        model.addAttribute("openOrders", orderService.getInvoicedOrdersByEmail(principal.getName()));
-
-        return "userCabinet/invoicedOrders";
     }
 
 //    public ModelAndView get() {
@@ -83,7 +61,8 @@ public class UserController {
 //    }
 
     @GetMapping("/placeOrder")
-    public String placeOrder(Model model) {
+    public String placeOrder(Model model)
+            throws DatabaseFetchException {
 //        Map<String, String> cityMap = routeService.getAllRoutesPoints()
 //                .stream()
 //                .collect(Collectors.toMap(city -> city, city -> city));
@@ -105,7 +84,7 @@ public class UserController {
     public String addOrder(@ModelAttribute @Valid OrderDTO orderDTO,
                            BindingResult result,
                            Principal principal)
-            throws DatabaseIssueException {
+            throws DatabaseFetchException, DatabaseSaveException {
 
         log.info("inside UserController, inside addOrder() before validation");
 
@@ -122,24 +101,53 @@ public class UserController {
         return "redirect:/user";
     }
 
+    @GetMapping("/orders")
+    public String displayAllOrders(Principal principal, Model model)
+            throws DatabaseFetchException {
+
+        model.addAttribute("orders", orderService.getOrdersByEmail(principal.getName()));
+
+        return "userCabinet/orders";
+    }
+
+    @GetMapping("/invoicedOrders")
+    public String displayOpenOrders(Principal principal, Model model)
+            throws DatabaseFetchException {
+
+        model.addAttribute("openOrders", orderService.getInvoicedOrdersByEmail(principal.getName()));
+
+        return "userCabinet/invoicedOrders";
+    }
+
     @GetMapping("/invoicedOrders/{orderNumber}")
-    public String orderDetails(@PathVariable("orderNumber") Long orderNumber, Model model) {
+    public String displayOrderDetails(@PathVariable("orderNumber") Long orderNumber,
+                                      Model model)
+            throws DatabaseFetchException {
+
         model.addAttribute("order", orderService.getOrderByNumber(orderNumber));
 
         return "userCabinet/orderDetails";
     }
 
     @PostMapping("/invoicedOrders/{orderNumber}")
-    public String payOrder(@PathVariable("orderNumber") Long orderNumber) {
+    public String payOrder(@PathVariable("orderNumber") Long orderNumber)
+            throws DatabaseFetchException, DatabaseSaveException {
+
         invoiceService.payInvoiceOfOrderNumber(orderNumber);
 
         return "redirect:/user/invoicedOrders";
     }
 
-    @ExceptionHandler(DatabaseIssueException.class)
-    public String handleDatabaseIssueException(DatabaseIssueException ex,
-                                               Model model) {
-        model.addAttribute("errorMessage", DATABASE_ISSUE);
+    @ExceptionHandler(DatabaseFetchException.class)
+    public String handleDatabaseIssueException(DatabaseFetchException e, Model model) {
+        model.addAttribute("errorMessage", e.toString());
+
+        return "general/error";
+    }
+
+    @ExceptionHandler(DatabaseSaveException.class)
+    public String handleDatabaseSaveException(DatabaseSaveException e, Model model) {
+        model.addAttribute("errorMessage", e.toString());
 
         return "general/error";
     }

@@ -1,6 +1,7 @@
 package com.training.projectlogistics.service;
 
-import com.training.projectlogistics.exceptions.DatabaseIssueException;
+import com.training.projectlogistics.exceptions.DatabaseFetchException;
+import com.training.projectlogistics.exceptions.DatabaseSaveException;
 import com.training.projectlogistics.model.*;
 import com.training.projectlogistics.model.dto.OrderDTO;
 import com.training.projectlogistics.enums.OrderStatus;
@@ -15,7 +16,6 @@ import java.math.RoundingMode;
 import java.util.Optional;
 
 import static com.training.projectlogistics.constants.BusinessInputConstants.*;
-import static com.training.projectlogistics.constants.TextConstants.*;
 
 @Slf4j
 @Service
@@ -40,13 +40,9 @@ public class OrderCreationService {
     // 3 - build Order instance
     @Transactional
     public void addOrder(String email, OrderDTO orderDTO)
-            throws DatabaseIssueException {
+            throws DatabaseFetchException, DatabaseSaveException {
 
-        User user = userRepository
-                .findByEmail(email)
-                .orElseThrow(() -> new DatabaseIssueException(DATABASE_ISSUE));
-
-
+        User user = getUserFromDB(email, orderDTO);
         Address dispatchAddress = defineDispatchAddress(orderDTO);
         Address deliveryAddress = defineDeliveryAddress(orderDTO);
 
@@ -57,32 +53,45 @@ public class OrderCreationService {
                 .deliveryDate(orderDTO.getDeliveryDate())
                 .weight(orderDTO.getWeight())
                 .cargoType(orderDTO.getCargoType())
-                .sum(getSum(orderDTO))
+                .sum(calculateSum(orderDTO))
                 .orderStatus(OrderStatus.OPEN)
-                .route(getRouteFromDB(orderDTO))
+                .route(getRoutefromDB(orderDTO))
                 .build();
 
-        addressRepository.save(dispatchAddress);
-        addressRepository.save(deliveryAddress);
-        orderRepository.save(order);
+        try {
+            addressRepository.save(dispatchAddress);
+            addressRepository.save(deliveryAddress);
+            orderRepository.save(order);
+        } catch (Exception e) {
+            throw new DatabaseSaveException();
+        }
+    }
+
+    private User getUserFromDB(String email, OrderDTO orderDTO)
+            throws DatabaseFetchException {
+
+        return userRepository
+                .findByEmail(email)
+                .orElseThrow(DatabaseFetchException::new);
     }
 
     // 1 - get the relevant Route
-    private Route getRouteFromDB(OrderDTO orderDTO)
-            throws DatabaseIssueException {
+    private Route getRoutefromDB(OrderDTO orderDTO)
+            throws DatabaseFetchException {
 
         return routeRepository
                 .findByPointOneAndPointTwoOrPointTwoAndPointOne
                         (orderDTO.getDispatchCity(),
-                         orderDTO.getDeliveryCity(),
-                         orderDTO.getDispatchCity(),
-                         orderDTO.getDeliveryCity())
-                .orElseThrow(() -> new DatabaseIssueException(DATABASE_ISSUE));
+                                orderDTO.getDeliveryCity(),
+                                orderDTO.getDispatchCity(),
+                                orderDTO.getDeliveryCity())
+                .orElseThrow(DatabaseFetchException::new);
     }
 
     // 2 - check Addresses presence in DB and create those if absent
+    private Optional<Address> getAddressFromDbByDispatchDetails(OrderDTO orderDTO)
+            throws DatabaseFetchException {
 
-    private Optional<Address> getDispatchAddressFromDB(OrderDTO orderDTO) {
         return addressRepository
                 .findAddressesByCityAndStreetAndHouseAndApartment(
                         orderDTO.getDispatchCity(),
@@ -91,7 +100,9 @@ public class OrderCreationService {
                         orderDTO.getDispatchApartment());
     }
 
-    private Optional<Address> getDeliveryAddressFromDB(OrderDTO orderDTO) {
+    private Optional<Address> getAddressFromDbByDeliveryDetails(OrderDTO orderDTO)
+            throws DatabaseFetchException {
+
         return addressRepository
                 .findAddressesByCityAndStreetAndHouseAndApartment(
                         orderDTO.getDeliveryCity(),
@@ -101,9 +112,9 @@ public class OrderCreationService {
     }
 
     private Address defineDispatchAddress(OrderDTO orderDTO)
-            throws DatabaseIssueException {
+            throws DatabaseFetchException {
 
-        return getDispatchAddressFromDB(orderDTO).orElse(
+        return getAddressFromDbByDispatchDetails(orderDTO).orElse(
                 Address.builder()
                         .city(orderDTO.getDispatchCity())
                         .street(orderDTO.getDispatchStreet())
@@ -113,9 +124,9 @@ public class OrderCreationService {
     }
 
     private Address defineDeliveryAddress(OrderDTO orderDTO)
-            throws DatabaseIssueException {
+            throws DatabaseFetchException {
 
-        return getDeliveryAddressFromDB(orderDTO).orElse(
+        return getAddressFromDbByDeliveryDetails(orderDTO).orElse(
                 Address.builder()
                         .city(orderDTO.getDeliveryCity())
                         .street(orderDTO.getDeliveryStreet())
@@ -125,9 +136,10 @@ public class OrderCreationService {
     }
 
     // getting basic rate from the Route
-    private BigDecimal getSum(OrderDTO orderDTO)
-            throws DatabaseIssueException {
-        BigDecimal basicRate = getRouteFromDB(orderDTO)
+    private BigDecimal calculateSum(OrderDTO orderDTO)
+            throws DatabaseFetchException {
+
+        BigDecimal basicRate = getRoutefromDB(orderDTO)
                 .getBasicRate();
 
         return basicRate
@@ -137,6 +149,7 @@ public class OrderCreationService {
 
     // defining weight coefficient from weight_rates.properties file data
     private BigDecimal getWeightRateCoefficient(OrderDTO orderDTO) {
+
         BigDecimal weight = orderDTO.getWeight();
         BigDecimal weightRateCoefficient;
 

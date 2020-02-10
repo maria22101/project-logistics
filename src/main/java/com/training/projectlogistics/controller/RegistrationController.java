@@ -73,7 +73,7 @@ public class RegistrationController {
     }
 
     @ExceptionHandler(DatabaseFetchException.class)
-    public String handleDatabaseIssueException(DatabaseFetchException e, Model model) {
+    public String handleDatabaseFetchException(DatabaseFetchException e, Model model) {
         model.addAttribute("errorMessage", e.toString());
 
         return "general/error";

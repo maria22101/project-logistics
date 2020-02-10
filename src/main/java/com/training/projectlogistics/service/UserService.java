@@ -22,6 +22,7 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    //TODO - localize exception message
     @Override
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {

@@ -24,7 +24,7 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String greetingAll(@AuthenticationPrincipal User user,
+    public String greetAll(@AuthenticationPrincipal User user,
                               Model model)
             throws DatabaseFetchException {
 
@@ -48,7 +48,7 @@ public class MainController {
     }
 
     @ExceptionHandler(DatabaseFetchException.class)
-    public String handleDatabaseIssueException(DatabaseFetchException e, Model model) {
+    public String handleDatabaseFetchException(DatabaseFetchException e, Model model) {
         model.addAttribute("errorMessage", e.toString());
 
         return "general/error";

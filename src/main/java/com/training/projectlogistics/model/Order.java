@@ -2,7 +2,6 @@ package com.training.projectlogistics.model;
 
 import com.training.projectlogistics.enums.CargoType;
 import com.training.projectlogistics.enums.OrderStatus;
-import com.training.projectlogistics.model.validators.CargoTypeSubset;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -40,7 +39,7 @@ public class Order{
     @JoinColumn(name = "delivery_address_id", referencedColumnName = "id")
     private Address deliveryAddress;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     @Column(name = "delivery_date", nullable = false)
     private LocalDate deliveryDate;
 
@@ -52,7 +51,6 @@ public class Order{
 
     @Enumerated(EnumType.STRING)
     @Column(name = "cargo_type", nullable = false)
-    @CargoTypeSubset(anyOf = {CargoType.REGULAR, CargoType.FRAGILE})
     private CargoType cargoType;
 
     @Column(name = "sum", nullable = false)

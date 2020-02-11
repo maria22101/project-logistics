@@ -1,6 +1,6 @@
 package com.training.projectlogistics.controller;
 
-import com.training.projectlogistics.controller.unility.RegistrationFormValidator;
+import com.training.projectlogistics.controller.validation.RegistrationFormValidator;
 import com.training.projectlogistics.exceptions.DatabaseSaveException;
 import com.training.projectlogistics.model.User;
 import com.training.projectlogistics.exceptions.DatabaseFetchException;

@@ -47,7 +47,7 @@
     <@spring.bind "orderDTO"/>
         <form action="${path}" method="post">
 
-            <@spring.bind "routeCities" />
+<#--            <@spring.bind "dispatchCities" />-->
 
             <div>
             <@spring.message "order.dispatch.city"/>

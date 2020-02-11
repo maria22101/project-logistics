@@ -1,6 +1,6 @@
 package com.training.projectlogistics.controller;
 
-import com.training.projectlogistics.controller.unility.OrderFormValidator;
+import com.training.projectlogistics.controller.validation.OrderFormRegexValidator;
 import com.training.projectlogistics.exceptions.DatabaseFetchException;
 import com.training.projectlogistics.exceptions.DatabaseSaveException;
 import com.training.projectlogistics.model.User;
@@ -28,19 +28,19 @@ public class UserController {
     private OrderService orderService;
     private InvoiceService invoiceService;
     private RouteService routeService;
-    private OrderFormValidator orderFormValidator;
+    private OrderFormRegexValidator orderFormRegexValidator;
 
     @Autowired
     public UserController(OrderCreationService orderCreationService,
                           OrderService orderService,
                           InvoiceService invoiceService,
                           RouteService routeService,
-                          OrderFormValidator orderFormValidator) {
+                          OrderFormRegexValidator orderFormRegexValidator) {
         this.orderCreationService = orderCreationService;
         this.orderService = orderService;
         this.invoiceService = invoiceService;
         this.routeService = routeService;
-        this.orderFormValidator = orderFormValidator;
+        this.orderFormRegexValidator = orderFormRegexValidator;
     }
 
     @GetMapping
@@ -51,27 +51,16 @@ public class UserController {
         return "userCabinet/userMain";
     }
 
-//    public ModelAndView get() {
-//        ModelAndView mav = new ModelAndView();
-//        List<String> routeCities = routeService.getAllRoutesPoints();;
-//        mav.addObject("routeCities", routeCities);
-//        mav.setViewName("cityMap");
-//
-//        return mav;
-//    }
+
 
     @GetMapping("/placeOrder")
     public String placeOrder(Model model)
             throws DatabaseFetchException {
-//        Map<String, String> cityMap = routeService.getAllRoutesPoints()
-//                .stream()
-//                .collect(Collectors.toMap(city -> city, city -> city));
-//
-//        Map<String, Object> m = new HashMap();
-//        m.put("cityMap", cityMap);;
+
+        log.info("dispatchCitiesOptions: " + routeService.getCitiesOptions());
 
         model.addAttribute("orderDTO", new OrderDTO());
-        model.addAttribute("routeCities", routeService.getAllRoutesPoints());
+        model.addAttribute("routeCities", routeService.getCitiesOptions());
         model.addAttribute("cargoTypes", CargoType.values());
 
 //        log.info("routeCities: " + routeCities);
@@ -83,14 +72,17 @@ public class UserController {
     @PostMapping("/placeOrder")
     public String addOrder(@ModelAttribute @Valid OrderDTO orderDTO,
                            BindingResult result,
-                           Principal principal)
+                           Principal principal,
+                           Model model)
             throws DatabaseFetchException, DatabaseSaveException {
 
         log.info("inside UserController, inside addOrder() before validation");
 
-        orderFormValidator.validate(orderDTO, result);
+        orderFormRegexValidator.validate(orderDTO, result);
         if (result.hasErrors()) {
             log.info("inside UserController, inside addOrder(): checked that form has errors");
+            model.addAttribute("routeCities", routeService.getCitiesOptions());
+            model.addAttribute("cargoTypes", CargoType.values());
             return "userCabinet/placeOrder";
         }
 

@@ -1,4 +1,4 @@
-package com.training.projectlogistics.controller.unility;
+package com.training.projectlogistics.controller.validation;
 
 import com.training.projectlogistics.model.User;
 import lombok.extern.slf4j.Slf4j;

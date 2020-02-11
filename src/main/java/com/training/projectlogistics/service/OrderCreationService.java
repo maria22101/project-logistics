@@ -150,17 +150,24 @@ public class OrderCreationService {
     // defining weight coefficient from weight_rates.properties file data
     private BigDecimal getWeightRateCoefficient(OrderDTO orderDTO) {
 
-        BigDecimal weight = orderDTO.getWeight();
+        BigDecimal weight = orderDTO.getWeight()
+                .setScale(2, RoundingMode.HALF_UP);
+
         BigDecimal weightRateCoefficient;
 
-        if (weight.compareTo(new BigDecimal(WEIGHT_LIGHT_UPPER_BOUND)) <= 0) {
-            weightRateCoefficient = new BigDecimal(WEIGHT_LIGHT_COEFFICIENT);
+        if (weight.compareTo(new BigDecimal(WEIGHT_LIGHT_UPPER_BOUND)
+                .setScale(2, RoundingMode.HALF_UP)) <= 0) {
+            weightRateCoefficient = new BigDecimal(WEIGHT_LIGHT_COEFFICIENT)
+                    .setScale(2, RoundingMode.HALF_UP);
 
-        } else if (weight.compareTo(new BigDecimal(WEIGHT_MEDIUM_UPPER_BOUND)) <= 0) {
-            weightRateCoefficient = new BigDecimal(WEIGHT_MEDIUM_COEFFICIENT);
+        } else if (weight.compareTo(new BigDecimal(WEIGHT_MEDIUM_UPPER_BOUND)
+                .setScale(2, RoundingMode.HALF_UP)) <= 0) {
+            weightRateCoefficient = new BigDecimal(WEIGHT_MEDIUM_COEFFICIENT)
+                    .setScale(2, RoundingMode.HALF_UP);
 
         } else {
-            weightRateCoefficient = new BigDecimal(WEIGHT_HEAVY_COEFFICIENT);
+            weightRateCoefficient = new BigDecimal(WEIGHT_HEAVY_COEFFICIENT)
+                    .setScale(2, RoundingMode.HALF_UP);
         }
 
         log.info("weight coefficient amounts to: " + weightRateCoefficient.toString());

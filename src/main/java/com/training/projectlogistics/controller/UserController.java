@@ -4,7 +4,7 @@ import com.training.projectlogistics.controller.validation.OrderFormRegexValidat
 import com.training.projectlogistics.exceptions.DatabaseFetchException;
 import com.training.projectlogistics.exceptions.DatabaseSaveException;
 import com.training.projectlogistics.model.User;
-import com.training.projectlogistics.model.dto.OrderDTO;
+import com.training.projectlogistics.controller.dto.OrderDTO;
 import com.training.projectlogistics.enums.CargoType;
 import com.training.projectlogistics.service.*;
 import lombok.extern.slf4j.Slf4j;

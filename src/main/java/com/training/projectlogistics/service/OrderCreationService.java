@@ -3,7 +3,7 @@ package com.training.projectlogistics.service;
 import com.training.projectlogistics.exceptions.DatabaseFetchException;
 import com.training.projectlogistics.exceptions.DatabaseSaveException;
 import com.training.projectlogistics.model.*;
-import com.training.projectlogistics.model.dto.OrderDTO;
+import com.training.projectlogistics.controller.dto.OrderDTO;
 import com.training.projectlogistics.enums.OrderStatus;
 import com.training.projectlogistics.repository.*;
 import lombok.extern.slf4j.Slf4j;

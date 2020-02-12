@@ -1,4 +1,4 @@
-package com.training.projectlogistics.model.dto;
+package com.training.projectlogistics.controller.dto;
 
 import com.training.projectlogistics.controller.validation.WeightRange;
 import com.training.projectlogistics.enums.CargoType;

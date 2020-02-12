@@ -1,6 +1,6 @@
 package com.training.projectlogistics.controller.validation;
 
-import com.training.projectlogistics.model.dto.OrderDTO;
+import com.training.projectlogistics.controller.dto.OrderDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;

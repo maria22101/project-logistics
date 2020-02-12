@@ -71,6 +71,10 @@
                 <td><@spring.message "order.status"/></td>
                 <td>${order.orderStatus}</td>
             </tr>
+            <tr>
+                <td><@spring.message "order.invoice.number"/></td>
+                <td>${order.invoice.invoiceNumber}</td>
+            </tr>
         </tbody>
     </table>
 

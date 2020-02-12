@@ -11,7 +11,7 @@
         <tr>
             <th><@spring.message "main.route.point.one"/></th>
             <th><@spring.message "main.route.point.two"/></th>
-            <th><@spring.message "main.cost"/></th>
+            <th><@spring.message "main.basic.rate"/></th>
         </tr>
         </thead>
         <tbody>

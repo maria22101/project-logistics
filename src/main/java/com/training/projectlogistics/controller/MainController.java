@@ -3,16 +3,14 @@ package com.training.projectlogistics.controller;
 import com.training.projectlogistics.exceptions.DatabaseFetchException;
 import com.training.projectlogistics.model.User;
 import com.training.projectlogistics.service.RouteService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.Locale;
 
 @Controller
 public class MainController {
@@ -25,10 +23,10 @@ public class MainController {
 
     @GetMapping("/")
     public String greetAll(@AuthenticationPrincipal User user,
-                              Model model)
+                           Model model)
             throws DatabaseFetchException {
 
-        if(user !=null) {
+        if (user != null) {
             SecurityContextHolder.clearContext();
         }
 
@@ -40,11 +38,18 @@ public class MainController {
     @GetMapping("/login")
     public String enterLogin(@AuthenticationPrincipal User user,
                              Model model) {
-        if(user !=null) {
+
+        if (user != null) {
             SecurityContextHolder.clearContext();
         }
 
         return "general/login";
+    }
+
+    @GetMapping("/login/authError")
+    public String failedLoginOutput() {
+
+        return "general/authError";
     }
 
     @ExceptionHandler(DatabaseFetchException.class)

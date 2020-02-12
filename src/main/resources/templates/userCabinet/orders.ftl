@@ -10,8 +10,8 @@
         <thead>
         <tr>
             <th><@spring.message "order.number"/></th>
-            <th><@spring.message "order.route.source"/></th>
-            <th><@spring.message "order.route.destination"/></th>
+            <th><@spring.message "order.dispatch.city"/></th>
+            <th><@spring.message "order.delivery.city"/></th>
             <th><@spring.message "order.delivery.date"/></th>
             <th><@spring.message "order.weight"/></th>
             <th><@spring.message "order.cargo"/></th>
@@ -23,8 +23,8 @@
         <#list orders as order>
             <tr>
                 <td>${order.orderNumber}</td>
-                <td>${order.route.source}</td>
-                <td>${order.route.destination}</td>
+                <td>${order.dispatchAddress.city}</td>
+                <td>${order.deliveryAddress.city}</td>
                 <td>${order.deliveryDate}</td>
                 <td>${order.weight}</td>
                 <td>${order.cargoType}</td>

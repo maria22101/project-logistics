@@ -13,8 +13,8 @@ import java.io.Serializable;
 @ToString
 
 @Entity
-@Table(name = "invoice",
-        uniqueConstraints={@UniqueConstraint(columnNames = "delivery_order_number",
+@Table(name = "invoices",
+        uniqueConstraints={@UniqueConstraint(columnNames = "order_number",
                 name = "uniqueOrderNumberConstraint")})
 public class Invoice{
     @Id
@@ -26,7 +26,7 @@ public class Invoice{
     private boolean isPaid;
 
     @OneToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "delivery_order_number", referencedColumnName = "order_number", unique = true)
+    @JoinColumn(name = "order_number", referencedColumnName = "order_number", unique = true)
     private Order order;
 
     public Invoice(Order order) {

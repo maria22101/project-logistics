@@ -1,6 +1,6 @@
 package com.training.projectlogistics.model;
 
-import com.training.projectlogistics.model.enums.Role;
+import com.training.projectlogistics.enums.Role;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 @ToString
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +46,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
 
+    //TODO is this constructor really necessary?
     public User(String name, String surname, String password, String email) {
         this.name = name;
         this.surname = surname;

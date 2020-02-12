@@ -1,4 +1,4 @@
-package com.training.projectlogistics.service;
+package com.training.projectlogistics.exceptions;
 
 public class NotUniqueEmailException extends Exception {
     private String email;

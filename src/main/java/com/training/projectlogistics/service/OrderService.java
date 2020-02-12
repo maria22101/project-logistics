@@ -1,8 +1,8 @@
 package com.training.projectlogistics.service;
 
+import com.training.projectlogistics.exceptions.DatabaseFetchException;
 import com.training.projectlogistics.model.Order;
-import com.training.projectlogistics.model.User;
-import com.training.projectlogistics.model.enums.OrderStatus;
+import com.training.projectlogistics.enums.OrderStatus;
 import com.training.projectlogistics.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,28 +18,52 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    //TODO - check for an empty result
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+    public List<Order> getAllOrders()
+            throws DatabaseFetchException {
+
+        try {
+            return orderRepository.findAll();
+        } catch (Exception e) {
+            throw new DatabaseFetchException();
+        }
     }
 
-    //TODO - check for an empty result
-    public List<Order> getOpenOrders() {
-        return orderRepository.findOrdersByOrderStatus(OrderStatus.OPEN);
+    public List<Order> getOpenOrders()
+            throws DatabaseFetchException {
+
+        try {
+            return orderRepository.findOrdersByOrderStatus(OrderStatus.OPEN);
+        } catch (Exception e) {
+            throw new DatabaseFetchException();
+        }
     }
 
-    //TODO - check for an empty result
-    public List<Order> getOrdersByEmail(String email) {
-        return orderRepository.findOrdersByUser_Email(email);
+    public List<Order> getOrdersByEmail(String email)
+            throws DatabaseFetchException {
+
+        try {
+            return orderRepository.findOrdersByUser_Email(email);
+        } catch (Exception e) {
+            throw new DatabaseFetchException();
+        }
     }
 
-    //TODO - check for an empty result
-    public List<Order> getInvoicedOrdersByEmail(String email) {
-        return orderRepository.findOrdersByOrderStatusAndUser_Email(OrderStatus.INVOICED, email);
+    public List<Order> getInvoicedOrdersByEmail(String email)
+            throws DatabaseFetchException {
+
+        try {
+            return orderRepository
+                    .findOrdersByOrderStatusAndUser_Email(OrderStatus.INVOICED, email);
+        } catch (Exception e) {
+            throw new DatabaseFetchException();
+        }
     }
 
-    //TODO - process null
-    public Order getOrderByNumber(Long orderNumber) {
-        return orderRepository.findOrderByOrderNumber(orderNumber).get();
+    public Order getOrderByNumber(Long orderNumber)
+            throws DatabaseFetchException {
+
+        return orderRepository
+                .findOrderByOrderNumber(orderNumber)
+                .orElseThrow(DatabaseFetchException::new);
     }
 }

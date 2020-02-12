@@ -1,7 +1,9 @@
 package com.training.projectlogistics.controller;
 
+import com.training.projectlogistics.exceptions.DatabaseFetchException;
+import com.training.projectlogistics.exceptions.DatabaseSaveException;
 import com.training.projectlogistics.model.Order;
-import com.training.projectlogistics.model.enums.Role;
+import com.training.projectlogistics.enums.Role;
 import com.training.projectlogistics.service.AdminService;
 import com.training.projectlogistics.service.OrderService;
 import com.training.projectlogistics.service.RouteService;
@@ -37,37 +39,28 @@ public class AdminController {
         return "adminCabinet/adminMain";
     }
 
-//    @GetMapping("/orders")
-//    public String displayOrders(Model model) {
-//        model.addAttribute("orders", adminService.getAllOrders());
-//
-//        return "adminCabinet/orderList";
-//    }
-
     @GetMapping("/orders")
-    public String displayAllOrders(Model model) {
+    public String displayAllOrders(Model model)
+            throws DatabaseFetchException {
+
         model.addAttribute("orders", orderService.getAllOrders());
 
         return "adminCabinet/orders";
     }
 
     @GetMapping("/open_orders")
-    public String displayOpenOrders(Model model) {
+    public String displayOpenOrders(Model model)
+            throws DatabaseFetchException {
+
         model.addAttribute("openOrders", orderService.getOpenOrders());
 
         return "adminCabinet/openOrders";
     }
 
-//    @GetMapping("/orders/{orderNumber}")
-//    public String orderStatusChange(@PathVariable("orderNumber") Long orderNumber, Model model) {
-//        model.addAttribute("order", orderService.getOrderByNumber(orderNumber));
-//        model.addAttribute("statuses", OrderStatus.values());
-//
-//        return "adminCabinet/orderEdit";
-//    }
-
     @PostMapping("/open_orders")
-    public String issueInvoice(@RequestParam("orderNumber") Long orderNumber) {
+    public String issueInvoice(@RequestParam("orderNumber") Long orderNumber)
+            throws DatabaseFetchException, DatabaseSaveException {
+
         Order editingOrder = orderService.getOrderByNumber(orderNumber);
         adminService.issueInvoice(editingOrder);
 
@@ -75,16 +68,34 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    public String displayUsers(Model model) {
-        model.addAttribute("users", userService.getUsersByRole(Role.USER));
+    public String displayUsers(Model model)
+            throws DatabaseFetchException {
+
+        model.addAttribute("users", adminService.getUsersByRole(Role.USER));
 
         return "adminCabinet/users";
     }
 
     @GetMapping("/routes")
-    public String displayRoutes(Model model) {
+    public String displayRoutes(Model model)
+            throws DatabaseFetchException {
+
         model.addAttribute("routes", routeService.getAllRoutes());
 
         return "adminCabinet/routes";
+    }
+
+    @ExceptionHandler(DatabaseFetchException.class)
+    public String handleDatabaseFetchException(DatabaseFetchException e, Model model) {
+        model.addAttribute("errorMessage", e.toString());
+
+        return "general/error";
+    }
+
+    @ExceptionHandler(DatabaseSaveException.class)
+    public String handleDatabaseSaveException(DatabaseSaveException e, Model model) {
+        model.addAttribute("errorMessage", e.toString());
+
+        return "general/error";
     }
 }

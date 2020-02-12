@@ -13,11 +13,12 @@
             <th><@spring.message "name.indication"/></th>
             <th><@spring.message "surname.indication"/></th>
             <th><@spring.message "email.indication"/></th>
-            <th><@spring.message "order.route.source"/></th>
-            <th><@spring.message "order.route.destination"/></th>
+            <th><@spring.message "order.dispatch.city"/></th>
+            <th><@spring.message "order.delivery.city"/></th>
             <th><@spring.message "order.weight"/></th>
             <th><@spring.message "order.cargo"/></th>
             <th><@spring.message "order.sum"/></th>
+            <th><@spring.message "order.invoice.number"/></th>
             <th><@spring.message "order.status"/></th>
         </tr>
         </thead>
@@ -28,11 +29,14 @@
                 <td>${order.user.name}</td>
                 <td>${order.user.surname}</td>
                 <td>${order.user.email}</td>
-                <td>${order.route.source}</td>
-                <td>${order.route.destination}</td>
+                <td>${order.route.pointOne}</td>
+                <td>${order.route.pointTwo}</td>
                 <td>${order.weight}</td>
                 <td>${order.cargoType}</td>
                 <td>${order.sum}</td>
+                <td>
+                    ${(order.invoice.invoiceNumber)!''}
+                </td>
                 <td>${order.orderStatus}</td>
             </tr>
         </#list>

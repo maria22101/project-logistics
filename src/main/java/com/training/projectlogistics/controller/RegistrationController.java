@@ -1,10 +1,12 @@
 package com.training.projectlogistics.controller;
 
-import com.training.projectlogistics.controller.unility.UserValidator;
+import com.training.projectlogistics.controller.validation.RegistrationFormValidator;
+import com.training.projectlogistics.exceptions.DatabaseSaveException;
 import com.training.projectlogistics.model.User;
-import com.training.projectlogistics.service.DatabaseIssueException;
-import com.training.projectlogistics.service.NotUniqueEmailException;
+import com.training.projectlogistics.exceptions.DatabaseFetchException;
+import com.training.projectlogistics.exceptions.NotUniqueEmailException;
 import com.training.projectlogistics.service.RegistrationService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,20 +16,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import static com.training.projectlogistics.controller.TextConstants.*;
+import static com.training.projectlogistics.constants.TextConstants.*;
 
-
+@Slf4j
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
     private RegistrationService registrationService;
-    private UserValidator userValidator;
+    private RegistrationFormValidator registrationFormValidator;
 
     @Autowired
     public RegistrationController(RegistrationService registrationService,
-                                  UserValidator userValidator) {
+                                  RegistrationFormValidator registrationFormValidator) {
         this.registrationService = registrationService;
-        this.userValidator = userValidator;
+        this.registrationFormValidator = registrationFormValidator;
     }
 
     @GetMapping
@@ -44,33 +46,36 @@ public class RegistrationController {
     @PostMapping
     public String addUser(@ModelAttribute @Valid User user,
                           BindingResult result)
-            throws NotUniqueEmailException, DatabaseIssueException {
+            throws NotUniqueEmailException,
+                   DatabaseFetchException,
+                   DatabaseSaveException {
 
-        userValidator.validate(user, result);
+        log.info("inside RegistrationController, inside addUser() before validation");
+
+        registrationFormValidator.validate(user, result);
         if (result.hasErrors()) {
+            log.info("inside RegistrationController, inside addUser(): checked that form has errors");
             return "general/registration";
         }
 
         registrationService.addUser(user);
 
+        log.info("inside RegistrationController, inside addUser() form valid, user added");
+
         return "redirect:/login";
     }
 
     @ExceptionHandler(NotUniqueEmailException.class)
-    public String handleNotUniqueEmailException(NotUniqueEmailException ex,
-                                                Model model) {
+    public String handleNotUniqueEmailException(Model model) {
         model.addAttribute("errorMessage", EMAIL_EXISTS);
 
         return "general/error";
     }
 
-    @ExceptionHandler(DatabaseIssueException.class)
-    public String handleDatabaseIssueException(DatabaseIssueException ex,
-                                               Model model) {
-        model.addAttribute("errorMessage", DATABASE_ISSUE);
+    @ExceptionHandler(DatabaseFetchException.class)
+    public String handleDatabaseFetchException(DatabaseFetchException e, Model model) {
+        model.addAttribute("errorMessage", e.toString());
 
         return "general/error";
     }
-
-
 }

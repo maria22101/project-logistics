@@ -23,18 +23,9 @@
             }
 
             th{
-                background-color: #176c9a;
+                background-color: steelblue;
                 color : #FFFFFF;
             }
-
-            tr.odd{
-                background-color: #CFCFCF;
-            }
-
-            tr.even{
-                background-color: #1076F5;
-            }
-
             .error {
                 color: orangered;
             }

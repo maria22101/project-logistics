@@ -10,9 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -41,13 +39,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/registration").permitAll() // routes allowed for all
+                .antMatchers("/", "/login/**", "/registration").permitAll() // routes allowed for all
                 .anyRequest().authenticated() // for all other routes authentication required
                 .and()
                     .formLogin()
                     .loginPage("/login")
-                    .failureUrl("/login?error=true")
                     .successHandler(loginSuccessHandler)
+                    .failureUrl("/login/authError")
                 .and()
                     .logout()
                     .logoutUrl("/logout")

@@ -10,12 +10,13 @@
         <thead>
         <tr>
             <th><@spring.message "order.number"/></th>
-            <th><@spring.message "order.route.source"/></th>
-            <th><@spring.message "order.route.destination"/></th>
+            <th><@spring.message "order.dispatch.city"/></th>
+            <th><@spring.message "order.delivery.city"/></th>
             <th><@spring.message "order.delivery.date"/></th>
+            <th><@spring.message "order.weight"/></th>
+            <th><@spring.message "order.cargo"/></th>
             <th><@spring.message "order.sum"/></th>
             <th><@spring.message "order.status"/></th>
-            <th><@spring.message "order.invoice.number"/></th>
             <th><@spring.message "order.action"/></th>
         </tr>
         </thead>
@@ -23,20 +24,16 @@
         <#list openOrders as order>
             <tr>
                 <td>${order.orderNumber}</td>
-                <td>${order.route.source}</td>
-                <td>${order.route.destination}</td>
+                <td>${order.dispatchAddress.city}</td>
+                <td>${order.deliveryAddress.city}</td>
                 <td>${order.deliveryDate}</td>
+                <td>${order.weight}</td>
+                <td>${order.cargoType}</td>
                 <td>${order.sum}</td>
                 <td>${order.orderStatus}</td>
-                <td>${order.invoice.invoiceNumber}</td>
 
                 <td>
-                    <form action="/user/invoicedOrders" method="post">
-                        <div>
-                            <input type="hidden" value="${order.orderNumber}" name="orderNumber">
-                            <input type="submit" value="<@spring.message "usercabinet.invoice.payment.button"/>">
-                        </div>
-                    </form>
+                    <a href="/user/invoicedOrders/${order.orderNumber}"><@spring.message "usercabinet.review.and.pay"/></a>
                 </td>
 
             </tr>

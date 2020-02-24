@@ -13,8 +13,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import static com.training.projectlogistics.constants.WebConstants.*;
+
 @Controller
 public class MainController {
+    private static final String STATICS = "statics";
+    private static final String DEFAULT_OBJ_WRAPPER_BUILDER_VERSION = "2.3.28";
+    private static final String MAIN_PAGE = "general/main";
+    private static final String LOGIN_PAGE = "general/login";
+    private static final String AUTH_ERROR_PAGE = "general/authError";
+
     private RouteService routeService;
 
     @Autowired
@@ -30,35 +38,30 @@ public class MainController {
         if (user != null) {
             SecurityContextHolder.clearContext();
         }
-
-        model.addAttribute("routes", routeService.getAllRoutes());
-        model.addAttribute("statics", new DefaultObjectWrapperBuilder(new Version("2.3.28"))
+        model.addAttribute(ATTRIBUTE_ROUTES, routeService.getAllRoutes());
+        model.addAttribute(STATICS,
+                new DefaultObjectWrapperBuilder(new Version(DEFAULT_OBJ_WRAPPER_BUILDER_VERSION))
                 .build().getStaticModels());
-
-        return "general/main";
+        return MAIN_PAGE;
     }
 
     @GetMapping("/login")
     public String enterLogin(@AuthenticationPrincipal User user,
                              Model model) {
-
         if (user != null) {
             SecurityContextHolder.clearContext();
         }
-
-        return "general/login";
+        return LOGIN_PAGE;
     }
 
     @GetMapping("/login/authError")
     public String failedLoginOutput() {
-
-        return "general/authError";
+        return AUTH_ERROR_PAGE;
     }
 
     @ExceptionHandler(DatabaseFetchException.class)
     public String handleDatabaseFetchException(DatabaseFetchException e, Model model) {
-        model.addAttribute("errorMessage", e.toString());
-
-        return "general/error";
+        model.addAttribute(ERROR_MESSAGE, e.toString());
+        return GENERAL_ERROR_PAGE;
     }
 }

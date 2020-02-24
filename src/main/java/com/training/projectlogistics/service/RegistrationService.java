@@ -1,6 +1,7 @@
 package com.training.projectlogistics.service;
 
 import com.training.projectlogistics.exceptions.DatabaseFetchException;
+import com.training.projectlogistics.exceptions.DatabaseSaveException;
 import com.training.projectlogistics.exceptions.NotUniqueEmailException;
 import com.training.projectlogistics.model.User;
 import com.training.projectlogistics.enums.Role;
@@ -22,7 +23,7 @@ public class RegistrationService {
     }
 
     public void addUser(User user)
-            throws NotUniqueEmailException, DatabaseFetchException {
+            throws NotUniqueEmailException, DatabaseSaveException {
 
         checkIfEmailPresent(user);
 
@@ -32,7 +33,7 @@ public class RegistrationService {
         try {
             userRepository.save(user);
         }catch (Exception ex) {
-            throw new DatabaseFetchException();
+            throw new DatabaseSaveException();
         }
     }
 

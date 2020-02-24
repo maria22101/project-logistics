@@ -12,10 +12,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static com.training.projectlogistics.constants.WebConstants.*;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    private final static String LOGIN_COMMON_PATH = "/login/**";
 
     @Autowired
     private UserService userService;
@@ -39,16 +42,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/login/**", "/registration").permitAll() // routes allowed for all
-                .anyRequest().authenticated() // for all other routes authentication required
+                .antMatchers(ROOT_PATH, LOGIN_COMMON_PATH, REGISTRATION).permitAll()
+                .anyRequest().authenticated()
                 .and()
                     .formLogin()
-                    .loginPage("/login")
+                    .loginPage(LOGIN)
                     .successHandler(loginSuccessHandler)
-                    .failureUrl("/login/authError")
+                    .failureUrl(LOGIN_FAILURE_URL)
                 .and()
                     .logout()
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/").permitAll();
+                    .logoutUrl(LOGOUT)
+                    .logoutSuccessUrl(ROOT_PATH).permitAll();
     }
 }

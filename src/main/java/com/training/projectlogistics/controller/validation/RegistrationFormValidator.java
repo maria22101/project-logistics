@@ -11,11 +11,17 @@ import org.springframework.validation.Validator;
 
 import static com.training.projectlogistics.constants.TextConstants.*;
 import static com.training.projectlogistics.constants.RegexContainer.*;
+import static com.training.projectlogistics.constants.WebConstants.UA_LANGUAGE;
 
 //TODO - substitute text with text constants
 @Slf4j
 @Component
 public class RegistrationFormValidator implements Validator {
+    private final static String NAME = "name";
+    private final static String SURNAME = "surname";
+    private final static String EMAIL = "email";
+    private final static String PASSWORD = "password";
+
     @Override
     public boolean supports(Class<?> aClass) {
         return User.class.equals(aClass);
@@ -25,45 +31,31 @@ public class RegistrationFormValidator implements Validator {
     public void validate(Object target, Errors errors) {
         User user = (User) target;
 
-        log.info("inside RegistrationFormValidator");
+        ValidationUtils.rejectIfEmpty(errors, NAME, ERROR_COMMENT_NAME);
+        ValidationUtils.rejectIfEmpty(errors, SURNAME, ERROR_COMMENT_SURNAME);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, EMAIL, ERROR_COMMENT_E_MAIL);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, PASSWORD, ERROR_COMMENT_PASSWORD);
 
-        // first checking if fields are "not null" and "no whitespace" - where relevant
-        ValidationUtils.rejectIfEmpty(errors, "name", ERROR_COMMENT_NAME);
-
-        log.info("errors content: " + errors.toString());
-
-        ValidationUtils.rejectIfEmpty(errors, "surname", ERROR_COMMENT_SURNAME);
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", ERROR_COMMENT_E_MAIL);
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", ERROR_COMMENT_PASSWORD);
-
-        log.info("error comment name: " + ERROR_COMMENT_NAME);
-
-        // then process REGEX logic
-        // conditional regex strings depending on the locale
-        String regexStrName = (LocaleContextHolder.getLocale().toString().equals("ua")
+        String regexStrName = (LocaleContextHolder.getLocale().toString().equals(UA_LANGUAGE)
                 ? REGEX_NAME_UKR : REGEX_NAME_ENG);
-        String regexStrSurname = (LocaleContextHolder.getLocale().toString().equals("ua")
+        String regexStrSurname = (LocaleContextHolder.getLocale().toString().equals(UA_LANGUAGE)
                 ? REGEX_SURNAME_UKR : REGEX_SURNAME_ENG);
-
-        log.info("Regex String name: " + REGEX_NAME_ENG);
 
         if ((StringUtils.hasText(user.getName()) &&
                 !user.getName().matches(regexStrName))) {
-            errors.rejectValue("name", ERROR_COMMENT_NAME);
+            errors.rejectValue(NAME, ERROR_COMMENT_NAME);
         }
         if (StringUtils.hasText(user.getSurname()) &&
                 !user.getSurname().matches(regexStrSurname)) {
-            errors.rejectValue("surname", ERROR_COMMENT_SURNAME);
+            errors.rejectValue(SURNAME, ERROR_COMMENT_SURNAME);
         }
         if (StringUtils.hasText(user.getEmail()) &&
                 !user.getEmail().matches(REGEX_EMAIL)) {
-            errors.rejectValue("email", ERROR_COMMENT_E_MAIL);
+            errors.rejectValue(EMAIL, ERROR_COMMENT_E_MAIL);
         }
         if (StringUtils.hasText(user.getPassword()) &&
                 !user.getPassword().matches(REGEX_PASSWORD)) {
-            errors.rejectValue("password", ERROR_COMMENT_PASSWORD);
+            errors.rejectValue(PASSWORD, ERROR_COMMENT_PASSWORD);
         }
-
-        log.info("Order creation form validation completed. Errors content: " + errors.toString());
     }
 }

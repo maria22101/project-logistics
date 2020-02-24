@@ -7,95 +7,93 @@ import com.training.projectlogistics.enums.Role;
 import com.training.projectlogistics.service.AdminService;
 import com.training.projectlogistics.service.OrderService;
 import com.training.projectlogistics.service.RouteService;
-import com.training.projectlogistics.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import static com.training.projectlogistics.constants.WebConstants.*;
+
 @Controller
 @RequestMapping("/admin")
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
-    private UserService userService;
+    private final static String ADMIN_CABINET_PATH = "adminCabinet/adminMain";
+    private final static String ADMIN_CABINET_ORDERS_PATH = "adminCabinet/orders";
+    private final static String ADMIN_CABINET_OPEN_ORDERS_PATH = "adminCabinet/openOrders";
+    private final static String ADMIN_CABINET_OPEN_ORDERS_REDIRECT = "redirect:/admin/open_orders";
+    private final static String ADMIN_CABINET_USERS_PATH = "adminCabinet/users";
+    private final static String ADMIN_CABINET_ROUTES_PATH = "adminCabinet/routes";
+
     private AdminService adminService;
     private OrderService orderService;
     private RouteService routeService;
 
     @Autowired
-    public AdminController(UserService userService,
-                           AdminService adminService,
+    public AdminController(AdminService adminService,
                            OrderService orderService,
                            RouteService routeService) {
-        this.userService = userService;
         this.adminService = adminService;
         this.orderService = orderService;
         this.routeService = routeService;
     }
 
     @GetMapping
-    public String greetAdmin(Model model) {
-        return "adminCabinet/adminMain";
+    public String greetAdmin() {
+        return ADMIN_CABINET_PATH;
     }
 
     @GetMapping("/orders")
     public String displayAllOrders(Model model)
             throws DatabaseFetchException {
 
-        model.addAttribute("orders", orderService.getAllOrders());
-
-        return "adminCabinet/orders";
+        model.addAttribute(ATTRIBUTE_ORDERS, orderService.getAllOrders());
+        return ADMIN_CABINET_ORDERS_PATH;
     }
 
     @GetMapping("/open_orders")
     public String displayOpenOrders(Model model)
             throws DatabaseFetchException {
 
-        model.addAttribute("openOrders", orderService.getOpenOrders());
-
-        return "adminCabinet/openOrders";
+        model.addAttribute(ATTRIBUTE_OPEN_ORDERS, orderService.getOpenOrders());
+        return ADMIN_CABINET_OPEN_ORDERS_PATH;
     }
 
     @PostMapping("/open_orders")
-    public String issueInvoice(@RequestParam("orderNumber") Long orderNumber)
+    public String issueInvoice(@RequestParam(PARAM_ORDER_NUMBER) Long orderNumber)
             throws DatabaseFetchException, DatabaseSaveException {
 
         Order editingOrder = orderService.getOrderByNumber(orderNumber);
         adminService.issueInvoice(editingOrder);
-
-        return "redirect:/admin/open_orders";
+        return ADMIN_CABINET_OPEN_ORDERS_REDIRECT;
     }
 
     @GetMapping("/users")
     public String displayUsers(Model model)
             throws DatabaseFetchException {
 
-        model.addAttribute("users", adminService.getUsersByRole(Role.USER));
-
-        return "adminCabinet/users";
+        model.addAttribute(ATTRIBUTE_USERS, adminService.getUsersByRole(Role.USER));
+        return ADMIN_CABINET_USERS_PATH;
     }
 
     @GetMapping("/routes")
     public String displayRoutes(Model model)
             throws DatabaseFetchException {
 
-        model.addAttribute("routes", routeService.getAllRoutes());
-
-        return "adminCabinet/routes";
+        model.addAttribute(ATTRIBUTE_ROUTES, routeService.getAllRoutes());
+        return ADMIN_CABINET_ROUTES_PATH;
     }
 
     @ExceptionHandler(DatabaseFetchException.class)
     public String handleDatabaseFetchException(DatabaseFetchException e, Model model) {
-        model.addAttribute("errorMessage", e.toString());
-
-        return "general/error";
+        model.addAttribute(ERROR_MESSAGE, e.toString());
+        return GENERAL_ERROR_PAGE;
     }
 
     @ExceptionHandler(DatabaseSaveException.class)
     public String handleDatabaseSaveException(DatabaseSaveException e, Model model) {
-        model.addAttribute("errorMessage", e.toString());
-
-        return "general/error";
+        model.addAttribute(ERROR_MESSAGE, e.toString());
+        return GENERAL_ERROR_PAGE;
     }
 }

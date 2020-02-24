@@ -46,7 +46,6 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
 
-    //TODO is this constructor really necessary?
     public User(String name, String surname, String password, String email) {
         this.name = name;
         this.surname = surname;

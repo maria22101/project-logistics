@@ -22,13 +22,10 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    //TODO - localize exception message
     @Override
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
 
-        return userRepository
-                .findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("email " + email + " not found"));
+        return userRepository.findByEmail(email);
     }
 }

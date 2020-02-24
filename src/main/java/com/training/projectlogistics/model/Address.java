@@ -19,19 +19,19 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    Long id;
+    private Long id;
 
     @Column(name = "city", nullable = false)
-    String city;
+    private String city;
 
     @Column(name = "street", nullable = false)
-    String street;
+    private String street;
 
     @Column(name = "house", nullable = false)
-    String house;
+    private String house;
 
     @Column(name = "apartment")
-    String apartment;
+    private String apartment;
 
     @OneToMany(mappedBy = "dispatchAddress", fetch = FetchType.LAZY)
     private List<Order> dispatchingOrders = new ArrayList<>();

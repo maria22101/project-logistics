@@ -18,12 +18,16 @@ import java.util.Locale;
 
 @Configuration
 public class LocaleConfig implements WebMvcConfigurer {
+    private final static String MESSAGE_SOURCE_NAME = "classpath:messages";
+    private final static String DEFAULT_ENCODING = "UTF-8";
+    private final static String LANGUAGE_PARAMETER = "lang";
+
 
     @Bean("messageSource")
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasenames("classpath:messages");
-        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setBasenames(MESSAGE_SOURCE_NAME);
+        messageSource.setDefaultEncoding(DEFAULT_ENCODING);
         return messageSource;
     }
 
@@ -34,17 +38,10 @@ public class LocaleConfig implements WebMvcConfigurer {
         return slr;
     }
 
-//    @Bean
-//    public LocaleResolver localeResolver() {
-//        CookieLocaleResolver clr = new CookieLocaleResolver();
-//        clr.setDefaultLocale(Locale.US);
-//        return clr;
-//    }
-
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-        lci.setParamName("lang");
+        lci.setParamName(LANGUAGE_PARAMETER);
         return lci;
     }
 

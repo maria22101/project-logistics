@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -31,5 +32,20 @@ public class Invoice{
 
     public Invoice(Order order) {
         this.order = order;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Invoice invoice = (Invoice) o;
+        return isPaid == invoice.isPaid &&
+                invoiceNumber.equals(invoice.invoiceNumber) &&
+                order.equals(invoice.order);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(invoiceNumber, isPaid, order);
     }
 }

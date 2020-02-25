@@ -1,6 +1,7 @@
 <#import "../parts/common.ftl" as c>
 <#import "../parts/weightTable.ftl" as w>
 <#import "/spring.ftl" as spring/>
+<#import "../parts/forms.ftl" as m>
 
 <@c.page>
 
@@ -64,8 +65,8 @@
 
     <div style="clear: both;"></div>
 
-    <br/><br/>
+    <h3 style="color: seagreen"><@spring.message "main.calculate.button"/></h3>
 
-    <strong style="color: #3a60bf"><@spring.message "main.services.weight.coeff.explanation"/></strong>
+    <@m.calculator "/calculate" />
 
 </@c.page>

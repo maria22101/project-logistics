@@ -5,13 +5,13 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 
 @Entity
 @Table(name = "addresses")
@@ -19,19 +19,19 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    Long id;
+    private Long id;
 
     @Column(name = "city", nullable = false)
-    String city;
+    private String city;
 
     @Column(name = "street", nullable = false)
-    String street;
+    private String street;
 
     @Column(name = "house", nullable = false)
-    String house;
+    private String house;
 
     @Column(name = "apartment")
-    String apartment;
+    private String apartment;
 
     @OneToMany(mappedBy = "dispatchAddress", fetch = FetchType.LAZY)
     private List<Order> dispatchingOrders = new ArrayList<>();
@@ -43,5 +43,31 @@ public class Address {
         this.street = street;
         this.house = house;
         this.apartment = apartment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return city.equals(address.city) &&
+                street.equals(address.street) &&
+                house.equals(address.house) &&
+                Objects.equals(apartment, address.apartment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(city, street, house, apartment);
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", house='" + house + '\'' +
+                ", apartment='" + apartment + '\'' +
+                '}';
     }
 }

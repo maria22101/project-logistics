@@ -4,7 +4,6 @@
 
 <@c.page>
 
-
     <h3><@spring.message "usercabinet.order.creation.title"/></h3>
 
     <@l.delivery_order_creation "/user/placeOrder" />

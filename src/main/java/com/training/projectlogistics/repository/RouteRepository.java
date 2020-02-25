@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface RouteRepository extends JpaRepository<Route, Long> {
     Optional<Route> findById(Long id);
-    Optional<Route> findByPointOneAndPointTwo(String pointOne, String pointTwo);
-    Optional<Route> findByPointOneUAAndPointTwoUA(String pointOneUA, String pointTwoUA);
     Optional<Route> findByPointOneAndPointTwoOrPointTwoAndPointOne(
             String city1, String city2, String city3, String city4);
-    List<Route> findRoutesByPointOneContainingAndPointTwoContaining(String city1, String city2);
+    Optional<Route> findByPointOneUAAndPointTwoUAOrPointTwoUAAndPointOneUA(
+            String city1, String city2, String city3, String city4);
+    List<Route> findAll();
 }

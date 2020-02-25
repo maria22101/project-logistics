@@ -12,16 +12,20 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static com.training.projectlogistics.constants.WebConstants.*;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    private final static String LOGIN_COMMON_PATH = "/login/**";
+    private final static String CALCULATOR_RESULT_PATH = "/calculate";
 
     @Autowired
     private UserService userService;
 
     @Autowired
-    private LoginSuccessHandler loginSuccessHandler;
+    private LoginHandler loginHandler;
 
     @Bean
     public PasswordEncoder bcryptPasswordEncoder() {
@@ -39,16 +43,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/login/**", "/registration").permitAll() // routes allowed for all
-                .anyRequest().authenticated() // for all other routes authentication required
+                .antMatchers(ROOT_PATH, LOGIN_COMMON_PATH, REGISTRATION, CALCULATOR_RESULT_PATH).permitAll()
+                .anyRequest().authenticated()
                 .and()
                     .formLogin()
-                    .loginPage("/login")
-                    .successHandler(loginSuccessHandler)
-                    .failureUrl("/login/authError")
+                    .loginPage(LOGIN)
+                    .successHandler(loginHandler)
+                    .failureUrl(LOGIN_FAILURE_URL)
                 .and()
                     .logout()
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/").permitAll();
+                    .logoutUrl(LOGOUT)
+                    .logoutSuccessUrl(ROOT_PATH).permitAll();
     }
 }

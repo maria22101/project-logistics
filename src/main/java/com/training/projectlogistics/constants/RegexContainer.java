@@ -18,9 +18,4 @@ public interface RegexContainer {
     String REGEX_HOUSE_ENG = "^\\d{1,5}([-A-Za-z'/0-9]{1,10})?$";
 
     String REGEX_APARTMENT = "\\d{1,5}";
-
-//    String REGEX_DELIVERY_DATE = "^(0[1-9]|[12][0-9]|3[01])[\\.](0[1-9]|1[012])[\\.](20|22)\\d\\d$";
-
-    //TODO: check additionally
-    String REGEX_WEIGHT = "^[0-9]{2}[.][0-9]{2}";
 }

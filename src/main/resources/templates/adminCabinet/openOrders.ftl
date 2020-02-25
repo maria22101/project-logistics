@@ -29,8 +29,8 @@
                 <td>${order.user.name}</td>
                 <td>${order.user.surname}</td>
                 <td>${order.user.email}</td>
-                <td>${order.route.pointOne}</td>
-                <td>${order.route.pointTwo}</td>
+                <td>${order.dispatchAddress.city}</td>
+                <td>${order.deliveryAddress.city}</td>
                 <td>${order.weight}</td>
                 <td>${order.cargoType}</td>
                 <td>${order.sum}</td>

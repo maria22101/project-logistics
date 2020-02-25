@@ -8,12 +8,20 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import static com.training.projectlogistics.constants.TextConstants.*;
+import static com.training.projectlogistics.constants.ErrorConstants.*;
 import static com.training.projectlogistics.constants.RegexContainer.*;
 
 @Slf4j
 @Component
 public class OrderFormRegexValidator implements Validator {
+    private final static String DISPATCH_STREET = "dispatchStreet";
+    private final static String DISPATCH_HOUSE = "dispatchHouse";
+    private final static String DISPATCH_APARTMENT ="dispatchApartment";
+
+    private final static String DELIVERY_STREET = "deliveryStreet";
+    private final static String DELIVERY_HOUSE = "deliveryHouse";
+    private final static String DELIVERY_APARTMENT = "deliveryApartment";
+
     @Override
     public boolean supports(Class<?> aClass) {
         return OrderDTO.class.equals(aClass);
@@ -30,27 +38,27 @@ public class OrderFormRegexValidator implements Validator {
 
         if ((StringUtils.hasText(dto.getDispatchStreet()) &&
                 !dto.getDispatchStreet().matches(regexStreet))) {
-            errors.rejectValue("dispatchStreet", ERROR_COMMENT_DISPATCH_STREET);
+            errors.rejectValue(DISPATCH_STREET, ERROR_COMMENT_DISPATCH_STREET);
         }
         if ((StringUtils.hasText(dto.getDispatchHouse()) &&
                 !dto.getDispatchHouse().matches(regexHouse))) {
-            errors.rejectValue("dispatchHouse", ERROR_COMMENT_DISPATCH_HOUSE);
+            errors.rejectValue(DISPATCH_HOUSE, ERROR_COMMENT_DISPATCH_HOUSE);
         }
         if ((StringUtils.hasText(dto.getDispatchApartment()) &&
                 !dto.getDispatchApartment().matches(REGEX_APARTMENT))) {
-            errors.rejectValue("dispatchApartment", ERROR_COMMENT_DISPATCH_APARTMENT);
+            errors.rejectValue(DISPATCH_APARTMENT, ERROR_COMMENT_DISPATCH_APARTMENT);
         }
         if ((StringUtils.hasText(dto.getDeliveryStreet()) &&
                 !dto.getDeliveryStreet().matches(regexStreet))) {
-            errors.rejectValue("deliveryStreet", ERROR_COMMENT_DELIVERY_STREET);
+            errors.rejectValue(DELIVERY_STREET, ERROR_COMMENT_DELIVERY_STREET);
         }
         if ((StringUtils.hasText(dto.getDeliveryHouse()) &&
                 !dto.getDeliveryHouse().matches(regexHouse))) {
-            errors.rejectValue("deliveryHouse", ERROR_COMMENT_DELIVERY_HOUSE);
+            errors.rejectValue(DELIVERY_HOUSE, ERROR_COMMENT_DELIVERY_HOUSE);
         }
         if ((StringUtils.hasText(dto.getDeliveryApartment()) &&
                 !dto.getDeliveryApartment().matches(REGEX_APARTMENT))) {
-            errors.rejectValue("deliveryApartment", ERROR_COMMENT_DELIVERY_APARTMENT);
+            errors.rejectValue(DELIVERY_APARTMENT, ERROR_COMMENT_DELIVERY_APARTMENT);
         }
     }
 }

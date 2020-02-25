@@ -23,9 +23,9 @@ public class OrderDTO {
     private String dispatchStreet;
 
     @NotEmpty
-    String dispatchHouse;
+    private String dispatchHouse;
 
-    String dispatchApartment;
+    private String dispatchApartment;
 
     @NotEmpty
     private String deliveryCity;
@@ -34,9 +34,9 @@ public class OrderDTO {
     private String deliveryStreet;
 
     @NotEmpty
-    String deliveryHouse;
+    private String deliveryHouse;
 
-    String deliveryApartment;
+    private String deliveryApartment;
 
     @Future
     @NotNull

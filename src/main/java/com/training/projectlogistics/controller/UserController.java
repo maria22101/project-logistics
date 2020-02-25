@@ -7,6 +7,8 @@ import com.training.projectlogistics.model.User;
 import com.training.projectlogistics.controller.dto.OrderDTO;
 import com.training.projectlogistics.enums.CargoType;
 import com.training.projectlogistics.service.*;
+import com.training.projectlogistics.service.order.OrderCreationService;
+import com.training.projectlogistics.service.order.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,11 +21,24 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 
+import static com.training.projectlogistics.constants.WebConstants.*;
+
 @Slf4j
 @Controller
 @RequestMapping("/user")
 @PreAuthorize("hasAuthority('USER')")
 public class UserController {
+    private final static String ATTRIBUTE_NAME = "name";
+    private final static String USER_MAIN_PAGE = "userCabinet/userMain";
+    private final static String USER_PLACE_ORDER_PAGE = "userCabinet/placeOrder";
+    private final static String USER_ORDERS_PAGE = "userCabinet/orders";
+    private final static String USER_INVOICED_ORDERS_PAGE = "userCabinet/invoicedOrders";
+    private final static String USER_ORDER_DETAILS_PAGE = "userCabinet/orderDetails";
+    private final static String USER_MAIN_PAGE_REDIRECT = "redirect:/user";
+    private final static String USER_INVOICED_ORDERS_REDIRECT = "redirect:/user/invoicedOrders";
+    private final static String ATTRIBUTE_ORDER_DTO = "orderDTO";
+    private final static String ATTRIBUTE_ORDER = "order";
+
     private OrderCreationService orderCreationService;
     private OrderService orderService;
     private InvoiceService invoiceService;
@@ -46,27 +61,26 @@ public class UserController {
     @GetMapping
     public String greetUser(@AuthenticationPrincipal User user,
                             Model model) {
-        model.addAttribute("name", user.getName());
-
-        return "userCabinet/userMain";
+        model.addAttribute(ATTRIBUTE_NAME, user.getName());
+        return USER_MAIN_PAGE;
     }
-
-
 
     @GetMapping("/placeOrder")
     public String placeOrder(Model model)
             throws DatabaseFetchException {
 
-        log.info("dispatchCitiesOptions: " + routeService.getCitiesOptions());
+        log.info("citiesOptions eng: " + routeService.getCitiesOptionsEng());
 
-        model.addAttribute("orderDTO", new OrderDTO());
-        model.addAttribute("routeCities", routeService.getCitiesOptions());
-        model.addAttribute("cargoTypes", CargoType.values());
+        log.info("citiesOptions ua: " + routeService.getCitiesOptionsUa());
+
+        model.addAttribute(ATTRIBUTE_ORDER_DTO, new OrderDTO());
+        model.addAttribute(ATTRIBUTE_CITIES_EN, routeService.getCitiesOptionsEng());
+        model.addAttribute(ATTRIBUTE_CITIES_UA, routeService.getCitiesOptionsUa());
+        model.addAttribute(ATTRIBUTE_CARGO_TYPES, CargoType.values());
 
 //        log.info("routeCities: " + routeCities);
 //        log.info("cargoTypes: " + Arrays.toString(cargoTypes));
-
-        return "userCabinet/placeOrder";
+        return USER_PLACE_ORDER_PAGE;
     }
 
     @PostMapping("/placeOrder")
@@ -76,71 +90,52 @@ public class UserController {
                            Model model)
             throws DatabaseFetchException, DatabaseSaveException {
 
-        log.info("inside UserController, inside addOrder() before validation");
+//        log.info("inside UserController, inside addOrder() before validation");
 
         orderFormRegexValidator.validate(orderDTO, result);
         if (result.hasErrors()) {
-            log.info("inside UserController, inside addOrder(): checked that form has errors");
-            model.addAttribute("routeCities", routeService.getCitiesOptions());
-            model.addAttribute("cargoTypes", CargoType.values());
-            return "userCabinet/placeOrder";
+            model.addAttribute(ATTRIBUTE_CITIES_EN, routeService.getCitiesOptionsEng());
+            model.addAttribute(ATTRIBUTE_CITIES_UA, routeService.getCitiesOptionsUa());
+            model.addAttribute(ATTRIBUTE_CARGO_TYPES, CargoType.values());
+            return USER_PLACE_ORDER_PAGE;
         }
 
         log.info("OrderDTO created: " + orderDTO.toString());
-
         orderCreationService.addOrder(principal.getName(), orderDTO);
-
-        return "redirect:/user";
+        return USER_MAIN_PAGE_REDIRECT;
     }
 
     @GetMapping("/orders")
     public String displayAllOrders(Principal principal, Model model)
             throws DatabaseFetchException {
 
-        model.addAttribute("orders", orderService.getOrdersByEmail(principal.getName()));
-
-        return "userCabinet/orders";
+        model.addAttribute(ATTRIBUTE_ORDERS, orderService.getOrdersByEmail(principal.getName()));
+        return USER_ORDERS_PAGE;
     }
 
     @GetMapping("/invoicedOrders")
     public String displayOpenOrders(Principal principal, Model model)
             throws DatabaseFetchException {
 
-        model.addAttribute("openOrders", orderService.getInvoicedOrdersByEmail(principal.getName()));
-
-        return "userCabinet/invoicedOrders";
+        model.addAttribute(ATTRIBUTE_OPEN_ORDERS,
+                orderService.getInvoicedOrdersByEmail(principal.getName()));
+        return USER_INVOICED_ORDERS_PAGE;
     }
 
     @GetMapping("/invoicedOrders/{orderNumber}")
-    public String displayOrderDetails(@PathVariable("orderNumber") Long orderNumber,
+    public String displayOrderDetails(@PathVariable(PARAM_ORDER_NUMBER) Long orderNumber,
                                       Model model)
             throws DatabaseFetchException {
 
-        model.addAttribute("order", orderService.getOrderByNumber(orderNumber));
-
-        return "userCabinet/orderDetails";
+        model.addAttribute(ATTRIBUTE_ORDER, orderService.getOrderByNumber(orderNumber));
+        return USER_ORDER_DETAILS_PAGE;
     }
 
     @PostMapping("/invoicedOrders/{orderNumber}")
-    public String payOrder(@PathVariable("orderNumber") Long orderNumber)
+    public String payOrder(@PathVariable(PARAM_ORDER_NUMBER) Long orderNumber)
             throws DatabaseFetchException, DatabaseSaveException {
 
         invoiceService.payInvoiceOfOrderNumber(orderNumber);
-
-        return "redirect:/user/invoicedOrders";
-    }
-
-    @ExceptionHandler(DatabaseFetchException.class)
-    public String handleDatabaseFetchException(DatabaseFetchException e, Model model) {
-        model.addAttribute("errorMessage", e.toString());
-
-        return "general/error";
-    }
-
-    @ExceptionHandler(DatabaseSaveException.class)
-    public String handleDatabaseSaveException(DatabaseSaveException e, Model model) {
-        model.addAttribute("errorMessage", e.toString());
-
-        return "general/error";
+        return USER_INVOICED_ORDERS_REDIRECT;
     }
 }

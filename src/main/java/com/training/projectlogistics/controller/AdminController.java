@@ -84,16 +84,4 @@ public class AdminController {
         model.addAttribute(ATTRIBUTE_ROUTES, routeService.getAllRoutes());
         return ADMIN_CABINET_ROUTES_PATH;
     }
-
-    @ExceptionHandler(DatabaseFetchException.class)
-    public String handleDatabaseFetchException(DatabaseFetchException e, Model model) {
-        model.addAttribute(ERROR_MESSAGE, e.toString());
-        return GENERAL_ERROR_PAGE;
-    }
-
-    @ExceptionHandler(DatabaseSaveException.class)
-    public String handleDatabaseSaveException(DatabaseSaveException e, Model model) {
-        model.addAttribute(ERROR_MESSAGE, e.toString());
-        return GENERAL_ERROR_PAGE;
-    }
 }

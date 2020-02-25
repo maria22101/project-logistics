@@ -9,7 +9,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import static com.training.projectlogistics.constants.TextConstants.*;
+import static com.training.projectlogistics.constants.ErrorConstants.*;
 import static com.training.projectlogistics.constants.RegexContainer.*;
 import static com.training.projectlogistics.constants.WebConstants.UA_LANGUAGE;
 

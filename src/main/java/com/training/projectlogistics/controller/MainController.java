@@ -110,10 +110,4 @@ public class MainController {
     public String failedLoginOutput() {
         return AUTH_ERROR_PAGE;
     }
-
-    @ExceptionHandler(DatabaseFetchException.class)
-    public String handleDatabaseFetchException(DatabaseFetchException e, Model model) {
-        model.addAttribute(ERROR_MESSAGE, e.toString());
-        return GENERAL_ERROR_PAGE;
-    }
 }

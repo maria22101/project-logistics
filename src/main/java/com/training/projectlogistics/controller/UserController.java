@@ -138,16 +138,4 @@ public class UserController {
         invoiceService.payInvoiceOfOrderNumber(orderNumber);
         return USER_INVOICED_ORDERS_REDIRECT;
     }
-
-    @ExceptionHandler(DatabaseFetchException.class)
-    public String handleDatabaseFetchException(DatabaseFetchException e, Model model) {
-        model.addAttribute(ERROR_MESSAGE, e.toString());
-        return GENERAL_ERROR_PAGE;
-    }
-
-    @ExceptionHandler(DatabaseSaveException.class)
-    public String handleDatabaseSaveException(DatabaseSaveException e, Model model) {
-        model.addAttribute(ERROR_MESSAGE, e.toString());
-        return GENERAL_ERROR_PAGE;
-    }
 }

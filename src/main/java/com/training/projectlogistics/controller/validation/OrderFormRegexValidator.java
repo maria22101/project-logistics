@@ -8,7 +8,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import static com.training.projectlogistics.constants.TextConstants.*;
+import static com.training.projectlogistics.constants.ErrorConstants.*;
 import static com.training.projectlogistics.constants.RegexContainer.*;
 
 @Slf4j

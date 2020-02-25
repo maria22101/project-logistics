@@ -11,5 +11,7 @@ public interface RouteRepository extends JpaRepository<Route, Long> {
     Optional<Route> findById(Long id);
     Optional<Route> findByPointOneAndPointTwoOrPointTwoAndPointOne(
             String city1, String city2, String city3, String city4);
+    Optional<Route> findByPointOneUAAndPointTwoUAOrPointTwoUAAndPointOneUA(
+            String city1, String city2, String city3, String city4);
     List<Route> findAll();
 }

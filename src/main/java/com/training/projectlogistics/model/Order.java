@@ -11,13 +11,13 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 
 @Entity
 @Table(name = "orders")
@@ -68,4 +68,39 @@ public class Order{
             cascade = CascadeType.ALL,
             mappedBy = "order")
     private Invoice invoice;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return user.equals(order.user) &&
+                dispatchAddress.equals(order.dispatchAddress) &&
+                deliveryAddress.equals(order.deliveryAddress) &&
+                deliveryDate.equals(order.deliveryDate) &&
+                weight.equals(order.weight) &&
+                cargoType == order.cargoType &&
+                sum.equals(order.sum);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(user, dispatchAddress, deliveryAddress, deliveryDate, weight, cargoType, sum);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "user=" + user +
+                ", dispatchAddress=" + dispatchAddress +
+                ", deliveryAddress=" + deliveryAddress +
+                ", deliveryDate=" + deliveryDate +
+                ", weight=" + weight +
+                ", cargoType=" + cargoType +
+                ", sum=" + sum +
+                ", orderStatus=" + orderStatus +
+                ", route=" + route +
+                ", invoice=" + invoice +
+                '}';
+    }
 }

@@ -11,6 +11,6 @@
     <a href="?lang=ua"><@spring.message "lang.ua"/></a>
 
     <p></p>
-    <a href="/"><@spring.message "main.return.link"/></a>
+    <a href="/"><@spring.message "main.page.link"/></a>
 
 </@c.page>

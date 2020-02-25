@@ -65,7 +65,7 @@
 
     <div style="clear: both;"></div>
 
-    <br><br>
+    <h3 style="color: seagreen"><@spring.message "main.calculate.button"/></h3>
 
     <@m.calculator "/calculate" />
 

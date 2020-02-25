@@ -10,6 +10,7 @@ import com.training.projectlogistics.service.RouteService;
 import com.training.projectlogistics.service.order.OrderSumCalculationService;
 import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.Version;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +28,7 @@ import java.math.BigDecimal;
 
 import static com.training.projectlogistics.constants.WebConstants.*;
 
+@Slf4j
 @Controller
 public class MainController {
     private static final String STATICS = "statics";
@@ -63,11 +65,9 @@ public class MainController {
         model.addAttribute(STATICS,
                 new DefaultObjectWrapperBuilder(new Version(DEFAULT_OBJ_WRAPPER_BUILDER_VERSION))
                 .build().getStaticModels());
-
         model.addAttribute(ATTRIBUTE_CALCULATOR_DTO, new CalculatorDTO());
         model.addAttribute(ATTRIBUTE_CITIES_EN, routeService.getCitiesOptionsEng());
         model.addAttribute(ATTRIBUTE_CITIES_UA, routeService.getCitiesOptionsUa());
-
         return MAIN_PAGE;
     }
 
@@ -82,12 +82,10 @@ public class MainController {
             model.addAttribute(STATICS,
                     new DefaultObjectWrapperBuilder(new Version(DEFAULT_OBJ_WRAPPER_BUILDER_VERSION))
                             .build().getStaticModels());
-
             model.addAttribute(ATTRIBUTE_CITIES_EN, routeService.getCitiesOptionsEng());
             model.addAttribute(ATTRIBUTE_CITIES_UA, routeService.getCitiesOptionsUa());
             return MAIN_PAGE;
         }
-
         String pointOne = calculatorDTO.getDispatchCity();
         String pointTwo = calculatorDTO.getDeliveryCity();
         Route route = routeService.getRouteByTwoPoints(pointOne, pointTwo);
@@ -97,7 +95,6 @@ public class MainController {
         model.addAttribute(ATTRIBUTE_POINT_TWO, calculatorDTO.getDeliveryCity());
         model.addAttribute(ATTRIBUTE_WEIGHT, calculatorDTO.getWeight());
         model.addAttribute(ATTRIBUTE_DELIVERY_COST, cost);
-
         return CALCULATOR_RESULT_PAGE;
     }
 

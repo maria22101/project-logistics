@@ -16,6 +16,8 @@ public interface WebConstants {
     String ATTRIBUTE_ROUTES = "routes";
     String ATTRIBUTE_ROUTE_CITIES = "routeCities";
     String ATTRIBUTE_CARGO_TYPES = "cargoTypes";
+    String ATTRIBUTE_CITIES_EN = "citiesEn";
+    String ATTRIBUTE_CITIES_UA = "citiesUa";
 
     String PARAM_ORDER_NUMBER = "orderNumber";
 

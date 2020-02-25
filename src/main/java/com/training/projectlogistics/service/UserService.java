@@ -15,6 +15,8 @@ import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
+    private static final String USER_NOT_FOUND = "user not found";
+
     private UserRepository userRepository;
 
     @Autowired
@@ -26,6 +28,8 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
 
-        return userRepository.findByEmail(email);
+        return userRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(USER_NOT_FOUND));
     }
 }

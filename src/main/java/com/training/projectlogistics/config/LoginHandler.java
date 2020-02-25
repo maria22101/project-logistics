@@ -1,11 +1,11 @@
 package com.training.projectlogistics.config;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,10 +15,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.training.projectlogistics.constants.WebConstants.*;
-
-@Configuration
-public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+@Service
+public class LoginHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final static String DETERMINED_URL = "/login?error=true";
     private final static String ADMIN_PATH = "/admin";
     private final static String USER_PATH = "/user";

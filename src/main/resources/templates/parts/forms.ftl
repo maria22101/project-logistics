@@ -49,7 +49,13 @@
 
             <div>
             <@spring.message "order.dispatch.city"/>
-            <@spring.formSingleSelect "orderDTO.dispatchCity", routeCities, " "/>
+
+                <#if .locale?starts_with("ua")>
+                    <@spring.formSingleSelect "orderDTO.dispatchCity", citiesUa, " "/>
+                <#else>
+                    <@spring.formSingleSelect "orderDTO.dispatchCity", citiesEn, " "/>
+                </#if>
+
             <@spring.showErrors ", "/>
             </div>
 
@@ -75,7 +81,13 @@
 
             <div>
             <@spring.message "order.delivery.city"/>
-            <@spring.formSingleSelect "orderDTO.deliveryCity", routeCities ""/>
+
+                <#if .locale?starts_with("ua")>
+                    <@spring.formSingleSelect "orderDTO.deliveryCity", citiesUa ""/>
+                <#else>
+                    <@spring.formSingleSelect "orderDTO.deliveryCity", citiesEn ""/>
+                </#if>
+
             <@spring.showErrors ", "/>
             </div>
 
@@ -125,5 +137,45 @@
 
             <input type="submit" value="<@spring.message "usercabinet.order.placing.button"/>">
         </form>
+</#macro>
+
+<#macro calculator path>
+
+    <@spring.bind "calculatorDTO"/>
+    <form action="${path}" method="get">
+
+        <label>
+            <@spring.message "order.dispatch.city"/>
+
+            <#if .locale?starts_with("ua")>
+                <@spring.formSingleSelect "calculatorDTO.dispatchCity", citiesUa, " "/>
+            <#else>
+                <@spring.formSingleSelect "calculatorDTO.dispatchCity", citiesEn, " "/>
+            </#if>
+
+            <@spring.showErrors ", "/>
+        </label>
+
+        <label>
+            <@spring.message "order.delivery.city"/>
+
+            <#if .locale?starts_with("ua")>
+                <@spring.formSingleSelect "calculatorDTO.deliveryCity", citiesUa ""/>
+            <#else>
+                <@spring.formSingleSelect "calculatorDTO.deliveryCity", citiesEn ""/>
+            </#if>
+
+            <@spring.showErrors ", "/>
+        </label>
+
+        <label>
+            <@spring.message "order.weight"/>
+            <@spring.formInput "calculatorDTO.weight"/>
+            <@spring.showErrors ", "/>
+        </label>
+
+        <input type="submit" value=<@spring.message "main.calculate.button"/>>
+
+    </form>
 </#macro>
 

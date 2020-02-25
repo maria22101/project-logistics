@@ -5,7 +5,7 @@ import com.training.projectlogistics.exceptions.DatabaseSaveException;
 import com.training.projectlogistics.model.Order;
 import com.training.projectlogistics.enums.Role;
 import com.training.projectlogistics.service.AdminService;
-import com.training.projectlogistics.service.OrderService;
+import com.training.projectlogistics.service.order.OrderService;
 import com.training.projectlogistics.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

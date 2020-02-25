@@ -19,12 +19,13 @@ import static com.training.projectlogistics.constants.WebConstants.*;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final static String LOGIN_COMMON_PATH = "/login/**";
+    private final static String CALCULATOR_RESULT_PATH = "/calculate";
 
     @Autowired
     private UserService userService;
 
     @Autowired
-    private LoginSuccessHandler loginSuccessHandler;
+    private LoginHandler loginHandler;
 
     @Bean
     public PasswordEncoder bcryptPasswordEncoder() {
@@ -42,12 +43,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(ROOT_PATH, LOGIN_COMMON_PATH, REGISTRATION).permitAll()
+                .antMatchers(ROOT_PATH, LOGIN_COMMON_PATH, REGISTRATION, CALCULATOR_RESULT_PATH).permitAll()
                 .anyRequest().authenticated()
                 .and()
                     .formLogin()
                     .loginPage(LOGIN)
-                    .successHandler(loginSuccessHandler)
+                    .successHandler(loginHandler)
                     .failureUrl(LOGIN_FAILURE_URL)
                 .and()
                     .logout()

@@ -7,6 +7,8 @@ import com.training.projectlogistics.model.User;
 import com.training.projectlogistics.controller.dto.OrderDTO;
 import com.training.projectlogistics.enums.CargoType;
 import com.training.projectlogistics.service.*;
+import com.training.projectlogistics.service.order.OrderCreationService;
+import com.training.projectlogistics.service.order.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -67,10 +69,13 @@ public class UserController {
     public String placeOrder(Model model)
             throws DatabaseFetchException {
 
-        log.info("dispatchCitiesOptions: " + routeService.getCitiesOptions());
+        log.info("citiesOptions eng: " + routeService.getCitiesOptionsEng());
+
+        log.info("citiesOptions ua: " + routeService.getCitiesOptionsUa());
 
         model.addAttribute(ATTRIBUTE_ORDER_DTO, new OrderDTO());
-        model.addAttribute(ATTRIBUTE_ROUTE_CITIES, routeService.getCitiesOptions());
+        model.addAttribute(ATTRIBUTE_CITIES_EN, routeService.getCitiesOptionsEng());
+        model.addAttribute(ATTRIBUTE_CITIES_UA, routeService.getCitiesOptionsUa());
         model.addAttribute(ATTRIBUTE_CARGO_TYPES, CargoType.values());
 
 //        log.info("routeCities: " + routeCities);
@@ -89,7 +94,8 @@ public class UserController {
 
         orderFormRegexValidator.validate(orderDTO, result);
         if (result.hasErrors()) {
-            model.addAttribute(ATTRIBUTE_ROUTE_CITIES, routeService.getCitiesOptions());
+            model.addAttribute(ATTRIBUTE_CITIES_EN, routeService.getCitiesOptionsEng());
+            model.addAttribute(ATTRIBUTE_CITIES_UA, routeService.getCitiesOptionsUa());
             model.addAttribute(ATTRIBUTE_CARGO_TYPES, CargoType.values());
             return USER_PLACE_ORDER_PAGE;
         }

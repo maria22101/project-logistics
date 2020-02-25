@@ -30,7 +30,14 @@ public class RouteService {
         }
     }
 
-    public List<String> getCitiesOptions()
+    public Route getRouteByTwoPoints(String pointOne, String pointTwo)
+            throws DatabaseFetchException {
+        return routeRepository
+                .findByPointOneAndPointTwoOrPointTwoAndPointOne(pointOne, pointTwo, pointOne, pointTwo)
+                .orElseThrow(DatabaseFetchException::new);
+    }
+
+    public List<String> getCitiesOptionsEng()
             throws DatabaseFetchException {
 
         try {
@@ -41,6 +48,24 @@ public class RouteService {
                     routeRepository.findAll()
                             .stream()
                             .map(Route::getPointTwo))
+                    .distinct()
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new DatabaseFetchException();
+        }
+    }
+
+    public List<String> getCitiesOptionsUa()
+            throws DatabaseFetchException {
+
+        try {
+            return Stream.concat(
+                    routeRepository.findAll()
+                            .stream()
+                            .map(Route::getPointOneUA),
+                    routeRepository.findAll()
+                            .stream()
+                            .map(Route::getPointTwoUA))
                     .distinct()
                     .collect(Collectors.toList());
         } catch (Exception e) {

@@ -1,4 +1,4 @@
-package com.training.projectlogistics.service;
+package com.training.projectlogistics.service.order;
 
 import com.training.projectlogistics.exceptions.DatabaseFetchException;
 import com.training.projectlogistics.model.Order;

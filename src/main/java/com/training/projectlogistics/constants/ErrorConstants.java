@@ -1,9 +1,5 @@
 package com.training.projectlogistics.constants;
 
-import org.springframework.validation.ValidationUtils;
-
-import java.math.BigDecimal;
-
 public interface ErrorConstants {
     String EMAIL_EXISTS = "registration.emailexist.error.message";
     String DATABASE_FETCH_ISSUE = "database.fetch.issue";

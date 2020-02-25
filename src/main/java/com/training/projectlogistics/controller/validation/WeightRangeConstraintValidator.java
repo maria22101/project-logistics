@@ -7,7 +7,8 @@ import javax.validation.ConstraintValidatorContext;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import static com.training.projectlogistics.constants.BusinessInputConstants.*;
+import static com.training.projectlogistics.constants.BusinessInputConstants.WEIGHT_HEAVY_UPPER_BOUND;
+import static com.training.projectlogistics.constants.BusinessInputConstants.WEIGHT_LIGHT_LOWER_BOUND;
 
 @Slf4j
 public class WeightRangeConstraintValidator implements ConstraintValidator<WeightRange, BigDecimal> {

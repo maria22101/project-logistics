@@ -3,7 +3,6 @@ package com.training.projectlogistics.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Objects;
 
 @Getter

@@ -1,9 +1,9 @@
 package com.training.projectlogistics.service.order;
 
+import com.training.projectlogistics.enums.OrderStatus;
 import com.training.projectlogistics.exceptions.DatabaseFetchException;
 import com.training.projectlogistics.model.Order;
-import com.training.projectlogistics.enums.OrderStatus;
-import com.training.projectlogistics.repository.*;
+import com.training.projectlogistics.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

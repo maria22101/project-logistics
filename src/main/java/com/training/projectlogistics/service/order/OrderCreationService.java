@@ -1,17 +1,22 @@
 package com.training.projectlogistics.service.order;
 
-import com.training.projectlogistics.exceptions.DatabaseFetchException;
-import com.training.projectlogistics.exceptions.DatabaseSaveException;
-import com.training.projectlogistics.model.*;
 import com.training.projectlogistics.controller.dto.OrderDTO;
 import com.training.projectlogistics.enums.OrderStatus;
-import com.training.projectlogistics.repository.*;
+import com.training.projectlogistics.exceptions.DatabaseFetchException;
+import com.training.projectlogistics.exceptions.DatabaseSaveException;
+import com.training.projectlogistics.model.Address;
+import com.training.projectlogistics.model.Order;
+import com.training.projectlogistics.model.Route;
+import com.training.projectlogistics.model.User;
+import com.training.projectlogistics.repository.AddressRepository;
+import com.training.projectlogistics.repository.OrderRepository;
+import com.training.projectlogistics.repository.RouteRepository;
+import com.training.projectlogistics.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Slf4j
 @Service

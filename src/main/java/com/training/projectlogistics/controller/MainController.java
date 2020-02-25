@@ -1,8 +1,6 @@
 package com.training.projectlogistics.controller;
 
 import com.training.projectlogistics.controller.dto.CalculatorDTO;
-import com.training.projectlogistics.controller.dto.OrderDTO;
-import com.training.projectlogistics.enums.CargoType;
 import com.training.projectlogistics.exceptions.DatabaseFetchException;
 import com.training.projectlogistics.model.Route;
 import com.training.projectlogistics.model.User;
@@ -17,13 +15,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-
 import java.math.BigDecimal;
 
 import static com.training.projectlogistics.constants.WebConstants.*;

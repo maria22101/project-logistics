@@ -1,7 +1,6 @@
 package com.training.projectlogistics.repository;
 
 import com.training.projectlogistics.model.Address;
-import com.training.projectlogistics.model.Route;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

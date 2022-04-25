@@ -1,23 +1,17 @@
-**Spring boot project - Delivery System**
-
-**Проект Spring boot - Система "Доставка вантажу"**
+**MVC Spring boot project - Delivery System**
 
 ---------------------------------------------------------------------
-Надання послуг з отримання і доставки вантажу.
+Project aims at organizing Delivery service.
 
-На сайті відображається інформація по тарифах і напрямах доставки.
+- The web site reflects delivery tarrifs and delivery destinations.
 
-- Незареєстрованому користувачу доступний перегляд сайту та калькулятор послуг.
+- Unregistrated user is able to surf the site and calculate delivery costs.
 
-- Зареєстрований користувач у себе в кабінеті може створити Заявку на отримання
-вантажу і адресу доставки. Заявка містить інформацію про тип вантажу, вагу,
-дату отримання.
+- Registrated user has access to the cabinet and is able to create a delivery 
+request that contains information on cargo type, weight, date.
 
-- Після створення заявки Система* формує Рахунок. Користувач може оплатити рахунок
-в своєму кабінеті.
-
-*або Адміністратор(узгоджено з Тренером)
-
+- After the request is submitted the invoice gets created. 
+The user can pay the invoice in the cabinet.
 ---------------------------------------------------------------------
 Requirements:
 DB - MySql
